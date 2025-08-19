@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:49 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/06/04 13:59:28 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:06:39 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "get_next_line.h"
 # include "limits.h"
 # include "printf/ft_printf.h"
+# include <stdbool.h>
 # include <stdlib.h>
 # include <time.h>
 # include <unistd.h>
@@ -98,6 +99,8 @@ long long			ft_atol(const char *nptr, int *f);
 char				**ft_matrix_dup(char **new_matrix, char **src);
 
 void				ft_sort_matrix(char **matrix);
+
+void				ft_matrix_print(char **matrix);
 
 typedef struct s_list
 {

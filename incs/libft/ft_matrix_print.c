@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean.c                                            :+:      :+:    :+:   */
+/*   ft_matrix_print.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/19 18:07:15 by dpaes-so         ###   ########.fr       */
+/*   Created: 2025/08/19 16:11:27 by dpaes-so          #+#    #+#             */
+/*   Updated: 2025/08/19 18:06:09 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/cub3d.h"
+#include "libft.h"
 
-int	closex(t_game *mlx)
+void	ft_matrix_print(char **matrix)
 {
-	ft_printf("\n\nGAME CLOSING\n");
-    mlx_destroy_image(mlx->mlx,mlx->bg_img.img);
-	mlx_destroy_window(mlx->mlx, mlx->win);
-	mlx_destroy_display(mlx->mlx);
-	free(mlx->mlx);
-	exit(0);
+	int	j;
+	int	i;
+
+	j = 0;
+	while (matrix[j])
+	{
+		i = 0;
+		while (matrix[j][i])
+		{
+			ft_printf("%c", matrix[j][i]);
+			i++;
+		}
+		j++;
+	}
 }

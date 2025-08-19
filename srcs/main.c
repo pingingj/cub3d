@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/19 15:06:21 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:06:14 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,49 @@ void	print_errors(t_game *game, int error)
 	}
 	exit(error);
 }
+char	**make_maptrix(int row, char *map_file)
+{
+	char	**maptrix;
+	int		i;
+	int		fd;
 
+	i = 0;
+	fd = open(map_file, O_RDONLY);
+	maptrix = malloc(sizeof(char *) * row + 1);
+	if (!maptrix)
+		return (NULL);
+	while (i < row)
+	{
+		maptrix[i] = get_next_line(fd);
+		i++;
+	}
+	i = 0;
+	return (maptrix);
+}
+
+int	temp_parse(char *map_file, t_game *game)
+{
+	int		fd;
+	char	*str;
+	int		row;
+
+	row = 0;
+	fd = open(map_file, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	while (1)
+	{
+		str = get_next_line(fd);
+		if (str)
+			row++;
+		else
+			break ;
+		free(str);
+	}
+	close(fd);
+	game->map = make_maptrix(row, map_file);
+	return (1);
+}
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -45,10 +87,13 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	// parse(argv[1], fd);
+	if (temp_parse(argv[1], &game) < 0)
+		return (printf("ERROR\n"));
+	ft_matrix_print(game.map);
 	game.mlx = mlx_init();
 	map_gen(&game);
 	mlx_hook(game.win, 17, 0, closex, &game);
-    mlx_key_hook(game.win,keys,&game);
+	mlx_key_hook(game.win, keys, &game);
 	mlx_loop(game.mlx);
 	return (0);
 }
