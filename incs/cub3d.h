@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/18 16:23:56 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/19 15:09:59 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,11 @@ typedef struct s_game
 	void		*win;
 }				t_game;
 
+
+//generation.c
+void map_gen(t_game *game);
+//clean.c
+int	closex(t_game *mlx);
+//events.c
+int	keys(int keycode, t_game *mlx);
 #endif
