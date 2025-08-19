@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:49 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/06/04 13:59:28 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/19 16:15:22 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "get_next_line.h"
 # include "limits.h"
 # include "printf/ft_printf.h"
+# include <stdbool.h>
 # include <stdlib.h>
 # include <time.h>
 # include <unistd.h>
@@ -50,6 +51,8 @@ int					ft_strlcat(char *dest, const char *src, unsigned int size);
 size_t				ft_strlcpy(char *dest, const char *src, size_t destsize);
 
 char				*ft_strnstr(const char *hay, const char *needle, size_t n);
+
+char				*ft_strstr(char *str, char *to_find);
 
 int					ft_atoi(const char *str);
 
@@ -123,5 +126,7 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
+
+bool				skip_wspaces(char **input);
 
 #endif

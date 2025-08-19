@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/18 16:23:56 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:10:59 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_img
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	char		*filename;
 }				t_img;
 
 typedef struct s_pos
@@ -36,12 +37,22 @@ typedef struct s_pos
 	int			y;
 }				t_pos;
 
+typedef struct s_assets
+{
+	t_img		NO;
+	t_img		SO;
+	t_img		WE;
+	t_img		EA;
+	char		*ceiling;
+	char		*floor;
+}				t_assets;
+
 typedef struct s_game
 {
 	char		**map;
+	t_assets	ass;
 	t_pos		pos;
 	t_img		bg_img;
-	int			i;
 	void		*mlx;
 	void		*win;
 }				t_game;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
+#    By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/23 17:23:52 by dpaes-so          #+#    #+#              #
-#    Updated: 2025/05/20 17:32:30 by dpaes-so         ###   ########.fr        #
+#    Updated: 2025/08/19 15:32:35 by dgarcez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ FLAGS = -Wall -Werror -Wextra -g
 SRC_FILES =	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c \
 		ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_strlcpy.c \
 		ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c ft_strncmp.c \
-		ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c \
+		ft_memchr.c ft_memcmp.c ft_strnstr.c ft_strstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c \
 		ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_putchar_fd.c \
 		ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_striteri.c get_next_line.c get_next_line_utils.c \
-		ft_strcmp.c ft_freetrix.c  ft_atol.c ft_matrix_dup.c ft_matrix_sort.c
+		ft_strcmp.c ft_freetrix.c  ft_atol.c ft_matrix_dup.c ft_matrix_sort.c ft_skipwspaces.c
 
 PRINTF = $(addprefix ./printf/, ft_putcharf.c  ft_putnbrbasef.c  ft_putnbrf.c ft_putnbrf_unsigned.c \
 		ft_putstrf.c  ft_putptr.c ft_printf.c)

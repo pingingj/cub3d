@@ -6,7 +6,7 @@
 #    By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/08/18 15:06:35 by dgarcez-         ###   ########.fr        #
+#    Updated: 2025/08/19 14:50:17 by dgarcez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,15 +42,7 @@ $(MLX):
 	
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
-
-map1: all
-	@./$(NAME) maps/map1.ber
-
-map2: all
-	@./$(NAME) maps/map2.ber
-
-map3: all
-	@./$(NAME) maps/map3.ber
+	@mkdir -p $(OBJS_DIR)/parser
 
 clean:
 	make clean -C ./incs/libft -s
@@ -64,3 +56,12 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+map1: all
+	@./$(NAME) maps/map1.ber
+
+map2: all
+	@./$(NAME) maps/map2.ber
+
+map3: all
+	@./$(NAME) maps/map3.ber
