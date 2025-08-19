@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/19 15:09:59 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:12:51 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_game
 	char		**map;
 	t_pos		pos;
 	t_img		bg_img;
+	t_img		mini_map;
 	int			i;
 	void		*mlx;
 	void		*win;
