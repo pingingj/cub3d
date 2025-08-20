@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/19 18:06:14 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/20 19:58:07 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,21 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	(void)argv;
-	if (argc != 2)
+	if (argc == 2)
 	{
+		// parse(argv[1], fd);
+		if (temp_parse(argv[1], &game) < 0)
+			return (printf("ERROR\n"));
+		ft_matrix_print(game.map);
+		game.mlx = mlx_init();
+		map_gen(&game);
+		mlx_hook(game.win, 17, 0, closex, &game);
+		mlx_key_hook(game.win, keys, &game);
+		mlx_loop(game.mlx);
 		print_errors(&game, 1);
 		return (1);
 	}
-	// parse(argv[1], fd);
-	if (temp_parse(argv[1], &game) < 0)
-		return (printf("ERROR\n"));
-	ft_matrix_print(game.map);
-	game.mlx = mlx_init();
-	map_gen(&game);
-	mlx_hook(game.win, 17, 0, closex, &game);
-	mlx_key_hook(game.win, keys, &game);
-	mlx_loop(game.mlx);
+	else
+		return (print_errors(&game, 1), 1);
 	return (0);
 }

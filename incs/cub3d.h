@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/19 18:12:51 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/20 19:47:34 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
+# include "math.h"
 # include "minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <fcntl.h>
@@ -21,6 +22,8 @@
 # include <stddef.h>
 # include <stdlib.h>
 
+# define WIDTH 1920
+# define HEIGHT 1080
 typedef struct s_img
 {
 	void		*img;
@@ -36,22 +39,48 @@ typedef struct s_pos
 	int			y;
 }				t_pos;
 
+typedef struct s_player
+{
+	double		posx;
+	double		posy;
+	double		dirx;
+	double		diry;
+	double		planex;
+	double		planey;
+}				t_player;
+
+typedef struct s_math
+{
+	double		camerax;
+	double		raydirx;
+	double		raydiry;
+	int			mapx;
+	int			mapy;
+	double		deltadistx;
+	double		deltadisty;
+	int			stepx;
+	int			stepy;
+	double		sidedistx;
+	double		sidedisty;
+}				t_math;
+
 typedef struct s_game
 {
 	char		**map;
-	t_pos		pos;
+	t_player	player;
 	t_img		bg_img;
 	t_img		mini_map;
+	t_math		meth;
 	int			i;
 	void		*mlx;
 	void		*win;
+
 }				t_game;
 
-
-//generation.c
-void map_gen(t_game *game);
-//clean.c
-int	closex(t_game *mlx);
-//events.c
-int	keys(int keycode, t_game *mlx);
+// generation.c
+void			map_gen(t_game *game);
+// clean.c
+int				closex(t_game *mlx);
+// events.c
+int				keys(int keycode, t_game *mlx);
 #endif
