@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/20 19:56:12 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/20 20:01:58 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	math_with_an_e(t_game *game)
 
 	hit = 0;
 	i = 0;
-	w = WIDTH;
+	w = WIDTH; 
 	player_init(game);
 	while (i < WIDTH)
 	{
