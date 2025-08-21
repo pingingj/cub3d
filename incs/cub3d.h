@@ -22,8 +22,8 @@
 # include <stddef.h>
 # include <stdlib.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1440
+# define HEIGHT 900
 typedef struct s_img
 {
 	void		*img;

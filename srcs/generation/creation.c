@@ -14,8 +14,8 @@
 
 static void	background_gen(t_game *game)
 {
-	game->win = mlx_new_window(game->mlx, 1920, 1080, "NEETs");
-	game->bg_img.img = mlx_new_image(game->mlx, 1920, 1080);
+	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "NEETs");
+	game->bg_img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
 			&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
 			&game->bg_img.endian);
@@ -27,12 +27,12 @@ static void	background_gen(t_game *game)
 
 static void	player_init(t_game *game)
 {
-	game->player.posx = 1;
-	game->player.posy = 1;
-	game->player.dirx = -1;
+	game->player.posx = 5.5;
+	game->player.posy = 7.5;
 	game->player.dirx = 0;
-	game->player.planey = 0.66;
-	game->player.planex = 0;
+	game->player.diry = -1;
+	game->player.planey = 0;
+	game->player.planex = 0.66;
 }
 
 int	hit_wall(t_game *game)
@@ -56,7 +56,7 @@ int	hit_wall(t_game *game)
 			game->meth.mapy += game->meth.stepy;
 			side = 1;
 		}
-		if (game->map[game->meth.mapy][game->meth.mapx])
+		if (game->map[game->meth.mapy][game->meth.mapx] >= '1')
 			hit = 1;
 	}
 	return (side);
@@ -71,11 +71,11 @@ void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 		walldist = 0.000001;
 	line_heigth = (int)(HEIGHT / walldist);
 	(*sdraw) = -line_heigth / 2 + HEIGHT / 2;
-	if (sdraw < 0)
-		sdraw = 0;
+	if ((*sdraw) < 0)
+		(*sdraw) = 0;
 	(*edraw) = line_heigth / 2 + HEIGHT / 2;
-	if (edraw < 0)
-		edraw = 0;
+	if ((*edraw) < 0)
+		(*edraw) = 0;
 }
 
 void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
@@ -113,7 +113,6 @@ void	math_with_an_e(t_game *game)
 
 	i = 0;
 	w = WIDTH;
-	player_init(game);
 	while (i < WIDTH)
 	{
 		game->meth.camerax = 2 * i / (double)w - 1;
@@ -167,6 +166,7 @@ void	math_with_an_e(t_game *game)
 }
 void	map_gen(t_game *game)
 {
+	player_init(game);
 	background_gen(game);
 	math_with_an_e(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
