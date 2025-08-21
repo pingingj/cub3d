@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/20 19:47:34 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:10:01 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_math
 	int			stepy;
 	double		sidedistx;
 	double		sidedisty;
+	int 		orientation;
 }				t_math;
 
 typedef struct s_game
@@ -83,4 +84,6 @@ void			map_gen(t_game *game);
 int				closex(t_game *mlx);
 // events.c
 int				keys(int keycode, t_game *mlx);
+//mlx_adds.c
+void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 #endif

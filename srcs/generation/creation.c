@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/21 18:07:57 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:32:54 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 static void	background_gen(t_game *game)
 {
 	game->win = mlx_new_window(game->mlx, 1920, 1080, "NEETs");
-	// game->bg_img.img = mlx_new_image(game->mlx, 1920, 1080);
-	// game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
-	// 		&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
-	// 		&game->bg_img.endian);
-	game->mini_map.img = mlx_new_image(game->mlx, 200, 200);
-	game->mini_map.addr = mlx_get_data_addr(game->mini_map.img,
-			&game->mini_map.bits_per_pixel, &game->mini_map.line_length,
-			&game->mini_map.endian);
+	game->bg_img.img = mlx_new_image(game->mlx, 1920, 1080);
+	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
+			&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
+			&game->bg_img.endian);
+	// game->mini_map.img = mlx_new_image(game->mlx, 200, 200);
+	// game->mini_map.addr = mlx_get_data_addr(game->mini_map.img,
+	// 		&game->mini_map.bits_per_pixel, &game->mini_map.line_length,
+	// 		&game->mini_map.endian);
 }
 
 static void	player_init(t_game *game)
 {
-	game->player.posx = 22;
-	game->player.posy = 12;
+	game->player.posx = 1;
+	game->player.posy = 1;
 	game->player.dirx = -1;
 	game->player.dirx = 0;
 	game->player.planey = 0.66;
@@ -56,22 +56,60 @@ int	hit_wall(t_game *game)
 			game->meth.mapy += game->meth.stepy;
 			side = 1;
 		}
-		if (game->map[game->meth.mapx][game->meth.mapy])
+		if (game->map[game->meth.mapy][game->meth.mapx])
 			hit = 1;
 	}
-	return(side);
+	return (side);
 }
 
-void wall_size()
+void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 {
-	
+	int	line_heigth;
+
+	(void)game;
+	if (walldist <= 0.000001)
+		walldist = 0.000001;
+	line_heigth = (int)(HEIGHT / walldist);
+	(*sdraw) = -line_heigth / 2 + HEIGHT / 2;
+	if (sdraw < 0)
+		sdraw = 0;
+	(*edraw) = line_heigth / 2 + HEIGHT / 2;
+	if (edraw < 0)
+		edraw = 0;
+}
+
+void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
+{
+	int	color;
+	int	ceiling;
+	int	floor;
+	int	y;
+
+	ceiling = 0x0000FF;
+	floor = 0xFFA500;
+	y = 0;
+	if (game->meth.orientation == 0)
+		color = 0xFF0000;
+	else
+		color = 0x880000;
+	while (y < HEIGHT)
+	{
+		if (y < sdraw)
+			my_mlx_pixel_put(&game->bg_img, x, y, ceiling);
+		else if (y >= sdraw && y <= edraw)
+			my_mlx_pixel_put(&game->bg_img, x, y, color);
+		else
+			my_mlx_pixel_put(&game->bg_img, x, y, floor);
+		y++;
+	}
 }
 void	math_with_an_e(t_game *game)
 {
 	int		i;
 	int		w;
-	int side;
 	double	walldist;
+	int		sdraw;
+	int		edraw;
 
 	i = 0;
 	w = WIDTH;
@@ -117,12 +155,13 @@ void	math_with_an_e(t_game *game)
 			game->meth.sidedisty = (game->meth.mapy + 1.0 - game->player.posy)
 				* game->meth.deltadisty;
 		}
-		side = hit_wall(game);
-		if (side == 0)
+		game->meth.orientation = hit_wall(game);
+		if (game->meth.orientation == 0)
 			walldist = game->meth.sidedistx - game->meth.deltadistx;
 		else
 			walldist = game->meth.sidedisty - game->meth.deltadisty;
-		wall_size();
+		wall_size(game, walldist, &sdraw, &edraw);
+		artistic_moment(game, i, sdraw, edraw);
 		i++;
 	}
 }
@@ -130,4 +169,5 @@ void	map_gen(t_game *game)
 {
 	background_gen(game);
 	math_with_an_e(game);
+	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
 }

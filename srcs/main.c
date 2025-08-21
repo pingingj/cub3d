@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/20 19:58:07 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:32:31 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	(void)argv;
+	ft_bzero(&game,sizeof(t_game));
 	if (argc == 2)
 	{
 		// parse(argv[1], fd);
