@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:49 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/19 16:15:22 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:43:11 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void				ft_putendl_fd(char *s, int fd);
 
 void				ft_putnbr_fd(int n, int fd);
 
-long long			ft_atol(const char *nptr, int *f);
+long				ft_atol(char *num);
 
 char				**ft_matrix_dup(char **new_matrix, char **src);
 
@@ -128,5 +128,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 
 bool				skip_wspaces(char **input);
+
+char				*get_word(char *line, char c);
 
 #endif

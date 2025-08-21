@@ -6,7 +6,7 @@
 #    By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/08/19 14:50:17 by dgarcez-         ###   ########.fr        #
+#    Updated: 2025/08/21 17:12:39 by dgarcez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
-SOURCES = main.c
+SOURCES = main.c parser/parser.c utils/clean.c
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SOURCES))
 
@@ -43,6 +43,7 @@ $(MLX):
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
 	@mkdir -p $(OBJS_DIR)/parser
+	@mkdir -p $(OBJS_DIR)/utils
 
 clean:
 	make clean -C ./incs/libft -s

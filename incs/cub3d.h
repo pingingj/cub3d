@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/19 18:10:59 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:03:33 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdlib.h>
+
+# define NO 0
+# define EA 1
+# define WE 2
+# define SO 3
 
 typedef struct s_img
 {
@@ -37,14 +42,19 @@ typedef struct s_pos
 	int			y;
 }				t_pos;
 
+typedef struct s_color
+{
+	int			red;
+	int			green;
+	int			blue;
+	char		*nums;
+}				t_color;
+
 typedef struct s_assets
 {
-	t_img		NO;
-	t_img		SO;
-	t_img		WE;
-	t_img		EA;
-	char		*ceiling;
-	char		*floor;
+	t_img		walls[4];
+	t_color		ceiling;
+	t_color		floor;
 }				t_assets;
 
 typedef struct s_game
@@ -57,4 +67,7 @@ typedef struct s_game
 	void		*win;
 }				t_game;
 
+bool	parse(char *filename, t_game *game);
+void	print_errors(t_game *game, int error, char *msg);
+void	free_game(t_game *game);
 #endif
