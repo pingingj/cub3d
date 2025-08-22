@@ -29,6 +29,7 @@
 # define S 115
 # define A 97
 # define D 100
+# define rot_speed  0.05
 typedef struct s_img
 {
 	void		*img;

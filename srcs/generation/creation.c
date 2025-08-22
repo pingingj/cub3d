@@ -28,6 +28,11 @@ static void	background_gen(t_game *game)
 
 //camera plane is the fov
 //dir is the direction the player is facing
+/*Draw your FOV as a triangle:
+
+    Wide base (big plane): covers more map, so objects look smaller and the edge is closer.
+    Narrow base (small plane): covers less map, so objects look bigger and the edge is farther.
+*/
 static void	player_init(t_game *game)
 {
 	game->player.posx = 3.5;
