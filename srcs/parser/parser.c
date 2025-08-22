@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/21 19:38:49 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:21:17 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,18 +123,39 @@ bool	get_colors(t_color *colors)
 	while (colors->nums[i] && colors->nums[i] != ',')
 		i++;
 	red = get_word(colors->nums, ',');
-	green = get_word(colors->nums + i + 1, ',');
 	if (colors->nums[i] && colors->nums[i] == ',')
 		i++;
+	if (colors->nums[i] == '\0')
+		return (free(red), false);
+	green = get_word(colors->nums + i, ',');
 	while (colors->nums[i] && colors->nums[i] != ',')
 		i++;
-	blue = get_word(colors->nums + i + 1, ',');
+	if (colors->nums[i] && colors->nums[i] == ',')
+		i++;
+	if (colors->nums[i] == '\0')
+		return (free(red), free(green), false);
+	blue = get_word(colors->nums + i, ',');
+	while (colors->nums[i] && colors->nums[i] != ',')
+		i++;
+	if (colors->nums[i] != '\0')
+		return (free(red), free(green), free(blue), false);
 	colors->red = ft_atol(red);
 	colors->green = ft_atol(green);
 	colors->blue = ft_atol(blue);
 	free(red);
 	free(blue);
 	free(green);
+	return (true);
+}
+
+bool	check_colors(t_color colors)
+{
+	if (colors.red < 0 || colors.red > 255)
+		return (false);
+	if (colors.green < 0 || colors.green > 255)
+		return (false);
+	if (colors.blue < 0 || colors.blue > 255)
+		return (false);
 	return (true);
 }
 
@@ -151,23 +172,23 @@ bool	parse(char *filename, t_game *game)
 	if (ft_strcmp(filename + ft_strlen(filename) - 4, ".cub") != 0)
 	{
 		close(fd);
-		print_errors(game, 2, "File is not in the correct format");
+		print_errors(game, 1, "File is not in the correct format");
 		return (false);
 	}
 	if (get_textures(filename, game, fd) == false)
 	{
 		close(fd);
-		print_errors(game, 4, "Invalid texture");
+		print_errors(game, 2, "Invalid texture");
 	}
-	if (get_colors(&game->ass.ceiling) == false)
+	if (get_colors(&game->ass.ceiling) == false || get_colors(&game->ass.floor) == false)
 	{
 		close(fd);
-		print_errors(game, 5, "Colors aren't valid");
+		print_errors(game, 2, "Colors aren't valid");
 	}
-	if (get_colors(&game->ass.floor) == false)
+	if (check_colors(game->ass.ceiling) == false || check_colors(game->ass.floor) == false)
 	{
 		close(fd);
-		print_errors(game, 5, "Colors aren't valid");
+		print_errors(game, 2, "Colors values aren't valid");
 	}
 	close(fd);
 	return (true);
