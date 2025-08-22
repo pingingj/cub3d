@@ -41,7 +41,7 @@ char	**make_maptrix(int row, char *map_file)
 
 	i = 0;
 	fd = open(map_file, O_RDONLY);
-	maptrix = malloc(sizeof(char *) * row + 1);
+	maptrix = ft_calloc(row +1,sizeof(char *));
 	if (!maptrix)
 		return (NULL);
 	while (i < row)
@@ -49,7 +49,6 @@ char	**make_maptrix(int row, char *map_file)
 		maptrix[i] = get_next_line(fd);
 		i++;
 	}
-	i = 0;
 	return (maptrix);
 }
 
@@ -81,7 +80,7 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	(void)argv;
-	ft_bzero(&game,sizeof(t_game));
+	// ft_bzero(&game,sizeof(t_game));
 	if (argc == 2)
 	{
 		// parse(argv[1], fd);

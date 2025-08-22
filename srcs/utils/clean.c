@@ -16,6 +16,7 @@ int	closex(t_game *mlx)
 {
 	ft_printf("\n\nGAME CLOSING\n");
     mlx_destroy_image(mlx->mlx,mlx->bg_img.img);
+	freetrix(mlx->map);
 	// mlx_destroy_image(mlx->mlx,mlx->mini_map.img);
 	mlx_destroy_window(mlx->mlx, mlx->win);
 	mlx_destroy_display(mlx->mlx);

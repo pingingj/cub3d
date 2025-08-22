@@ -96,6 +96,8 @@ void				ft_putnbr_fd(int n, int fd);
 
 long long			ft_atol(const char *nptr, int *f);
 
+void				freetrix(char **matrix);
+
 char				**ft_matrix_dup(char **new_matrix, char **src);
 
 void				ft_sort_matrix(char **matrix);
