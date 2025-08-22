@@ -24,6 +24,11 @@
 
 # define WIDTH 1440
 # define HEIGHT 900
+# define MOVE_SPEED 0.15
+# define W 119
+# define S 115
+# define A 97
+# define D 100
 typedef struct s_img
 {
 	void		*img;

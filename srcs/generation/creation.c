@@ -25,9 +25,12 @@ static void	background_gen(t_game *game)
 	// 		&game->mini_map.endian);
 }
 
+
+//camera plane is the fov
+//dir is the direction the player is facing
 static void	player_init(t_game *game)
 {
-	game->player.posx = 5.5;
+	game->player.posx = 3.5;
 	game->player.posy = 7.5;
 	game->player.dirx = 0;
 	game->player.diry = -1;
@@ -35,6 +38,51 @@ static void	player_init(t_game *game)
 	game->player.planex = 0.66;
 }
 
+
+
+/*so plane is the fov basicly, camera ex is where the camera(only x because it only moves horizontly
+) plane is the fov, i use the plane and camera to get the actual fov(the triangle), and the i use the dir(direction
+the player is looking to) to "draw" the ray to hit a wall*/
+void setup_ray(t_game *game, int x)
+{
+    game->meth.camerax = 2 * x / (double)WIDTH - 1;
+    game->meth.raydirx = game->player.dirx + game->player.planex * game->meth.camerax;
+    game->meth.raydiry = game->player.diry + game->player.planey * game->meth.camerax;
+    game->meth.mapx = (int)game->player.posx;
+    game->meth.mapy = (int)game->player.posy;
+}
+void prepare_dda(t_game *game)
+{
+    if (game->meth.raydirx == 0)
+        game->meth.deltadistx = 1e30;
+    else
+        game->meth.deltadistx = fabs(1 / game->meth.raydirx);
+    if (game->meth.raydiry == 0)
+        game->meth.deltadisty = 1e30;
+    else
+        game->meth.deltadisty = fabs(1 / game->meth.raydiry);
+
+    if (game->meth.raydirx < 0)
+    {
+        game->meth.stepx = -1;
+        game->meth.sidedistx = (game->player.posx - game->meth.mapx) * game->meth.deltadistx;
+    }
+    else
+    {
+        game->meth.stepx = 1;
+        game->meth.sidedistx = (game->meth.mapx + 1.0 - game->player.posx) * game->meth.deltadistx;
+    }
+    if (game->meth.raydiry < 0)
+    {
+        game->meth.stepy = -1;
+        game->meth.sidedisty = (game->player.posy - game->meth.mapy) * game->meth.deltadisty;
+    }
+    else
+    {
+        game->meth.stepy = 1;
+        game->meth.sidedisty = (game->meth.mapy + 1.0 - game->player.posy) * game->meth.deltadisty;
+    }
+}
 int	hit_wall(t_game *game)
 {
 	int	hit;
@@ -62,6 +110,13 @@ int	hit_wall(t_game *game)
 	return (side);
 }
 
+double calc_wall_dist(t_game *game)
+{
+    if (game->meth.orientation == 0)
+        return game->meth.sidedistx - game->meth.deltadistx;
+    else
+        return game->meth.sidedisty - game->meth.deltadisty;
+}
 void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 {
 	int	line_heigth;
@@ -115,50 +170,10 @@ void	math_with_an_e(t_game *game)
 	w = WIDTH;
 	while (i < WIDTH)
 	{
-		game->meth.camerax = 2 * i / (double)w - 1;
-		game->meth.raydirx = game->player.dirx + game->player.planex
-			* game->meth.camerax;
-		game->meth.raydiry = game->player.diry + game->player.planey
-			* game->meth.camerax;
-		game->meth.mapx = (int)game->player.posx;
-		game->meth.mapy = (int)game->player.posy;
-		if (game->meth.raydirx == 0)
-			game->meth.deltadistx = 1e30;
-		else
-			game->meth.deltadistx = fabs(1 / game->meth.raydirx);
-		if (game->meth.raydiry == 0)
-			game->meth.deltadisty = 1e30;
-		else
-			game->meth.deltadisty = fabs(1 / game->meth.raydiry);
-		if (game->meth.raydirx < 0)
-		{
-			game->meth.stepx = -1;
-			game->meth.sidedistx = (game->player.posx - game->meth.mapx)
-				* game->meth.deltadistx;
-		}
-		else
-		{
-			game->meth.stepx = 1;
-			game->meth.sidedistx = (game->meth.mapx + 1.0 - game->player.posx)
-				* game->meth.deltadistx;
-		}
-		if (game->meth.raydiry < 0)
-		{
-			game->meth.stepy = -1;
-			game->meth.sidedisty = (game->player.posy - game->meth.mapy)
-				* game->meth.deltadisty;
-		}
-		else
-		{
-			game->meth.stepy = 1;
-			game->meth.sidedisty = (game->meth.mapy + 1.0 - game->player.posy)
-				* game->meth.deltadisty;
-		}
+		setup_ray(game,i);
+		prepare_dda(game);
 		game->meth.orientation = hit_wall(game);
-		if (game->meth.orientation == 0)
-			walldist = game->meth.sidedistx - game->meth.deltadistx;
-		else
-			walldist = game->meth.sidedisty - game->meth.deltadisty;
+		walldist = calc_wall_dist(game);
 		wall_size(game, walldist, &sdraw, &edraw);
 		artistic_moment(game, i, sdraw, edraw);
 		i++;

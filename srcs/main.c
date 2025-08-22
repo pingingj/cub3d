@@ -91,7 +91,7 @@ int	main(int argc, char **argv)
 		game.mlx = mlx_init();
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
-		mlx_key_hook(game.win, keys, &game);
+		mlx_hook(game.win, 2, 1L<<0, keys, &game);
 		mlx_loop(game.mlx);
 		print_errors(&game, 1);
 		return (1);
