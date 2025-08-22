@@ -191,13 +191,11 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 void	math_with_an_e(t_game *game)
 {
 	int		i;
-	int		w;
 	double	walldist;
 	int		sdraw;
 	int		edraw;
 
 	i = 0;
-	w = WIDTH;
 	while (i < WIDTH)
 	{
 		setup_ray(game,i);

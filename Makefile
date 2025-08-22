@@ -16,7 +16,7 @@ MLX = 	./incs/minilibx-linux/libmlx.a
 LIBFT = ./incs/libft/libft.a
 
 CC = cc
-CFLAGS = -g
+CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
 SOURCES = main.c generation/creation.c utils/clean.c utils/events.c utils/mlx_adds.c

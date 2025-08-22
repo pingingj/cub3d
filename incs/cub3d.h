@@ -86,6 +86,7 @@ typedef struct s_game
 
 // generation.c
 void			map_gen(t_game *game);
+void	math_with_an_e(t_game *game);
 // clean.c
 int				closex(t_game *mlx);
 // events.c
