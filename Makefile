@@ -16,7 +16,7 @@ MLX = 	./incs/minilibx-linux/libmlx.a
 LIBFT = ./incs/libft/libft.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g 
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
 SOURCES = main.c generation/creation.c utils/clean.c utils/events.c utils/mlx_adds.c
@@ -29,7 +29,7 @@ OBJ_FILES =  $(addprefix $(OBJS_DIR)/, $(SOURCES:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLX) $(MLXFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLX) -lm $(MLXFLAGS) -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@

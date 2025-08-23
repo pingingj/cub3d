@@ -75,6 +75,7 @@ int	temp_parse(char *map_file, t_game *game)
 	game->map = make_maptrix(row, map_file);
 	return (1);
 }
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -91,6 +92,7 @@ int	main(int argc, char **argv)
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
 		mlx_hook(game.win, 2, 1L<<0, keys, &game);
+		// mlx_mouse_hide(game.mlx,game.win);andre disse que nao dava so not sure maybe not work with the bonus
 		mlx_loop(game.mlx);
 		print_errors(&game, 1);
 		return (1);
