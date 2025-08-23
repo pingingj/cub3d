@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+         #
+#    By: daniel <daniel@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/08/21 17:12:39 by dgarcez-         ###   ########.fr        #
+#    Updated: 2025/08/23 22:15:59 by daniel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3d
+NAME = cub3D
 
 MLX = 	./incs/minilibx-linux/libmlx.a
 LIBFT = ./incs/libft/libft.a
@@ -19,7 +19,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
-SOURCES = main.c parser/parser.c utils/clean.c
+SOURCES = main.c parser/parser.c utils/clean.c parser/rgb_parser.c
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SOURCES))
 

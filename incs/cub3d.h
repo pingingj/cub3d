@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/21 19:03:33 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/23 22:15:37 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,8 @@ typedef struct s_game
 bool	parse(char *filename, t_game *game);
 void	print_errors(t_game *game, int error, char *msg);
 void	free_game(t_game *game);
+bool	skip_comma(t_color *colors, int	*i, bool last_check);
+bool	get_colors(t_color *colors);
+bool	check_colors(t_color colors);
+
 #endif

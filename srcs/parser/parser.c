@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/22 23:21:17 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/23 22:06:26 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,55 +110,6 @@ bool	get_textures(char *filename, t_game *game, int fd)
 	return (true);
 }
 
-bool	get_colors(t_color *colors)
-{
-	int		i;
-	char	*red;
-	char	*blue;
-	char	*green;
-	
-	i = 0;
-	if (ft_strlen(colors->nums) > 11)
-		return (false);
-	while (colors->nums[i] && colors->nums[i] != ',')
-		i++;
-	red = get_word(colors->nums, ',');
-	if (colors->nums[i] && colors->nums[i] == ',')
-		i++;
-	if (colors->nums[i] == '\0')
-		return (free(red), false);
-	green = get_word(colors->nums + i, ',');
-	while (colors->nums[i] && colors->nums[i] != ',')
-		i++;
-	if (colors->nums[i] && colors->nums[i] == ',')
-		i++;
-	if (colors->nums[i] == '\0')
-		return (free(red), free(green), false);
-	blue = get_word(colors->nums + i, ',');
-	while (colors->nums[i] && colors->nums[i] != ',')
-		i++;
-	if (colors->nums[i] != '\0')
-		return (free(red), free(green), free(blue), false);
-	colors->red = ft_atol(red);
-	colors->green = ft_atol(green);
-	colors->blue = ft_atol(blue);
-	free(red);
-	free(blue);
-	free(green);
-	return (true);
-}
-
-bool	check_colors(t_color colors)
-{
-	if (colors.red < 0 || colors.red > 255)
-		return (false);
-	if (colors.green < 0 || colors.green > 255)
-		return (false);
-	if (colors.blue < 0 || colors.blue > 255)
-		return (false);
-	return (true);
-}
-
 bool	parse(char *filename, t_game *game)
 {
 	int	fd;
@@ -179,6 +130,12 @@ bool	parse(char *filename, t_game *game)
 	{
 		close(fd);
 		print_errors(game, 2, "Invalid texture");
+	}
+	if (!game->ass.ceiling.nums || !game->ass.floor.nums || !game->ass.walls[NO].filename 
+		|| !game->ass.walls[EA].filename || !game->ass.walls[WE].filename || !game->ass.walls[SO].filename)
+	{
+		close(fd);
+		print_errors(game, 2, "Missing texture or color");
 	}
 	if (get_colors(&game->ass.ceiling) == false || get_colors(&game->ass.floor) == false)
 	{
