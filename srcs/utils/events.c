@@ -119,21 +119,55 @@ void look_left(t_game *game)
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
 }
 
-int	keys(int keycode, t_game *mlx)
+int key_press(int keycode,t_game *game)
 {
-	if (keycode == 65307)
-		closex(mlx);
-	if(keycode == W)
-		move_foward(mlx);
+    if (keycode == 65307)
+		closex(game);
+    if(keycode == W)
+		game->move[0] = 1;
 	if(keycode == S)
-		move_back(mlx);
+		game->move[1] = 1;
 	if(keycode == A)
-		move_left(mlx);
+		game->move[2] = 1;
 	if(keycode == D)
-		move_right(mlx);
+		game->move[3] = 1;
     if(keycode == 65363)
-		look_right(mlx);
+		game->move[4] = 1;
     if(keycode == 65361)
-		look_left(mlx);
-	return (0);
+		game->move[5] = 1;
+    return (0);
+}
+
+int key_release(int keycode,t_game *game)
+{
+    if(keycode == W)
+		game->move[0] = 0;
+	if(keycode == S)
+		game->move[1] = 0;
+	if(keycode == A)
+		game->move[2] = 0;
+	if(keycode == D)
+		game->move[3] = 0;
+    if(keycode == 65363)
+		game->move[4] = 0;
+    if(keycode == 65361)
+		game->move[5] = 0;
+    return (0);
+}
+
+int move(t_game *game)
+{
+   	if(game->move[0] == 1) 
+		move_foward(game);
+	if(game->move[1])
+		move_back(game);
+	if(game->move[2])
+		move_left(game);
+	if(game->move[3])
+		move_right(game);
+    if(game->move[4])
+		look_right(game);
+    if(game->move[5])
+		look_left(game);
+    return (0);
 }

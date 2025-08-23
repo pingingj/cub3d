@@ -24,12 +24,13 @@
 
 # define WIDTH 1440
 # define HEIGHT 900
-# define MOVE_SPEED 0.15
+# define MOVE_SPEED 0.05
 # define W 119
 # define S 115
 # define A 97
 # define D 100
-# define rot_speed  0.05
+# define rot_speed  0.03
+
 typedef struct s_img
 {
 	void		*img;
@@ -78,6 +79,7 @@ typedef struct s_game
 	t_img		bg_img;
 	t_img		mini_map;
 	t_math		meth;
+	int 		*move;
 	int			i;
 	void		*mlx;
 	void		*win;
@@ -93,4 +95,11 @@ int				closex(t_game *mlx);
 int				keys(int keycode, t_game *mlx);
 //mlx_adds.c
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+
+
+int key_press(int keycode,t_game *game);
+
+int key_release(int keycode,t_game *game);
+
+int move(t_game *game);
 #endif
