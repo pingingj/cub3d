@@ -19,10 +19,10 @@ static void	background_gen(t_game *game)
 	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
 			&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
 			&game->bg_img.endian);
-	// game->mini_map.img = mlx_new_image(game->mlx, 200, 200);
-	// game->mini_map.addr = mlx_get_data_addr(game->mini_map.img,
-	// 		&game->mini_map.bits_per_pixel, &game->mini_map.line_length,
-	// 		&game->mini_map.endian);
+	game->mini_map.img = mlx_new_image(game->mlx, 300, 300);
+	game->mini_map.addr = mlx_get_data_addr(game->mini_map.img,
+			&game->mini_map.bits_per_pixel, &game->mini_map.line_length,
+			&game->mini_map.endian);
 }
 
 
@@ -35,7 +35,7 @@ static void	background_gen(t_game *game)
 */
 static void	player_init(t_game *game)
 {
-	game->player.posx = 3.5;
+	game->player.posx = 5.5;
 	game->player.posy = 7.5;
 	game->player.dirx = 0;
 	game->player.diry = -1;
@@ -208,6 +208,100 @@ void	math_with_an_e(t_game *game)
 		i++;
 	}
 }
+
+void draw_wall(t_game *game,int cx,int cy)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	x = 0;
+	while (y < 60)
+	{
+		x = 0;
+		while (x < 60)
+		{
+			my_mlx_pixel_put(&game->mini_map, cx * 60 + x - 60, cy * 60 + y - 60,0x00FF00);
+			x++;
+		}
+		y++;
+	}
+}
+
+void draw_floor(t_game *game,int cx,int cy)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	x = 0;
+	while (y < 60)
+	{
+		x = 0;
+		while (x < 60)
+		{
+			my_mlx_pixel_put(&game->mini_map, cx * 60 + x - 60, cy * 60 + y - 60,0xFFFFFF);
+			x++;
+		}
+		y++;
+	}
+}
+
+void draw_player(t_game *game,int cx,int cy)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	x = 0;
+	while (y < 60)
+	{
+		x = 0;
+		while (x < 60)
+		{
+			my_mlx_pixel_put(&game->mini_map, cx * 60 + x - 60, cy * 60 + y - 60,0xFF00FF);
+			x++;
+		}
+		y++;
+	}
+}
+int draw_minimap(t_game *game)
+{
+	int x;
+	int y;
+	double posx;
+	double posy;
+
+	posx = 0;
+	posy = 0;
+	y = 1;
+	if(game->player.posy - 2 < 0)
+		posy = 0;
+	else
+		posy = game->player.posy - 2;
+	draw_player(game,(int)game->player.posx,(int)game->player.posx);
+	while (posy <= game->player.posy + 2)
+	{
+		x = 1;
+		if(game->player.posx - 2 < 0)
+			posx = 0;
+		else
+			posx = game->player.posx - 2;
+		while (posx <=game->player.posx + 2 && posy < 13) 
+		{
+			if(game->map[(int)posy][(int)posx] == '0')
+				draw_floor(game,x,y);
+			else
+				draw_wall(game,x,y);
+			posx++;
+			x++;
+		}
+		y++;
+		posy++;
+	}
+	return(0);
+}
+
 void	map_gen(t_game *game)
 {
 	game->move = ft_calloc(7,sizeof(int));
@@ -216,5 +310,7 @@ void	map_gen(t_game *game)
 	player_init(game);
 	background_gen(game);
 	math_with_an_e(game);
+	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }

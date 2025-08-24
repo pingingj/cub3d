@@ -93,13 +93,14 @@ typedef struct s_game
 // generation.c
 void			map_gen(t_game *game);
 void	math_with_an_e(t_game *game);
+int draw_minimap(t_game *game);
 // clean.c
 int				closex(t_game *mlx);
 // events.c
 int				keys(int keycode, t_game *mlx);
 //mlx_adds.c
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
-
+int	pixel_get(t_img *data, int x, int y);
 
 int key_press(int keycode,t_game *game);
 

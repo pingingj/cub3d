@@ -27,7 +27,9 @@ void move_foward(t_game *game,double speed)
     }
 	mlx_clear_window(game->mlx,game->win);
 	math_with_an_e(game);
+  draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 
 void move_back(t_game *game,double speed)
@@ -45,7 +47,9 @@ void move_back(t_game *game,double speed)
     }
 	mlx_clear_window(game->mlx,game->win);
 	math_with_an_e(game);
+  draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 
 void move_left(t_game *game,double speed)
@@ -63,7 +67,9 @@ void move_left(t_game *game,double speed)
     }
 	mlx_clear_window(game->mlx,game->win);
 	math_with_an_e(game);
+  draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 
 void move_right(t_game *game,double speed)
@@ -81,7 +87,9 @@ void move_right(t_game *game,double speed)
     }
 	mlx_clear_window(game->mlx,game->win);
 	math_with_an_e(game);
+  draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 
 /*to lookj in both direction i use a formula that rotates vectors, since for the camere i have the direction and the plane (fov)
@@ -100,7 +108,9 @@ void look_right(t_game *game)
     game->player.planey = oldPlaneX * sin(rot_speed) +  game->player.planey * cos(rot_speed);
 	mlx_clear_window(game->mlx,game->win);
 	math_with_an_e(game);
+  draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 void look_left(t_game *game)
 {
@@ -116,7 +126,9 @@ void look_left(t_game *game)
     game->player.planey = oldPlaneX * sin(-rot_speed) +  game->player.planey * cos(-rot_speed);
 	mlx_clear_window(game->mlx,game->win);
 	math_with_an_e(game);
+  draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 
 int key_press(int keycode,t_game *game)
