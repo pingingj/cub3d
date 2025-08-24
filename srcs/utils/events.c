@@ -26,6 +26,7 @@ void move_foward(t_game *game,double speed)
         game->player.posy = new_y;
     }
 	mlx_clear_window(game->mlx,game->win);
+  //clear_bg_img(game);
 	math_with_an_e(game);
   draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
@@ -46,6 +47,7 @@ void move_back(t_game *game,double speed)
         game->player.posy = new_y;
     }
 	mlx_clear_window(game->mlx,game->win);
+  //clear_bg_img(game);
 	math_with_an_e(game);
   draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
@@ -66,6 +68,7 @@ void move_left(t_game *game,double speed)
         game->player.posy = new_y;
     }
 	mlx_clear_window(game->mlx,game->win);
+  //clear_bg_img(game);
 	math_with_an_e(game);
   draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
@@ -86,6 +89,7 @@ void move_right(t_game *game,double speed)
         game->player.posy = new_y;
     }
 	mlx_clear_window(game->mlx,game->win);
+  //clear_bg_img(game);
 	math_with_an_e(game);
   draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
@@ -107,6 +111,7 @@ void look_right(t_game *game)
     game->player.planex =  game->player.planex * cos(rot_speed) -  game->player.planey * sin(rot_speed);
     game->player.planey = oldPlaneX * sin(rot_speed) +  game->player.planey * cos(rot_speed);
 	mlx_clear_window(game->mlx,game->win);
+  //clear_bg_img(game);
 	math_with_an_e(game);
   draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
@@ -125,6 +130,7 @@ void look_left(t_game *game)
     game->player.planex =  game->player.planex * cos(-rot_speed) -  game->player.planey * sin(-rot_speed);
     game->player.planey = oldPlaneX * sin(-rot_speed) +  game->player.planey * cos(-rot_speed);
 	mlx_clear_window(game->mlx,game->win);
+  //clear_bg_img(game);
 	math_with_an_e(game);
   draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);

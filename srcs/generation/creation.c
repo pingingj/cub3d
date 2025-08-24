@@ -279,7 +279,7 @@ int draw_minimap(t_game *game)
 		posy = 0;
 	else
 		posy = game->player.posy - 2;
-	draw_player(game,(int)game->player.posx,(int)game->player.posx);
+	// draw_player(game,(int)game->player.posx,(int)game->player.posx);
 	while (posy <= game->player.posy + 2)
 	{
 		x = 1;
