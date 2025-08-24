@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 15:12:18 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/22 22:37:59 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/23 23:15:35 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	print_errors(t_game *game, int error, char *msg)
 {
 	ft_dprintf(2, "Error\n%s\n", msg);
 	if (error == 1)
-		free_game(game);
-	else if (error == 2)
 		free_game(game);
 	exit(error);
 }

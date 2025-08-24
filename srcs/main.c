@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/21 19:11:05 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/24 03:36:51 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ int	main(int argc, char **argv)
 	printf("R = %d\n", game.ass.floor.red);
 	printf("G = %d\n", game.ass.floor.green);
 	printf("B = %d\n", game.ass.floor.blue);
+	printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
+	printf("hexa floor = %d\n", game.ass.floor.hexa);
+
 	free_game(&game);
 	return (0);
 }

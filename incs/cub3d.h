@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/23 22:15:37 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/24 03:35:55 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_color
 	int			green;
 	int			blue;
 	char		*nums;
+	int			hexa;
 }				t_color;
 
 typedef struct s_assets
@@ -73,5 +74,6 @@ void	free_game(t_game *game);
 bool	skip_comma(t_color *colors, int	*i, bool last_check);
 bool	get_colors(t_color *colors);
 bool	check_colors(t_color colors);
+int		color_hexa(t_color color);
 
 #endif

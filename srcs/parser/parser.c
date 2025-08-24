@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/23 22:06:26 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/24 03:35:10 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,13 @@ bool	get_textures(char *filename, t_game *game, int fd)
 	return (true);
 }
 
+// void	color_hexa(t_color color)
+// {
+// 	int	result;
+	
+// 	255,255,255
+// }
+
 bool	parse(char *filename, t_game *game)
 {
 	int	fd;
@@ -117,36 +124,38 @@ bool	parse(char *filename, t_game *game)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		print_errors(game, 1, "Invalid file or no file provided");
+		print_errors(game, 0, "Invalid file or no file provided");
 		return (false);
 	}
 	if (ft_strcmp(filename + ft_strlen(filename) - 4, ".cub") != 0)
 	{
 		close(fd);
-		print_errors(game, 1, "File is not in the correct format");
+		print_errors(game, 0, "File is not in the correct format");
 		return (false);
 	}
 	if (get_textures(filename, game, fd) == false)
 	{
 		close(fd);
-		print_errors(game, 2, "Invalid texture");
+		print_errors(game, 1, "Invalid texture");
 	}
 	if (!game->ass.ceiling.nums || !game->ass.floor.nums || !game->ass.walls[NO].filename 
 		|| !game->ass.walls[EA].filename || !game->ass.walls[WE].filename || !game->ass.walls[SO].filename)
 	{
 		close(fd);
-		print_errors(game, 2, "Missing texture or color");
+		print_errors(game, 1, "Missing texture or color");
 	}
 	if (get_colors(&game->ass.ceiling) == false || get_colors(&game->ass.floor) == false)
 	{
 		close(fd);
-		print_errors(game, 2, "Colors aren't valid");
+		print_errors(game, 1, "Colors aren't valid");
 	}
 	if (check_colors(game->ass.ceiling) == false || check_colors(game->ass.floor) == false)
 	{
 		close(fd);
-		print_errors(game, 2, "Colors values aren't valid");
+		print_errors(game, 1, "Colors values aren't valid");
 	}
+	game->ass.ceiling.hexa = color_hexa(game->ass.ceiling);
+	game->ass.floor.hexa = color_hexa(game->ass.floor);
 	close(fd);
 	return (true);
 }
