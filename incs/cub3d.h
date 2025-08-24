@@ -25,11 +25,14 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 # define MOVE_SPEED 0.03
+# define RUN_SPEED 0.06
 # define W 119
 # define S 115
 # define A 97
 # define D 100
 # define rot_speed  0.05
+# define SHIFT  65505
+
 
 typedef struct s_img
 {
@@ -48,6 +51,7 @@ typedef struct s_pos
 
 typedef struct s_player
 {
+	double 		speed;
 	double		posx;
 	double		posy;
 	double		dirx;

@@ -41,6 +41,7 @@ static void	player_init(t_game *game)
 	game->player.diry = -1;
 	game->player.planey = 0;
 	game->player.planex = 0.66;
+	game->player.speed = MOVE_SPEED;
 }
 
 
