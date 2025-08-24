@@ -171,7 +171,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	int	y;
 
 	ceiling = 0x0000FF;
-	floor = 0xFFA500;
+	floor = 3289650;
 	y = 0;
 	if (game->meth.orientation == 0)
 		color = 0xFF0000;
@@ -209,6 +209,9 @@ void	math_with_an_e(t_game *game)
 }
 void	map_gen(t_game *game)
 {
+	game->move = ft_calloc(7,sizeof(int));
+	if(!game->move)
+		exit(1);
 	player_init(game);
 	background_gen(game);
 	math_with_an_e(game);

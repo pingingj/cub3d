@@ -22,14 +22,14 @@
 # include <stddef.h>
 # include <stdlib.h>
 
-# define WIDTH 1440
-# define HEIGHT 900
-# define MOVE_SPEED 0.05
+# define WIDTH 1920
+# define HEIGHT 1080
+# define MOVE_SPEED 0.03
 # define W 119
 # define S 115
 # define A 97
 # define D 100
-# define rot_speed  0.03
+# define rot_speed  0.05
 
 typedef struct s_img
 {

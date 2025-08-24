@@ -82,7 +82,6 @@ int	main(int argc, char **argv)
 
 	(void)argv;
 	// ft_bzero(&game,sizeof(t_game));
-	game.move = ft_calloc(7,sizeof(int));
 	if (argc == 2)
 	{
 		// parse(argv[1], fd);
@@ -92,7 +91,6 @@ int	main(int argc, char **argv)
 		game.mlx = mlx_init();
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
-		// mlx_hook(game.win, 2, 1L<<0, keys, &game);
 		mlx_hook(game.win, 2, 1L<<0, key_press, &game); 
 		mlx_hook(game.win, 3, 1L<<1, key_release, &game);
 		mlx_loop_hook(game.mlx,move ,&game); 
