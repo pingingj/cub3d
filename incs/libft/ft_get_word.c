@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:08:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/21 18:49:33 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:32:59 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/// @brief a strdup but it stops at first word it finds in a string
+/// @brief a strdup but it stops at first encounter of a character in the string
 /// @param line string u want word
 /// @param c character that seperates words example space
 /// @return memory allocated word

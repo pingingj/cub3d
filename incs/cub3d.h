@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/24 03:35:55 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/25 18:21:28 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,18 @@ typedef struct s_assets
 	t_color		floor;
 }				t_assets;
 
+typedef struct s_map
+{
+	char		**grid;
+	int			breakp;
+	t_pos		pos;
+	bool		exists;
+	
+}				t_map;
+
 typedef struct s_game
 {
-	char		**map;
+	t_map		map;
 	t_assets	ass;
 	t_pos		pos;
 	t_img		bg_img;
@@ -68,12 +77,13 @@ typedef struct s_game
 	void		*win;
 }				t_game;
 
-bool	parse(char *filename, t_game *game);
+bool	parse(t_game *game, char *filename);
 void	print_errors(t_game *game, int error, char *msg);
 void	free_game(t_game *game);
 bool	skip_comma(t_color *colors, int	*i, bool last_check);
 bool	get_colors(t_color *colors);
 bool	check_colors(t_color colors);
 int		color_hexa(t_color color);
+void	print_map(t_map map);
 
 #endif

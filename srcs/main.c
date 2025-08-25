@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/24 03:36:51 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/25 18:22:18 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 		print_errors(&game, 1, "Not valid amount of arguments");
 		return (1);
 	}
-	if (parse(argv[1], &game) == false)
+	if (parse(&game, argv[1]) == false)
 		return (1);
 	printf("NO = %s\n", game.ass.walls[NO].filename);
 	printf("EA = %s\n", game.ass.walls[EA].filename);
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	printf("B = %d\n", game.ass.floor.blue);
 	printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
 	printf("hexa floor = %d\n", game.ass.floor.hexa);
-
+	print_map(game.map);
 	free_game(&game);
 	return (0);
 }

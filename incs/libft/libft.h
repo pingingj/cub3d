@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:49 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/21 19:43:11 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:16:55 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,12 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 
+void				freetrix(char **matrix);
+
 bool				skip_wspaces(char **input);
 
 char				*get_word(char *line, char c);
+
+bool				in_string(char	*inspect, char *find);
 
 #endif
