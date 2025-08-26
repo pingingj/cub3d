@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/26 14:30:58 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:25:18 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,12 @@ void	print_errors(t_game *game, int error)
 	if (error == 3)
 		ft_dprintf(2, "Error\nNo map provided Bruh\n");
 	if (error == 4)
-	{
-		// free_map(game);
 		ft_dprintf(2, "Error\nInvalid Map\n");
-	}
 	if (error == 5)
-	{
-		// free_map(game);
 		ft_dprintf(2, "Map, is too big\n");
-	}
 	exit(error);
 }
+
 char	**make_maptrix(int row, char *map_file)
 {
 	char	**maptrix;
@@ -41,7 +36,7 @@ char	**make_maptrix(int row, char *map_file)
 
 	i = 0;
 	fd = open(map_file, O_RDONLY);
-	maptrix = ft_calloc(row +1,sizeof(char *));
+	maptrix = ft_calloc(row + 1, sizeof(char *));
 	if (!maptrix)
 		return (NULL);
 	while (i < row)
@@ -81,20 +76,18 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	(void)argv;
-	// ft_bzero(&game,sizeof(t_game));
 	if (argc == 2)
 	{
-		// parse(argv[1], fd);
 		if (temp_parse(argv[1], &game) < 0)
 			return (printf("ERROR\n"));
 		ft_matrix_print(game.map);
 		game.mlx = mlx_init();
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
-		mlx_hook(game.win, 2, 1L<<0, key_press, &game); 
-		mlx_hook(game.win, 3, 1L<<1, key_release, &game);
-		mlx_loop_hook(game.mlx,move ,&game); 
-		// mlx_mouse_hide(game.mlx,game.win);andre disse que nao dava so not sure maybe not work with the bonus
+		mlx_hook(game.win, 2, 1L << 0, key_press, &game);
+		mlx_hook(game.win, 3, 1L << 1, key_release, &game);
+		mlx_loop_hook(game.mlx, move, &game);
+		mlx_mouse_hide(game.mlx, game.win);
 		mlx_loop(game.mlx);
 		print_errors(&game, 1);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/26 17:26:15 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:52:30 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@
 # define S 115
 # define A 97
 # define D 100
-# define rot_speed  0.03
-# define SHIFT  65505
-
+# define rot_speed 0.03
+# define SHIFT 65505
 
 typedef struct s_img
 {
@@ -51,7 +50,7 @@ typedef struct s_pos
 
 typedef struct s_player
 {
-	double 		speed;
+	double		speed;
 	double		posx;
 	double		posy;
 	double		dirx;
@@ -73,7 +72,7 @@ typedef struct s_math
 	int			stepy;
 	double		sidedistx;
 	double		sidedisty;
-	int 		orientation;
+	int			orientation;
 }				t_math;
 
 typedef struct s_game
@@ -83,28 +82,41 @@ typedef struct s_game
 	t_img		bg_img;
 	t_img		mini_map;
 	t_math		meth;
-	int 		*move;
+	int			*move;
 	int			i;
 	void		*mlx;
 	void		*win;
 
 }				t_game;
 
-// generation.c
+// generation
 void			map_gen(t_game *game);
-void	math_with_an_e(t_game *game);
-int draw_minimap(t_game *game);
-// clean.c
+void			math_with_an_e(t_game *game);
+int				draw_minimap(t_game *game);
+void			setup_ray(t_game *game, int x);
+void			dda_prep(t_game *game);
+int				hit_wall(t_game *game);
+double			calc_wall_dist(t_game *game);
+void			wall_size(t_game *game, double walldist, int *sdraw,
+					int *edraw);
+void			artistic_moment(t_game *game, int x, int sdraw, int edraw);
+// clean
 int				closex(t_game *mlx);
-// events.c
+// mlx_adds
+void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
+// events
 int				keys(int keycode, t_game *mlx);
-//mlx_adds.c
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
-int	pixel_get(t_img *data, int x, int y);
-
-int key_press(int keycode,t_game *game);
-
-int key_release(int keycode,t_game *game);
-
-int move(t_game *game);
+int				pixel_get(t_img *data, int x, int y);
+int				key_press(int keycode, t_game *game);
+int				key_release(int keycode, t_game *game);
+int				move(t_game *game);
+void			move_foward(t_game *game, double speed);
+void			move_back(t_game *game, double speed);
+void			move_left(t_game *game, double speed);
+void			move_right(t_game *game, double speed);
+void			look_right(t_game *game);
+// drawing map
+void			draw_wall(t_game *game, int cx, int cy);
+void			draw_floor(t_game *game, int cx, int cy);
+int				draw_minimap(t_game *game);
 #endif
