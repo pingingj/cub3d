@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:49 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/25 17:16:55 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/26 13:46:55 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 
 char				to_upper_even_indices(unsigned int index, char c);
-;
+
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));

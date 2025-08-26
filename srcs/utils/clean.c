@@ -3,23 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 15:12:18 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/25 18:22:42 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/26 19:31:54 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
-void	print_map(t_map map)
+void	print_info(t_game game)
 {
 	int	i;
 
 	i = 0;
-	while (i < map.pos.y)
+	printf("NO = %s\n", game.ass.walls[NO].filename);
+	printf("EA = %s\n", game.ass.walls[EA].filename);
+	printf("SO = %s\n", game.ass.walls[SO].filename);
+	printf("WE = %s\n", game.ass.walls[WE].filename);
+	printf("Ceiling = %s\n", game.ass.ceiling.nums);
+	printf("R = %d\n", game.ass.ceiling.red);
+	printf("G = %d\n", game.ass.ceiling.green);
+	printf("B = %d\n", game.ass.ceiling.blue);
+	printf("Floor = %s\n", game.ass.floor.nums);
+	printf("R = %d\n", game.ass.floor.red);
+	printf("G = %d\n", game.ass.floor.green);
+	printf("B = %d\n", game.ass.floor.blue);
+	printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
+	printf("hexa floor = %d\n", game.ass.floor.hexa);
+	printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
+	while (i < game.map.pos.y)
 	{
-		ft_printf("%s", map.grid[i]);
+		ft_printf("%s", game.map.grid[i]);
 		i++;
 	}
 	// ft_printf("PLAYER positions X = %d, Y = %d\n", map.player.pos.x,
@@ -40,7 +55,7 @@ void	free_game(t_game *game)
 		free(game->ass.floor.nums);
 	if (game->map.grid)
 		freetrix(game->map.grid);
-	while(i < 4)
+	while (i < 4)
 	{
 		if (game->ass.walls[i].filename)
 			free(game->ass.walls[i].filename);
@@ -48,8 +63,10 @@ void	free_game(t_game *game)
 	}
 }
 
-void	print_errors(t_game *game, int error, char *msg)
+void	print_errors(t_game *game, int error, char *msg, int fd)
 {
+	if (fd > 0)
+		close(fd);
 	ft_dprintf(2, "Error\n%s\n", msg);
 	if (error == 1)
 		free_game(game);

@@ -3,70 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rgb_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 22:06:42 by daniel            #+#    #+#             */
-/*   Updated: 2025/08/24 03:49:33 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/26 19:46:05 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
-int	convert_dec(char *hexa)
-{
-	int	digit;
-	int	value;
-	int	i;
-
-	value = 0;
-	i = 0;
-	digit = 0;
-	while(hexa[i])
-	{
-		if (hexa[i] && hexa[i] >= '0' && hexa[i] <= '9')
-			digit = hexa[i] - '0';
-		else
-			digit = 10 + (hexa[i] - 'A');
-		value = value * 16 + digit;
-		i++;
-	}
-	return (value);
-}
-
-void	convert_hexa(int color, char **result, char *base, int *i)
-{
-	int	remainder;
-
-	if (color > 16)
-	{
-		convert_hexa(color / 16, result, base, i);
-		(*i)++;
-	}
-	remainder = color % 16;
-	(*result)[*i] = base[remainder];
-}
-
-int	color_hexa(t_color color)
-{
-	char	*hexa;
-	int		result;
-	int		i;
-
-	i = 0;
-	hexa = ft_calloc(7, sizeof(char));
-	if (hexa == NULL)
-		exit(1);
-	convert_hexa(color.red, &hexa, "0123456789ABCDEF", &i);
-	i++;
-	convert_hexa(color.green, &hexa, "0123456789ABCDEF", &i);
-	i++;
-	convert_hexa(color.blue, &hexa, "0123456789ABCDEF", &i);
-	result = convert_dec(hexa);
-	free(hexa);
-	return (result);
-}
-
-bool	skip_comma(t_color *colors, int	*i, bool last_check)
+bool	skip_comma(t_color *colors, int *i, bool last_check)
 {
 	if (colors->nums[*i] && colors->nums[*i] == ',')
 		return (false);
@@ -87,10 +33,9 @@ bool	get_colors(t_color *colors)
 	char	*red;
 	char	*blue;
 	char	*green;
-	
+
 	i = 0;
-	
-	red = get_word(colors->nums, ','); 
+	red = get_word(colors->nums, ',');
 	if (skip_comma(colors, &i, false) == false)
 		return (free(red), false);
 	green = get_word(colors->nums + i, ',');
@@ -113,7 +58,7 @@ bool	check_colors(t_color colors)
 	int	i;
 
 	i = 0;
-	while(colors.nums[i])
+	while (colors.nums[i])
 	{
 		if (!ft_isdigit(colors.nums[i]) && colors.nums[i] != ',')
 			return (false);
@@ -126,4 +71,16 @@ bool	check_colors(t_color colors)
 	if (colors.blue < 0 || colors.blue > 255)
 		return (false);
 	return (true);
+}
+
+void	parse_colors(t_game *game, int fd)
+{
+	if (get_colors(&game->ass.ceiling) == false
+		|| get_colors(&game->ass.floor) == false)
+		print_errors(game, 1, "Colors aren't valid", fd);
+	if (check_colors(game->ass.ceiling) == false
+		|| check_colors(game->ass.floor) == false)
+		print_errors(game, 1, "Colors values aren't valid", fd);
+	game->ass.ceiling.hexa = color_hexa(game->ass.ceiling);
+	game->ass.floor.hexa = color_hexa(game->ass.floor);
 }

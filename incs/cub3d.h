@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/25 18:21:28 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/26 19:59:59 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ typedef struct s_img
 	char		*filename;
 }				t_img;
 
+typedef struct s_player
+{
+    double      speed;
+    double      posx;
+    double      posy;
+    double      dirx;
+    double      diry;
+    double      planex;
+    double      planey;
+}               t_player;
+
 typedef struct s_pos
 {
 	int			x;
@@ -64,7 +75,6 @@ typedef struct s_map
 	int			breakp;
 	t_pos		pos;
 	bool		exists;
-	
 }				t_map;
 
 typedef struct s_game
@@ -73,17 +83,22 @@ typedef struct s_game
 	t_assets	ass;
 	t_pos		pos;
 	t_img		bg_img;
+	t_player	player;
 	void		*mlx;
 	void		*win;
 }				t_game;
 
 bool	parse(t_game *game, char *filename);
-void	print_errors(t_game *game, int error, char *msg);
+void	print_errors(t_game *game, int error, char *msg, int fd);
 void	free_game(t_game *game);
+void	parse_colors(t_game *game, int fd);
 bool	skip_comma(t_color *colors, int	*i, bool last_check);
 bool	get_colors(t_color *colors);
 bool	check_colors(t_color colors);
 int		color_hexa(t_color color);
-void	print_map(t_map map);
+void	parse_map(t_game *game, int fd, char *filename);
+bool	get_map(t_game *game, int fd, char *filename);
+bool	flood_map(t_map *map, int x, int y);
+void	print_info(t_game map);
 
 #endif
