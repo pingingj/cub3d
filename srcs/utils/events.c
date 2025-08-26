@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/19 15:09:15 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/26 18:10:37 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,8 @@ void move_foward(t_game *game,double speed)
         game->player.posx = new_x;
         game->player.posy = new_y;
     }
-	mlx_clear_window(game->mlx,game->win);
-  //clear_bg_img(game);
-	math_with_an_e(game);
-  draw_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
+    //clear_bg_img(game);
+
 }
 
 void move_back(t_game *game,double speed)
@@ -46,12 +42,12 @@ void move_back(t_game *game,double speed)
         game->player.posx = new_x;
         game->player.posy = new_y;
     }
-	mlx_clear_window(game->mlx,game->win);
-  //clear_bg_img(game);
-	math_with_an_e(game);
-  draw_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
+    //clear_bg_img(game);
+  // math_with_an_e(game);
+  // draw_minimap(game);
+  // mlx_clear_window(game->mlx,game->win);
+	// mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  // mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 
 void move_left(t_game *game,double speed)
@@ -67,12 +63,12 @@ void move_left(t_game *game,double speed)
         game->player.posx = new_x;
         game->player.posy = new_y;
     }
-	mlx_clear_window(game->mlx,game->win);
-  //clear_bg_img(game);
-	math_with_an_e(game);
-  draw_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
+    //clear_bg_img(game);
+  // math_with_an_e(game);
+  // draw_minimap(game);
+  // mlx_clear_window(game->mlx,game->win);
+	// mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  // mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 
 void move_right(t_game *game,double speed)
@@ -88,12 +84,12 @@ void move_right(t_game *game,double speed)
         game->player.posx = new_x;
         game->player.posy = new_y;
     }
-	mlx_clear_window(game->mlx,game->win);
-  //clear_bg_img(game);
-	math_with_an_e(game);
-  draw_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
+    //clear_bg_img(game);
+  // math_with_an_e(game);
+  // draw_minimap(game);
+  // mlx_clear_window(game->mlx,game->win);
+	// mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  // mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 
 /*to lookj in both direction i use a formula that rotates vectors, since for the camere i have the direction and the plane (fov)
@@ -110,13 +106,13 @@ void look_right(t_game *game)
     oldPlaneX = game->player.planex;
     game->player.planex =  game->player.planex * cos(rot_speed) -  game->player.planey * sin(rot_speed);
     game->player.planey = oldPlaneX * sin(rot_speed) +  game->player.planey * cos(rot_speed);
-	mlx_clear_window(game->mlx,game->win);
-  //clear_bg_img(game);
-	math_with_an_e(game);
-  draw_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
-}
+    //clear_bg_img(game);
+//     math_with_an_e(game);
+//     draw_minimap(game);
+//   mlx_clear_window(game->mlx,game->win);
+// 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+//   mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
+} 
 void look_left(t_game *game)
 {
     double oldDirX;
@@ -129,12 +125,12 @@ void look_left(t_game *game)
     oldPlaneX = game->player.planex;
     game->player.planex =  game->player.planex * cos(-rot_speed) -  game->player.planey * sin(-rot_speed);
     game->player.planey = oldPlaneX * sin(-rot_speed) +  game->player.planey * cos(-rot_speed);
-	mlx_clear_window(game->mlx,game->win);
-  //clear_bg_img(game);
-	math_with_an_e(game);
-  draw_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-  mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
+    //clear_bg_img(game);
+  //   math_with_an_e(game);
+  //   draw_minimap(game);
+  // mlx_clear_window(game->mlx,game->win);
+	// mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+  // mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
 
 int key_press(int keycode,t_game *game)
@@ -181,15 +177,23 @@ int move(t_game *game)
 {
    	if(game->move[0] == 1) 
 		  move_foward(game,game->player.speed);
-    if(game->move[1])
+    else if(game->move[1] == 1)
       move_back(game,game->player.speed);
-    if(game->move[2])
+    if(game->move[2] == 1)
       move_left(game,game->player.speed);
-    if(game->move[3])
+    if(game->move[3] == 1)
 		  move_right(game,game->player.speed);
-    if(game->move[4])
+    if(game->move[4] == 1)
 		  look_right(game);
-    if(game->move[5])
+    if(game->move[5] == 1)
 		  look_left(game);
+    if(game->move[0] == 1 || game->move[1] == 1 || game->move[2] == 1 || game->move[3]== 1 || game->move[4] == 1 || game->move[5] == 1)
+    {
+      math_with_an_e(game);
+      draw_minimap(game);
+      mlx_clear_window(game->mlx,game->win);
+      mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+      mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
+    }
     return (0);
 }

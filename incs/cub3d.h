@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/21 19:10:01 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:26:15 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 # define MOVE_SPEED 0.03
-# define RUN_SPEED 0.06
+# define RUN_SPEED 0.05
 # define W 119
 # define S 115
 # define A 97
 # define D 100
-# define rot_speed  0.05
+# define rot_speed  0.03
 # define SHIFT  65505
 
 

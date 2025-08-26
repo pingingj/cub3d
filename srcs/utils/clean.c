@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/21 19:20:51 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/26 18:14:05 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	closex(t_game *mlx)
 	ft_printf("\n\nGAME CLOSING\n");
     mlx_destroy_image(mlx->mlx,mlx->bg_img.img);
 	freetrix(mlx->map);
-	// mlx_destroy_image(mlx->mlx,mlx->mini_map.img);
+	free(mlx->move);
+	mlx_destroy_image(mlx->mlx,mlx->mini_map.img);
 	mlx_destroy_window(mlx->mlx, mlx->win);
 	mlx_destroy_display(mlx->mlx);
 	free(mlx->mlx);
