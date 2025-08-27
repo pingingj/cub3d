@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 17:39:42 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/27 18:36:57 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	int	floor;
 	int	y;
 
-	ceiling = 0x0000FF;
-	floor = 3289650;
+	ceiling = game->ass.ceiling.hexa;
+	floor = game->ass.floor.hexa;
 	y = 0;
 	if (game->meth.orientation == 0)
-		color = 0xFF0000;
+		color = 0x0000FF;
 	else
-		color = 0x880000;
+		color = 0x0000DF;
 	while (y < HEIGHT)
 	{
 		if (y < sdraw)
