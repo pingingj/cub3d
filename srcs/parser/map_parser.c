@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/26 19:59:11 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/27 15:55:26 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ bool	get_player(t_game *game)
 
 void	parse_map(t_game *game, int fd, char *filename)
 {
+	printf("yi");
 	get_map(game, fd, filename);
 	if (check_map(game) == false)
 		print_errors(game, 1, "Invalid char found", fd);

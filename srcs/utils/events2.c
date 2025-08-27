@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/26 19:45:33 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/27 16:04:38 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ int	move(t_game *game)
 		|| game->move[3] == 1 || game->move[4] == 1 || game->move[5] == 1)
 	{
 		math_with_an_e(game);
-		draw_minimap(game);
+		// draw_minimap(game);
 		mlx_clear_window(game->mlx, game->win);
 		mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-		mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,
-			20);
+		// mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,
+			// 20);
 	}
 	return (0);
 }

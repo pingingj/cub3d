@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/26 19:43:18 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/27 16:51:15 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	move_foward(t_game *game, double speed)
 
 	new_x = game->player.posx + game->player.dirx * speed;
 	new_y = game->player.posy + game->player.diry * speed;
-	if (game->map[(int)new_y][(int)new_x] < '1')
+	if (game->map.grid[(int)new_y][(int)new_x] == 'o')
 	{
 		game->player.posx = new_x;
 		game->player.posy = new_y;
@@ -33,7 +33,7 @@ void	move_back(t_game *game, double speed)
 
 	new_x = game->player.posx - game->player.dirx * speed;
 	new_y = game->player.posy - game->player.diry * speed;
-	if (game->map[(int)new_y][(int)new_x] < '1')
+	if (game->map.grid[(int)new_y][(int)new_x] == 'o')
 	{
 		game->player.posx = new_x;
 		game->player.posy = new_y;
@@ -47,7 +47,7 @@ void	move_left(t_game *game, double speed)
 
 	new_x = game->player.posx - game->player.planex * speed;
 	new_y = game->player.posy - game->player.planey * speed;
-	if (game->map[(int)new_y][(int)new_x] < '1')
+	if (game->map.grid[(int)new_y][(int)new_x] == 'o')
 	{
 		game->player.posx = new_x;
 		game->player.posy = new_y;
@@ -61,7 +61,7 @@ void	move_right(t_game *game, double speed)
 
 	new_x = game->player.posx + game->player.planex * speed;
 	new_y = game->player.posy + game->player.planey * speed;
-	if (game->map[(int)new_y][(int)new_x] < '1')
+	if (game->map.grid[(int)new_y][(int)new_x] == 'o')
 	{
 		game->player.posx = new_x;
 		game->player.posy = new_y;

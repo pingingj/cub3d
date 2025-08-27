@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:31:40 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/26 20:06:39 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/27 16:25:00 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	draw_minimap_loop(t_game *game, double *posx, double *posy, int *y)
 			(*posx) = 0;
 		else
 			(*posx) = game->player.posx - 2;
-		while ((*posx) <= game->player.posx + 2 && (*posy) < 13)
+		while ((*posx) <= game->player.posx + 2 && (*posy) < game->map.pos.y)
 		{
-			if (game->map[(int)(*posy)][(int)(*posx)] == '0')
+			if (game->map.grid[(int)(*posy)][(int)(*posx)] == 'o')
 				draw_floor(game, x, *y);
 			else
 				draw_wall(game, x, *y);

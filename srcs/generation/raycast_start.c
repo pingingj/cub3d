@@ -6,12 +6,26 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/26 19:54:46 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/27 15:44:38 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
+/*->dir its the direction, like if dirx = 1 & diry = 0, we are looking rigth
+  ->plane is a perpendicular vector to the direction, it determines the FOV.
+
+	->camerax indicates how much the ray is leaning to the left/rigth(valors
+	go between [-1,1])
+
+	->raydir are the vector that when added will give me the ray,so basicly
+		camra x tells me wich side the ray is
+  the math to get raydirx/y is basicly connecting the the player the pointy
+  part of the triangle
+  to the base,using the direction he is looking, the fov,
+	and how far left or rigth the ray should be*/
+
+	
 void	setup_ray(t_game *game, int x)
 {
 	game->meth.camerax = 2 * x / (double)WIDTH - 1;

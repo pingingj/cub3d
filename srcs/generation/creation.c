@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/26 19:46:48 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/27 16:14:11 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static void	background_gen(t_game *game)
 */
 static void	player_init(t_game *game)
 {
-	game->player.posx = 5.5;
-	game->player.posy = 7.5;
 	game->player.dirx = 0;
 	game->player.diry = -1;
 	game->player.planey = 0;
@@ -81,10 +79,11 @@ void	map_gen(t_game *game)
 	game->move = ft_calloc(7, sizeof(int));
 	if (!game->move)
 		exit(1);
+	printf("x = %f   y = %f\n",game->player.posx,game->player.posy);
 	player_init(game);
 	background_gen(game);
 	math_with_an_e(game);
-	draw_minimap(game);
+	// draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
+	// mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }
