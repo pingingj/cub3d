@@ -6,7 +6,7 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/08/26 19:49:31 by dpaes-so         ###   ########.fr        #
+#    Updated: 2025/08/27 15:50:43 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,12 +33,14 @@ OBJ_FILES =  $(addprefix $(OBJS_DIR)/, $(SOURCES:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLX) -lm $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLX) -lm $(MLXFLAGS) -o $(NAME)
+	@echo done
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
+	@echo compiling...
 	@make -C ./incs/libft -s
 
 $(MLX):

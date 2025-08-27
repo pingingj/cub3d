@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/26 19:59:59 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/27 16:05:34 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct s_game
 	t_pos		pos;
 	t_img		bg_img;
 	t_player	player;
-  t_img		mini_map;
+  	t_img		mini_map;
 	t_math		meth;
 	int			*move;
 	int			i;
@@ -163,5 +163,5 @@ int		color_hexa(t_color color);
 void	parse_map(t_game *game, int fd, char *filename);
 bool	get_map(t_game *game, int fd, char *filename);
 bool	flood_map(t_map *map, int x, int y);
-void	print_info(t_game map);
+void	print_info(t_game game);
 #endif
