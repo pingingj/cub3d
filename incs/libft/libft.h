@@ -52,6 +52,8 @@ size_t				ft_strlcpy(char *dest, const char *src, size_t destsize);
 
 char				*ft_strnstr(const char *hay, const char *needle, size_t n);
 
+char				*ft_strstr(char *str, char *to_find);
+
 int					ft_atoi(const char *str);
 
 void				*ft_memset(void *str, int c, size_t size);
@@ -81,7 +83,7 @@ char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 
 char				to_upper_even_indices(unsigned int index, char c);
-;
+
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
@@ -94,7 +96,7 @@ void				ft_putendl_fd(char *s, int fd);
 
 void				ft_putnbr_fd(int n, int fd);
 
-long long			ft_atol(const char *nptr, int *f);
+long				ft_atol(char *num);
 
 void				freetrix(char **matrix);
 
@@ -128,5 +130,13 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
+
+void				freetrix(char **matrix);
+
+bool				skip_wspaces(char **input);
+
+char				*get_word(char *line, char c);
+
+bool				in_string(char	*inspect, char *find);
 
 #endif

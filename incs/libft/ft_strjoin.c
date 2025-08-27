@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 11:56:13 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/05/21 02:29:29 by daniel           ###   ########.fr       */
+/*   Updated: 2025/08/24 02:40:08 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	buffer[i + j] = '\0';
-	free((char *)s1);
 	return (buffer);
 }
 

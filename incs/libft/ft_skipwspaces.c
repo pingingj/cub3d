@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   ft_skipwspaces.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 11:37:44 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/24 02:35:42 by daniel           ###   ########.fr       */
+/*   Created: 2025/08/19 15:31:16 by dgarcez-          #+#    #+#             */
+/*   Updated: 2025/08/19 15:31:28 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isprint(int c)
+bool	skip_wspaces(char **input)
 {
-	if (c >= 32 && c <= 126)
+	if (**input && (**input == ' ' || (**input >= 9 && **input <= 13)))
 	{
-		return (1);
+		while (**input && (**input == ' ' || (**input >= 9 && **input <= 13)))
+			(*input)++;
+		return (true);
 	}
-	return (0);
+	return (false);
 }
-
-/*int main()
-{
-	char c = 'a';
-	int n = 7;
-	int res = ft_isprint(c);
-	int res2 =ft_isprint(n);
-	printf("n->%d\n",res2);
-	printf("c->%d\n",res);
-}*/

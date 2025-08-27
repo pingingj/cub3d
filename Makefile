@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3d
+NAME = cub3D
 
 MLX = 	./incs/minilibx-linux/libmlx.a
 LIBFT = ./incs/libft/libft.a
@@ -21,7 +21,9 @@ MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
 SOURCES = main.c generation/creation.c generation/raycast_math.c generation/raycast_start.c \
 			generation/drawing_minimap.c utils/clean.c utils/events.c utils/mlx_adds.c \
-			utils/events2.c 
+			utils/events2.c parser/parser.c parser/rgb_parser.c parser/rgb_converter.c \
+			parser/map_parser.c parser/map_create.c 
+      
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SOURCES))
 
@@ -45,6 +47,7 @@ $(MLX):
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
 	@mkdir -p $(OBJS_DIR)/generation
+	@mkdir -p $(OBJS_DIR)/parser
 	@mkdir -p $(OBJS_DIR)/utils
 
 clean:
@@ -56,3 +59,12 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+map1: all
+	@./$(NAME) maps/map1.ber
+
+map2: all
+	@./$(NAME) maps/map2.ber
+
+map3: all
+	@./$(NAME) maps/map3.ber
