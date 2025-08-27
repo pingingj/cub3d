@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_freetrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniel <daniel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:00:27 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/04/23 14:25:39 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:16:30 by daniel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	freetrix(char **matrix)
 		return ;
 	while (matrix[i])
 	{
-		free(matrix[i]);
+		if (matrix[i])
+			free(matrix[i]);
 		i++;
 	}
 	free(matrix);

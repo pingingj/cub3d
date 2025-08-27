@@ -6,37 +6,38 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:30:24 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/05/16 15:30:55 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:36:01 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long long	ft_atol(const char *nptr, int *f)
+long	ft_atol(char *num)
 {
-	int			i;
-	int			minus;
-	long long	result;
+	int		i;
+	int		sign;
+	long	result;
 
+	sign = 1;
 	i = 0;
-	minus = 1;
 	result = 0;
-	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
+	while (num[i] && (num[i] == ' ' || (num[i] >= 9 && num[i] <= 13)))
 		i++;
-	if (nptr[i] == '-' || nptr[i] == '+')
+	if (num[i] == '+' || num[i] == '-')
 	{
-		if (nptr[i] == '-')
-			minus = -minus;
+		if (num[i] == '-')
+			sign = -1;
 		i++;
 	}
-	while (nptr[i] >= '0' && nptr[i] <= '9' && result < LONG_MAX)
+	while (num[i] && (num[i] >= '0' && num[i] <= '9'))
 	{
-		if (minus == 1 && (result > (LONG_MAX - (nptr[i] - '0')) / 10))
-			return ((*f) = 1, LONG_MAX);
-		else if (minus == -1 && (-result < (LONG_MIN + (nptr[i] - '0')) / 10))
-			return ((*f) = 1, LONG_MIN);
-		result = result * 10 + (nptr[i] - '0');
+		result = result * 10 + num[i] - '0';
+		if (result > INT_MAX)
+			break ;
 		i++;
 	}
-	return (result * minus);
+	if (num[i] && (num[i] < '0' || num[i] > '9'))
+		result = -1;
+	return (result * sign);
 }
+

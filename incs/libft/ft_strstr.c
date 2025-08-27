@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/26 20:00:34 by dgarcez-         ###   ########.fr       */
+/*   Created: 2025/08/19 15:15:13 by dgarcez-          #+#    #+#             */
+/*   Updated: 2025/08/19 15:15:17 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/cub3d.h"
-
-int	main(int argc, char **argv)
+char	*ft_strstr(char *str, char *to_find)
 {
-	t_game	game;
+	unsigned int	i;
+	unsigned int	j;
 
-	ft_bzero(&game, sizeof(t_game));
-	if (argc != 2)
+	i = 0;
+	j = 0;
+	if (to_find[j] == '\0')
+		return (str);
+	while (str[i] != '\0')
 	{
-		print_errors(&game, 1, "Not valid amount of arguments", -1);
-		return (1);
+		if (str[i] == to_find[j])
+		{
+			j++;
+		}
+		else
+			j = 0;
+		if (to_find[j] == '\0')
+			return (str + (i - j + 1));
+		i++;
 	}
-	if (parse(&game, argv[1]) == false)
-		return (1);
-	print_info(game);
-	free_game(&game);
 	return (0);
 }

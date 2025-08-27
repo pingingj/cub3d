@@ -6,11 +6,11 @@
 #    By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/08/18 15:06:35 by dgarcez-         ###   ########.fr        #
+#    Updated: 2025/08/26 19:59:40 by dgarcez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3d
+NAME = cub3D
 
 MLX = 	./incs/minilibx-linux/libmlx.a
 LIBFT = ./incs/libft/libft.a
@@ -19,7 +19,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
-SOURCES = main.c
+SOURCES = main.c parser/parser.c parser/rgb_parser.c parser/rgb_converter.c \
+			parser/map_parser.c parser/map_create.c utils/clean.c
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SOURCES))
 
@@ -42,15 +43,8 @@ $(MLX):
 	
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
-
-map1: all
-	@./$(NAME) maps/map1.ber
-
-map2: all
-	@./$(NAME) maps/map2.ber
-
-map3: all
-	@./$(NAME) maps/map3.ber
+	@mkdir -p $(OBJS_DIR)/parser
+	@mkdir -p $(OBJS_DIR)/utils
 
 clean:
 	make clean -C ./incs/libft -s
@@ -64,3 +58,12 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+map1: all
+	@./$(NAME) maps/map1.ber
+
+map2: all
+	@./$(NAME) maps/map2.ber
+
+map3: all
+	@./$(NAME) maps/map3.ber
