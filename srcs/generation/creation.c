@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 16:14:11 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/27 17:39:42 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,6 @@ static void	background_gen(t_game *game)
 */
 static void	player_init(t_game *game)
 {
-	game->player.dirx = 0;
-	game->player.diry = -1;
-	game->player.planey = 0;
-	game->player.planex = 0.66;
 	game->player.speed = MOVE_SPEED;
 }
 
