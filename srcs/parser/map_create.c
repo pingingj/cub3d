@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:50:51 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/26 20:10:38 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/27 14:58:18 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	change_grid(t_map *map, int x, int y)
 
 bool	flood_map(t_map *map, int x, int y)
 {
-	if (map->grid[y][x] && y >= 0 && y < map->pos.y && x >= 0 && x < map->pos.x
+	if (y >= 0 && y < map->pos.y && x >= 0 && x < ft_strlen(map->grid[y]) && map->grid[y][x]
 		&& (map->grid[y][x] == '1' || map->grid[y][x] == 'o'
 			|| map->grid[y][x] == 'e' || map->grid[y][x] == 'c'
 			|| map->grid[y][x] == 'd'))
 		return (true);
-	if (map->grid[y][x] == '\0' || y < 0 || y >= map->pos.y || x < 0
-		|| x >= map->pos.x || map->grid[y][x] == '\0'
+	if (y < 0 || y >= map->pos.y || x < 0
+		|| x >= ft_strlen(map->grid[y]) || map->grid[y][x] == '\0'
 		|| ft_strchr("10DocedNEWSnews", map->grid[y][x]) == NULL)
 		return (false);
 	change_grid(map, x, y);
