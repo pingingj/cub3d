@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/28 13:42:33 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 15:27:06 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	int	color;
 	int	ceiling;
 	int	floor;
+	int door;
 	int	y;
 
 	ceiling = game->ass.ceiling.hexa;
@@ -58,6 +59,10 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 		color = 0x0000FF;
 	else
 		color = 0x0000DF;
+	if (game->meth.orientation == 0)
+		door = 0x964B00;
+	else
+		door = 0x964B90;
 	while (y < HEIGHT)
 	{
 		if (y < sdraw)
@@ -65,7 +70,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 		else if (y >= sdraw && y <= edraw && game->meth.door == false)
 			my_mlx_pixel_put(&game->bg_img, x, y, color);
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
-			my_mlx_pixel_put(&game->bg_img, x, y, 0x964B00);
+			my_mlx_pixel_put(&game->bg_img, x, y, door);
 		else
 			my_mlx_pixel_put(&game->bg_img, x, y, floor);
 		y++;
