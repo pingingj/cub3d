@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/27 16:05:34 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/27 18:16:23 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@
 # define S 115
 # define A 97
 # define D 100
+# define M 109
 # define rot_speed 0.03
 # define SHIFT 65505
 # define NO 0
 # define EA 1
 # define WE 2
 # define SO 3
-
 
 typedef struct s_img
 {
@@ -112,8 +112,9 @@ typedef struct s_game
 	t_pos		pos;
 	t_img		bg_img;
 	t_player	player;
-  	t_img		mini_map;
+	t_img		mini_map;
 	t_math		meth;
+	bool		mini;
 	int			*move;
 	int			i;
 	void		*mlx;
@@ -152,16 +153,16 @@ void			draw_wall(t_game *game, int cx, int cy);
 void			draw_floor(t_game *game, int cx, int cy);
 int				draw_minimap(t_game *game);
 //parse
-bool	parse(t_game *game, char *filename);
-void	print_errors(t_game *game, int error, char *msg, int fd);
-void	free_game(t_game *game);
-void	parse_colors(t_game *game, int fd);
-bool	skip_comma(t_color *colors, int	*i, bool last_check);
-bool	get_colors(t_color *colors);
-bool	check_colors(t_color colors);
-int		color_hexa(t_color color);
-void	parse_map(t_game *game, int fd, char *filename);
-bool	get_map(t_game *game, int fd, char *filename);
-bool	flood_map(t_map *map, int x, int y);
-void	print_info(t_game game);
+bool			parse(t_game *game, char *filename);
+void			print_errors(t_game *game, int error, char *msg, int fd);
+void			free_game(t_game *game);
+void			parse_colors(t_game *game, int fd);
+bool			skip_comma(t_color *colors, int *i, bool last_check);
+bool			get_colors(t_color *colors);
+bool			check_colors(t_color colors);
+int				color_hexa(t_color color);
+void			parse_map(t_game *game, int fd, char *filename);
+bool			get_map(t_game *game, int fd, char *filename);
+bool			flood_map(t_map *map, int x, int y);
+void			print_info(t_game game);
 #endif

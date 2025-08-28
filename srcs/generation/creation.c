@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 17:39:42 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/27 18:41:23 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	int	floor;
 	int	y;
 
-	ceiling = 0x0000FF;
-	floor = 3289650;
+	ceiling = game->ass.ceiling.hexa;
+	floor = game->ass.floor.hexa;
 	y = 0;
 	if (game->meth.orientation == 0)
-		color = 0xFF0000;
+		color = 0x0000FF;
 	else
-		color = 0x880000;
+		color = 0x0000DF;
 	while (y < HEIGHT)
 	{
 		if (y < sdraw)
@@ -79,7 +79,7 @@ void	map_gen(t_game *game)
 	player_init(game);
 	background_gen(game);
 	math_with_an_e(game);
-	// draw_minimap(game);
+	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
 	// mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
 }

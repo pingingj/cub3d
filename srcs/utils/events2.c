@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 16:04:38 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/27 18:30:03 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@ int	key_press(int keycode, t_game *game)
 {
 	if (keycode == 65307)
 		closex(game);
+	if (keycode == M)
+	{
+		if (game->mini == false)
+		{
+			game->mini = true;
+			mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,20);
+		}
+		else
+		{
+			mlx_clear_window(game->mlx, game->win);
+			mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+			game->mini = false;
+		}
+	}
 	if (keycode == W)
 		game->move[0] = 1;
 	if (keycode == S)
@@ -87,11 +101,14 @@ int	move(t_game *game)
 		|| game->move[3] == 1 || game->move[4] == 1 || game->move[5] == 1)
 	{
 		math_with_an_e(game);
-		// draw_minimap(game);
+		draw_minimap(game);
 		mlx_clear_window(game->mlx, game->win);
 		mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-		// mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,
-			// 20);
+		if (game->mini == true)
+		{
+			mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,
+				20);
+		}
 	}
 	return (0);
 }
