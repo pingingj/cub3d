@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/28 14:00:45 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:54:01 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_math
 	double		sidedisty;
 	int			orientation;
 	bool		door;
+	bool		looking_door;
 }				t_math;
 
 typedef struct s_color

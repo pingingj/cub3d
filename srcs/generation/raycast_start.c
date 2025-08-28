@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/28 13:37:04 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:55:00 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,20 @@ void	math_with_an_e(t_game *game)
 	int		i;
 
 	i = 0;
+	game->meth.looking_door = false;
 	while (i < WIDTH)
 	{
 		setup_ray(game, i);
 		dda_prep(game);
 		game->meth.orientation = hit_wall(game);
+		if(game->meth.door == true)
+			game->meth.looking_door = true;
 		walldist = calc_wall_dist(game);
 		wall_size(game, walldist, &sdraw, &edraw);
 		artistic_moment(game, i, sdraw, edraw);
 		i++;
 	}
+	
 }
 
 void	create_frame(t_game *game)

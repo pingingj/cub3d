@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/28 13:23:25 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:57:07 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	hit_wall(t_game *game)
 			game->meth.door = true;
 			hit = 1;
 		}
+		if(game->map.grid[game->meth.mapy][game->meth.mapx] == 'D')
+			game->meth.looking_door = true;
 	}
 	return (side);
 }

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/28 14:21:10 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 15:13:44 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static bool	open_door(t_game *game,double x,double y)
 		angle = (2 * PI/ANGLE_NUMBERS) * i;
 		new_x = x + cos(angle) * 0.4;
 		new_y = y + sin(angle) * 0.4;
-		if(game->map.grid[(int)new_y][(int)new_x] == 'd')
+		if(game->map.grid[(int)new_y][(int)new_x] == 'd' && game->meth.looking_door == true)
 		{
 			game->map.grid[(int)new_y][(int)new_x] = 'D';
 			create_frame(game);
 			return (true);
 		}
-		else if(game->map.grid[(int)new_y][(int)new_x] == 'D')
+		if(game->map.grid[(int)new_y][(int)new_x] == 'D' && game->meth.looking_door == true)
 		{
 			game->map.grid[(int)new_y][(int)new_x] = 'd';
 			if(hit_box(game,x,y) == false)
