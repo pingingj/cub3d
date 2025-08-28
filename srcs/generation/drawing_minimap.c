@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/26 19:31:40 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/28 12:51:00 by dgarcez-         ###   ########.fr       */
+/*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
+/*   Updated: 2025/08/28 19:31:26 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,44 +52,51 @@ void	draw_floor(t_game *game, int cx, int cy)
 	}
 }
 
-void	draw_minimap_loop(t_game *game, double *posx, double *posy, int *y)
+void draw_filled_circle_mlx(t_game *game, int cx, int cy, int color)
 {
-	int	x;
+    int x;
+    int y;
 
-	while ((*posy) <= game->player.posy + 2)
-	{
-		x = 1;
-		if (game->player.posx - 2 < 0)
-			(*posx) = 0;
-		else
-			(*posx) = game->player.posx - 2;
-		while ((*posx) <= game->player.posx + 2 && (*posy) < game->map.pos.y)
-		{
-			if (game->map.grid[(int)(*posy)][(int)(*posx)] == 'o')
-				draw_floor(game, x, *y);
-			else
-				draw_wall(game, x, *y);
-			(*posx)++;
-			x++;
-		}
-		(*y)++;
-		(*posy)++;
-	}
+    y = cy - RADIUS;
+    while (y <= cy + RADIUS)
+    {
+        x = cx - RADIUS;
+        while (x <= cx + RADIUS)
+        {
+            if ((x - cx) * (x - cx) + (y - cy) * (y - cy) <= RADIUS * RADIUS)
+                my_mlx_pixel_put(&game->mini_map, x, y, color);
+            x++;
+        }
+        y++;
+    }
+}
+
+void draw_circle_mlx(t_game *game, int cx, int cy, int color)
+{
+	int i;
+	int	x;
+	int	y;
+
+	i = 0;
+    while (i < ANGLE_NUMBERS)
+    {
+		double angle = (2 * PI * i) / ANGLE_NUMBERS;
+		x = (int)(cx + cos(angle) * 5);
+		y = (int)(cy + sin(angle) * 5);
+		draw_filled_circle_mlx(game, x, y, color);
+		i++;
+    }
+}
+
+
+void	draw_minimap_loop(t_game *game)
+{
+	
+	draw_circle_mlx(game, 150, 150, 0xFFFFFF);
 }
 
 int	draw_minimap(t_game *game)
 {
-	double	posx;
-	double	posy;
-	int		y;
-
-	posx = 0;
-	posy = 0;
-	y = 1;
-	if (game->player.posy - 2 < 0)
-		posy = 0;
-	else
-		posy = game->player.posy - 2;
-	draw_minimap_loop(game, &posx, &posy, &y);
+	draw_minimap_loop(game);
 	return (0);
 }

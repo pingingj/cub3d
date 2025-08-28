@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/27 18:16:23 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/28 16:10:15 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,35 @@
 # include <stddef.h>
 # include <stdlib.h>
 
+//pixels
 # define WIDTH 1920
 # define HEIGHT 1080
-# define MOVE_SPEED 0.03
-# define RUN_SPEED 0.05
+# define MINI_CENTER_X 150
+# define MINI_CENTER_Y 150
+# define TILE_SIZE 60
+
+//keys
 # define W 119
 # define S 115
 # define A 97
 # define D 100
 # define M 109
-# define rot_speed 0.03
+# define F 102
 # define SHIFT 65505
+# define ARROW_RIGHT 65363
+# define ARROW_LEFT 65361
+
+//movement
+# define MOVE_SPEED 0.03
+# define RUN_SPEED 0.05
+# define rot_speed 0.04
+
+//circle bullshit
+# define PI 3.14159265358979323846
+# define RADIUS 5
+# define ANGLE_NUMBERS 50
+
+// parser
 # define NO 0
 # define EA 1
 # define WE 2
