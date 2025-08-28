@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 15:44:38 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 13:37:04 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
   to the base,using the direction he is looking, the fov,
 	and how far left or rigth the ray should be*/
 
-	
 void	setup_ray(t_game *game, int x)
 {
 	game->meth.camerax = 2 * x / (double)WIDTH - 1;
@@ -55,4 +54,14 @@ void	math_with_an_e(t_game *game)
 		artistic_moment(game, i, sdraw, edraw);
 		i++;
 	}
+}
+
+void	create_frame(t_game *game)
+{
+	math_with_an_e(game);
+	// draw_minimap(game);
+	mlx_clear_window(game->mlx, game->win);
+	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+	// mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,
+	// 20);
 }

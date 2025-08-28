@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 18:36:57 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 13:42:33 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	{
 		if (y < sdraw)
 			my_mlx_pixel_put(&game->bg_img, x, y, ceiling);
-		else if (y >= sdraw && y <= edraw)
+		else if (y >= sdraw && y <= edraw && game->meth.door == false)
 			my_mlx_pixel_put(&game->bg_img, x, y, color);
+		else if (y >= sdraw && y <= edraw && game->meth.door == true)
+			my_mlx_pixel_put(&game->bg_img, x, y, 0x964B00);
 		else
 			my_mlx_pixel_put(&game->bg_img, x, y, floor);
 		y++;
@@ -78,8 +80,5 @@ void	map_gen(t_game *game)
 	printf("x = %f   y = %f\n",game->player.posx,game->player.posy);
 	player_init(game);
 	background_gen(game);
-	math_with_an_e(game);
-	// draw_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-	// mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20, 20);
+	create_frame(game);
 }

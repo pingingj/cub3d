@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/28 11:54:37 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:09:13 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ bool	hit_box(t_game *game,double x,double y)
 		angle = (2 * PI/ANGLE_NUMBERS) * i;
 		new_x = x + cos(angle) * RADIUS;
 		new_y = y + sin(angle) * RADIUS;
-		if(game->map.grid[(int)new_y][(int)new_x] == '1')
+		if(game->map.grid[(int)new_y][(int)new_x] == '1' || game->map.grid[(int)new_y][(int)new_x] == 'd')
 			return (false);
 		i++;
 	}
+	// printf("true\n");
 	return(true);
 }
 void	move_foward(t_game *game, double speed)

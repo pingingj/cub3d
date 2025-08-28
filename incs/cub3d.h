@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/28 11:53:05 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:00:45 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define S 115
 # define A 97
 # define D 100
+# define F 102
 # define PI 3.14159265358979323846
 # define RADIUS 0.1
 # define ARROW_RIGHT 65363
@@ -83,6 +84,7 @@ typedef struct s_math
 	double		sidedistx;
 	double		sidedisty;
 	int			orientation;
+	bool		door;
 }				t_math;
 
 typedef struct s_color
@@ -135,6 +137,7 @@ int				hit_wall(t_game *game);
 double			calc_wall_dist(t_game *game);
 void			wall_size(t_game *game, double walldist, int *sdraw,
 					int *edraw);
+void			create_frame(t_game *game);
 void			artistic_moment(t_game *game, int x, int sdraw, int edraw);
 // clean
 int				closex(t_game *mlx);
@@ -152,6 +155,7 @@ void			move_left(t_game *game, double speed);
 void			move_right(t_game *game, double speed);
 void			look_right(t_game *game);
 void			look_left(t_game *game);
+bool			hit_box(t_game *game, double x, double y);
 // drawing map
 void			draw_wall(t_game *game, int cx, int cy);
 void			draw_floor(t_game *game, int cx, int cy);

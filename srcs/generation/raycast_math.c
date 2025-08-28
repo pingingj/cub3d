@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 16:51:30 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 13:23:25 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	hit_wall(t_game *game)
 
 	hit = 0;
 	side = 0;
+	game->meth.door = false;
 	while (hit == 0)
 	{
 		if (game->meth.sidedistx < game->meth.sidedisty)
@@ -95,6 +96,11 @@ int	hit_wall(t_game *game)
 		}
 		if (game->map.grid[game->meth.mapy][game->meth.mapx] == '1')
 			hit = 1;
+		else if (game->map.grid[game->meth.mapy][game->meth.mapx] == 'd')
+		{
+			game->meth.door = true;
+			hit = 1;
+		}
 	}
 	return (side);
 }

@@ -6,11 +6,46 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/28 11:28:07 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:21:10 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
+
+static bool	open_door(t_game *game,double x,double y)
+{
+	int i;
+	double new_x;
+	double new_y;
+	double angle;
+
+	i = 0;
+	while(i < ANGLE_NUMBERS)
+	{
+		angle = (2 * PI/ANGLE_NUMBERS) * i;
+		new_x = x + cos(angle) * 0.4;
+		new_y = y + sin(angle) * 0.4;
+		if(game->map.grid[(int)new_y][(int)new_x] == 'd')
+		{
+			game->map.grid[(int)new_y][(int)new_x] = 'D';
+			create_frame(game);
+			return (true);
+		}
+		else if(game->map.grid[(int)new_y][(int)new_x] == 'D')
+		{
+			game->map.grid[(int)new_y][(int)new_x] = 'd';
+			if(hit_box(game,x,y) == false)
+			{
+				game->map.grid[(int)new_y][(int)new_x] = 'D';
+				return(false);
+			}
+			create_frame(game);
+			return (true);
+		}
+		i++;
+	}
+	return(false);
+}
 
 void	look_left(t_game *game)
 {
@@ -31,6 +66,7 @@ void	look_left(t_game *game)
 
 int	key_press(int keycode, t_game *game)
 {
+	// printf("key code = %d\n",keycode);
 	if (keycode == 65307)
 		closex(game);
 	if (keycode == W)
@@ -47,6 +83,8 @@ int	key_press(int keycode, t_game *game)
 		game->move[5] = 1;
 	if (keycode == SHIFT)
 		game->player.speed = RUN_SPEED;
+	if (keycode == F)
+		open_door(game,game->player.posx + game->player.dirx * MOVE_SPEED,game->player.posy + game->player.diry * MOVE_SPEED);
 	return (0);
 }
 
@@ -86,12 +124,7 @@ int	move(t_game *game)
 	if (game->move[0] == 1 || game->move[1] == 1 || game->move[2] == 1
 		|| game->move[3] == 1 || game->move[4] == 1 || game->move[5] == 1)
 	{
-		math_with_an_e(game);
-		// draw_minimap(game);
-		mlx_clear_window(game->mlx, game->win);
-		mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-		// mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,
-			// 20);
+		create_frame(game);
 	}
 	return (0);
 }
