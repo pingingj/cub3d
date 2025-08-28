@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 16:04:38 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 11:28:07 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int	key_release(int keycode, t_game *game)
 		game->move[2] = 0;
 	if (keycode == D)
 		game->move[3] = 0;
-	if (keycode == 65363)
+	if (keycode == ARROW_RIGHT)
 		game->move[4] = 0;
-	if (keycode == 65361)
+	if (keycode == ARROW_LEFT)
 		game->move[5] = 0;
 	if (keycode == SHIFT)
 		game->player.speed = MOVE_SPEED;

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/27 19:19:06 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 11:42:32 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 int mouse(int x, int y,t_game *game)
 {
 	(void)game;
+	(void)y;
 	if(x > WIDTH /2)
 		game->move[4] = 1;
  	if(x < WIDTH/2)
@@ -25,7 +26,7 @@ int mouse(int x, int y,t_game *game)
 	}
 	if(x != WIDTH/2)
 		mlx_mouse_move(game->mlx,game->win,WIDTH/2,HEIGHT/2);
-	printf("x = %d y = %d\n",x,y);
+	// printf("x = %d y = %d\n",x,y);
 	return(0);
 }
 int	main(int argc, char **argv)

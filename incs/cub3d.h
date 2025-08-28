@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/27 19:23:13 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 11:53:05 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@
 # define S 115
 # define A 97
 # define D 100
+# define PI 3.14159265358979323846
+# define RADIUS 0.1
+# define ARROW_RIGHT 65363
+# define ARROW_LEFT 65361
+# define ANGLE_NUMBERS 8
 # define rot_speed 0.04
 # define SHIFT 65505
 # define NO 0
