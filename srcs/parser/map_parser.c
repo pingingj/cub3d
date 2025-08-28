@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/26 19:59:11 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/27 17:44:00 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,34 @@ bool	get_player(t_game *game)
 		{
 			if (ft_strchr("NEWS", game->map.grid[y][x]))
 			{
+				game->player.dirx = 0;
+				game->player.diry = 0;
+				game->player.planex = 0;
+				game->player.planey = 0;
+				if (game->map.grid[y][x] == 'N')
+				{
+					game->player.diry = -1;
+					game->player.planex = 0.66;
+				}
+				if (game->map.grid[y][x] == 'S')
+				{
+					game->player.diry = 1;
+					game->player.planex = -0.66;
+				}
+				if (game->map.grid[y][x] == 'E')
+				{
+					game->player.dirx = 1;
+					game->player.planey = 0.66;
+				}
+				if (game->map.grid[y][x] == 'W')
+				{
+					game->player.dirx = -1;
+					game->player.planey = -0.66;
+				}
 				if (game->player.posx > 0 && game->player.posy > 0)
 					return (false);
-				game->player.posx = x;
-				game->player.posy = y;
+				game->player.posx = x + 0.5;
+				game->player.posy = y + 0.5;
 			}
 			x++;
 		}

@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/26 19:59:59 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/27 18:16:23 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
+# include "math.h"
 # include "minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <fcntl.h>
@@ -21,6 +22,17 @@
 # include <stddef.h>
 # include <stdlib.h>
 
+# define WIDTH 1920
+# define HEIGHT 1080
+# define MOVE_SPEED 0.03
+# define RUN_SPEED 0.05
+# define W 119
+# define S 115
+# define A 97
+# define D 100
+# define M 109
+# define rot_speed 0.03
+# define SHIFT 65505
 # define NO 0
 # define EA 1
 # define WE 2
@@ -36,22 +48,38 @@ typedef struct s_img
 	char		*filename;
 }				t_img;
 
-typedef struct s_player
-{
-    double      speed;
-    double      posx;
-    double      posy;
-    double      dirx;
-    double      diry;
-    double      planex;
-    double      planey;
-}               t_player;
-
 typedef struct s_pos
 {
 	int			x;
 	int			y;
 }				t_pos;
+
+typedef struct s_player
+{
+	double		speed;
+	double		posx;
+	double		posy;
+	double		dirx;
+	double		diry;
+	double		planex;
+	double		planey;
+}				t_player;
+
+typedef struct s_math
+{
+	double		camerax;
+	double		raydirx;
+	double		raydiry;
+	int			mapx;
+	int			mapy;
+	double		deltadistx;
+	double		deltadisty;
+	int			stepx;
+	int			stepy;
+	double		sidedistx;
+	double		sidedisty;
+	int			orientation;
+}				t_math;
 
 typedef struct s_color
 {
@@ -84,21 +112,57 @@ typedef struct s_game
 	t_pos		pos;
 	t_img		bg_img;
 	t_player	player;
+	t_img		mini_map;
+	t_math		meth;
+	bool		mini;
+	int			*move;
+	int			i;
 	void		*mlx;
 	void		*win;
+
 }				t_game;
 
-bool	parse(t_game *game, char *filename);
-void	print_errors(t_game *game, int error, char *msg, int fd);
-void	free_game(t_game *game);
-void	parse_colors(t_game *game, int fd);
-bool	skip_comma(t_color *colors, int	*i, bool last_check);
-bool	get_colors(t_color *colors);
-bool	check_colors(t_color colors);
-int		color_hexa(t_color color);
-void	parse_map(t_game *game, int fd, char *filename);
-bool	get_map(t_game *game, int fd, char *filename);
-bool	flood_map(t_map *map, int x, int y);
-void	print_info(t_game map);
-
+// generation
+void			map_gen(t_game *game);
+void			math_with_an_e(t_game *game);
+int				draw_minimap(t_game *game);
+void			setup_ray(t_game *game, int x);
+void			dda_prep(t_game *game);
+int				hit_wall(t_game *game);
+double			calc_wall_dist(t_game *game);
+void			wall_size(t_game *game, double walldist, int *sdraw,
+					int *edraw);
+void			artistic_moment(t_game *game, int x, int sdraw, int edraw);
+// clean
+int				closex(t_game *mlx);
+// mlx_adds
+void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
+// events
+int				keys(int keycode, t_game *mlx);
+int				pixel_get(t_img *data, int x, int y);
+int				key_press(int keycode, t_game *game);
+int				key_release(int keycode, t_game *game);
+int				move(t_game *game);
+void			move_foward(t_game *game, double speed);
+void			move_back(t_game *game, double speed);
+void			move_left(t_game *game, double speed);
+void			move_right(t_game *game, double speed);
+void			look_right(t_game *game);
+// drawing map
+void			draw_wall(t_game *game, int cx, int cy);
+void			draw_floor(t_game *game, int cx, int cy);
+int				draw_minimap(t_game *game);
+//parse
+bool			parse(t_game *game, char *filename);
+void			print_errors(t_game *game, int error, char *msg, int fd);
+void			free_game(t_game *game);
+void			parse_colors(t_game *game, int fd);
+bool			skip_comma(t_color *colors, int *i, bool last_check);
+bool			get_colors(t_color *colors);
+bool			check_colors(t_color colors);
+int				color_hexa(t_color color);
+void			parse_map(t_game *game, int fd, char *filename);
+bool			get_map(t_game *game, int fd, char *filename);
+bool			flood_map(t_map *map, int x, int y);
+void			print_info(t_game game);
 #endif

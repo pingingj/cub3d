@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:49 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/26 13:46:55 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:06:39 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,13 @@ void				ft_putnbr_fd(int n, int fd);
 
 long				ft_atol(char *num);
 
+void				freetrix(char **matrix);
+
 char				**ft_matrix_dup(char **new_matrix, char **src);
 
 void				ft_sort_matrix(char **matrix);
+
+void				ft_matrix_print(char **matrix);
 
 typedef struct s_list
 {

@@ -5,12 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 15:12:18 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/26 19:31:54 by dgarcez-         ###   ########.fr       */
+/*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
+/*   Updated: 2025/08/27 18:20:56 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
+
+int	closex(t_game *mlx)
+{
+	ft_printf("\n\nGAME CLOSING\n");
+	mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
+	free(mlx->move);
+	mlx_destroy_image(mlx->mlx, mlx->mini_map.img);
+	mlx_destroy_window(mlx->mlx, mlx->win);
+	mlx_destroy_display(mlx->mlx);
+	free(mlx->mlx);
+	free_game(mlx);
+	exit(0);
+}
 
 void	print_info(t_game game)
 {
