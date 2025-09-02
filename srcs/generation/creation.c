@@ -69,6 +69,10 @@ int add_light(int color,double intensity)
 	then i use the ambient that is how dark the defualt world is to calculate using how close to the
 	center of the bam and how close to a wall how dark the pixel needs to be, aka intenisty then i jsut multyply
 	that on the mypixelput color*/
+	/*circ intensity exp is all squared for a bigger fade,
+	fist intenisty is becaus eif the same will give 0 os it will stop the ligth beam
+	the final inteisty math is ambient because thats the default ligth wer only adding
+	the other part in brackets its to scale to the max is one*/
 double flashlight(int x,int y, t_game *game)
 {
 	double intensity;
@@ -83,14 +87,14 @@ double flashlight(int x,int y, t_game *game)
     dx = x - WIDTH / 2;
     dy = y - HEIGHT / 2;
     softness = 200.0;
-    max_dist = 7.0; // Controls how far the beam reaches
-    dist = sqrt(dx * dx + dy * dy);
-    circ_intensity = exp(-((dist * dist) / (2 * softness * softness)));
+    max_dist = 7.0;
+    dist = (dx * dx + dy * dy);
+    circ_intensity = exp(-((dist) / (2 * softness * softness)));
     dist_intensity = 1.0 - (game->walldist / max_dist);
     if (dist_intensity < 0.0)
 		dist_intensity = 0.0;
     intensity = AMBIENT + (1.0 - AMBIENT) * circ_intensity * dist_intensity;
-	 if (intensity < AMBIENT)
+	if (intensity < AMBIENT)
 		intensity = AMBIENT;
     if (intensity > 1.0)
 		intensity = 1.0;
@@ -127,7 +131,7 @@ void artistic_moment(t_game *game, int x, int sdraw, int edraw)
         else if (y >= sdraw && y <= edraw && game->meth.door == true)
             my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
         else
-            my_mlx_pixel_put(&game->bg_img, x, y, add_light(game->ass.floor.hexa, AMBIENT + 0.07));
+            my_mlx_pixel_put(&game->bg_img, x, y, add_light(game->ass.floor.hexa,intensity));
         y++;
     }
 }
