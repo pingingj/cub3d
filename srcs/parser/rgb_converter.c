@@ -12,7 +12,7 @@
 
 #include "../../incs/cub3d.h"
 
-static int	convert_dec(char *hexa)
+int	convert_dec(char *hexa)
 {
 	int	digit;
 	int	value;
@@ -33,7 +33,7 @@ static int	convert_dec(char *hexa)
 	return (value);
 }
 
-static void	convert_hexa(int color, char **result, char *base, int *i)
+void	convert_hexa(int color, char **result, char *base, int *i)
 {
 	int	remainder;
 

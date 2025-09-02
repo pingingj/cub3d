@@ -22,10 +22,11 @@
 # include <stddef.h>
 # include <stdlib.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
-# define MOVE_SPEED 0.03
-# define RUN_SPEED 0.05
+# define WIDTH 1440
+# define HEIGHT 900
+# define AMBIENT 0.07
+# define MOVE_SPEED 0.10
+# define RUN_SPEED 0.17
 # define W 119
 # define S 115
 # define A 97
@@ -36,7 +37,7 @@
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
 # define ANGLE_NUMBERS 8
-# define rot_speed 0.04
+# define rot_speed 0.12
 # define SHIFT 65505
 # define NO 0
 # define EA 1
@@ -121,6 +122,8 @@ typedef struct s_game
 	t_player	player;
 	t_img		mini_map;
 	t_math		meth;
+	double 		light;
+	double 		walldist;
 	int			*move;
 	int			i;
 	void		*mlx;
@@ -174,4 +177,6 @@ void			parse_map(t_game *game, int fd, char *filename);
 bool			get_map(t_game *game, int fd, char *filename);
 bool			flood_map(t_map *map, int x, int y);
 void			print_info(t_game game);
+int				convert_dec(char *hexa);
+void			convert_hexa(int color, char **result, char *base, int *i);
 #endif

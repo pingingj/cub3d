@@ -36,24 +36,8 @@ void	setup_ray(t_game *game, int x)
 	game->meth.mapy = (int)game->player.posy;
 }
 
-void lanter(t_game *game)
-{
-	int dot;
-	int half_angle;
-	int cos_half;
-	int ang_intesity;
-
-	dot = game->player.dirx * game->meth.deltadistx + game->player.diry * game->meth.deltadisty;
-	half_angle = (0.30 /2);
-	cos_half = cos(half_angle);
-	if(dot >= cos_half)
-		ang_intesity = (dot -cos_half)/(1.0 - cos_half);
-	else
-		ang_intesity = 0;
-}
 void	math_with_an_e(t_game *game)
 {
-	double	walldist;
 	int		sdraw;
 	int		edraw;
 	int		i;
@@ -67,9 +51,8 @@ void	math_with_an_e(t_game *game)
 		game->meth.orientation = hit_wall(game);
 		if(game->meth.door == true)
 			game->meth.looking_door = true;
-		walldist = calc_wall_dist(game);
-		wall_size(game, walldist, &sdraw, &edraw);
-		lantern();
+		game->walldist = calc_wall_dist(game);
+		wall_size(game, game->walldist, &sdraw, &edraw);
 		artistic_moment(game, i, sdraw, edraw);
 		i++;
 	}
