@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/28 13:28:33 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/02 15:27:03 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	main(int argc, char **argv)
 		mlx_hook(game.win, 17, 0, closex, &game);
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 		mlx_hook(game.win, 3, 1L << 1, key_release, &game);
-		// mlx_hook(game.win, 6, 1L<<6, mouse, &game);
+		mlx_hook(game.win, 6, 1L<<6, mouse, &game);
 		mlx_loop_hook(game.mlx, move, &game);
-		// mlx_mouse_hide(game.mlx, game.win);
+		mlx_mouse_hide(game.mlx, game.win);
 		mlx_loop(game.mlx);
 		free_game(&game);
 		return (1);
