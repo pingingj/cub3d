@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/28 14:54:01 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:39:25 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # include <stddef.h>
 # include <stdlib.h>
 
-# define WIDTH 1440
+# define WIDTH 1400
 # define HEIGHT 900
-# define AMBIENT 0.07
+# define AMBIENT 0.05
 # define MOVE_SPEED 0.10
 # define RUN_SPEED 0.17
 # define W 119
