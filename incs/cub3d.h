@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/03 14:39:25 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:35:49 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # include <stddef.h>
 # include <stdlib.h>
 
-# define WIDTH 1400
-# define HEIGHT 900
-# define AMBIENT 0.05
+# define WIDTH 1920
+# define HEIGHT 1080
+# define AMBIENT 0.03
 # define MOVE_SPEED 0.10
 # define RUN_SPEED 0.17
 # define W 119

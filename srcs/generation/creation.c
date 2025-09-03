@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/03 14:41:18 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:38:50 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ double	flashlight(int x, int y, t_game *game)
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = 200.0;
-	max_dist = 200.0;
+	softness = 300.0;
+	max_dist = 7.0;
 	dist = (dx * dx + dy * dy);
 	circ_intensity = exp(-((dist) / (2 * softness * softness)));
     // circ_intensity = 1;
