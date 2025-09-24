@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/24 18:31:10 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/24 18:52:23 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,7 @@ void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 	add = 0;
 	if(game->player.sneak != 0)
 		add = game->player.sneak;
-	printf("add before = %d\n",add);
 	add +=game->player.look;
-	printf("look = %d\n",game->player.look);
-	printf("add = %d\n",add);
 	(void)game;
 	if (walldist <= 0.000001)
 		walldist = 0.000001;
