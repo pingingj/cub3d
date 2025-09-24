@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/03 18:35:49 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/09/24 17:45:03 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
 # define ANGLE_NUMBERS 8
-# define rot_speed 0.12
+# define rot_speed 0.10
 # define SHIFT 65505
 # define NO 0
 # define EA 1
