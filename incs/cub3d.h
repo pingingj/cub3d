@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/24 17:45:03 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/24 18:50:22 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@
 # include <stddef.h>
 # include <stdlib.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1440
+# define HEIGHT 800
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.10
 # define RUN_SPEED 0.17
+# define CTRL 65507
+# define SPACE 32
 # define W 119
 # define S 115
 # define A 97
@@ -34,10 +36,12 @@
 # define F 102
 # define PI 3.14159265358979323846
 # define RADIUS 0.1
-# define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
+# define ARROW_UP 65362
+# define ARROW_RIGHT 65363
+# define ARROW_DOWN 65364
 # define ANGLE_NUMBERS 8
-# define rot_speed 0.10
+# define rot_speed 0.09
 # define SHIFT 65505
 # define NO 0
 # define EA 1
@@ -69,6 +73,8 @@ typedef struct s_player
 	double		diry;
 	double		planex;
 	double		planey;
+	int			sneak;
+	int			look;
 }				t_player;
 
 typedef struct s_math
@@ -122,8 +128,8 @@ typedef struct s_game
 	t_player	player;
 	t_img		mini_map;
 	t_math		meth;
-	double 		light;
-	double 		walldist;
+	double		light;
+	double		walldist;
 	int			*move;
 	int			i;
 	void		*mlx;

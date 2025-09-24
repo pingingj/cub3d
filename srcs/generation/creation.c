@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/24 17:43:01 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/24 18:48:27 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ double	flashlight(int x, int y, t_game *game)
 	dist = (dx * dx + dy * dy);
 	circ_intensity = 1.0 - (dist / (2 * softness * softness));
 	dist_intensity = 1.0 - (game->walldist / max_dist);
-    // circ_intensity = 1;
 	dist_intensity = 1.0 - (game->walldist / max_dist );
 	if (dist_intensity < 0.0)
 		dist_intensity = 0.0;
@@ -132,7 +131,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	while (y < HEIGHT)
 	{
 		intensity = flashlight(x, y, game);
-        // intensity = 1;
+		// intensity = 1;
 		if (y < sdraw)
 			my_mlx_pixel_put(&game->bg_img, x, y,
 				add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));
@@ -149,7 +148,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 
 void	map_gen(t_game *game)
 {
-	game->move = ft_calloc(7, sizeof(int));
+	game->move = ft_calloc(9, sizeof(int));
 	if (!game->move)
 		exit(1);
 	printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
