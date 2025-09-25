@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/24 19:06:49 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:22:21 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 # define AMBIENT 0.03
-# define MOVE_SPEED 0.10
-# define RUN_SPEED 0.17
+# define MOVE_SPEED 0.12
+# define RUN_SPEED 0.19
 # define CTRL 65507
 # define SPACE 32
 # define W 119

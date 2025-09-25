@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/24 19:06:09 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:46:26 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	add_light(int color, double intensity)
 fist intenisty is becaus eif the same will give 0 os it will stop the ligth beam
 the final inteisty math is ambient because thats the default ligth wer only adding
 the other part in brackets its to scale to the max is one*/
-double	flashlight(int x, int y, t_game *game)
+double	flashlight(int x, int y, t_game *game, bool is_wall)
 {
 	double	intensity;
 	double	dist_intensity;
@@ -89,16 +89,34 @@ double	flashlight(int x, int y, t_game *game)
 	double	dx;
 	double	dy;
 	double	dist;
+	double	screen_dist;
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
 	softness = 300.0;
-	max_dist = 15.0;
+	// Circular flashlight falloff
 	dist = (dx * dx + dy * dy);
 	circ_intensity = 1.0 - (dist / (2 * softness * softness));
-	dist_intensity = 1.0 - (game->walldist / max_dist);
-	if (dist_intensity < 0.0)
-		dist_intensity = 0.0;
+	if (circ_intensity < 0.0)
+		circ_intensity = 0.0;
+	if (is_wall)
+	{
+		max_dist = 15.0;
+		dist_intensity = 1.0 - (game->walldist / max_dist);
+		if (dist_intensity < 0.0)
+			dist_intensity = 0.0;
+	}
+	else
+	{
+		screen_dist = abs(y - HEIGHT / 2);
+		max_dist = 40 + game->player.look;
+		if(max_dist < 0)
+			dist_intensity = (1.0 - (2/ max_dist));
+		else
+			dist_intensity = -(1.0 - (screen_dist / max_dist));
+	}
+	// if(dist_intensity > dy + 900)
+	// 	dist_intensity = AMBIENT;
 	intensity = AMBIENT + (1.0 - AMBIENT) * circ_intensity * dist_intensity;
 	if (intensity < AMBIENT)
 		intensity = AMBIENT;
@@ -106,6 +124,7 @@ double	flashlight(int x, int y, t_game *game)
 		intensity = 1.0;
 	return (intensity);
 }
+
 /*->here now that i have the the heigth of the wall,
 	i start drawing from above,so unitl
    sdraw i draw the ceiling,
@@ -121,7 +140,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	if (game->meth.orientation == 0)
 		color = 0x0000FF;
 	else
-		color = 0x0000DF;
+		color = 0xFFFFFF;
 	if (game->meth.orientation == 0)
 		door = 0x964B00;
 	else
@@ -129,7 +148,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	y = 0;
 	while (y < HEIGHT)
 	{
-		intensity = flashlight(x, y, game);
+		intensity = flashlight(x, y, game, true);
 		// intensity = 1;
 		if (y < sdraw)
 			my_mlx_pixel_put(&game->bg_img, x, y,
@@ -139,8 +158,11 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
 			my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
 		else
+		{
+			intensity = flashlight(x, y, game, false);
 			my_mlx_pixel_put(&game->bg_img, x, y,
 				add_light(game->ass.floor.hexa, intensity));
+		}
 		y++;
 	}
 }
