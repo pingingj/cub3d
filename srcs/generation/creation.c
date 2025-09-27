@@ -90,10 +90,13 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	double	dy;
 	double	dist;
 	double	screen_dist;
+	// static double old_soft;
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
 	softness = 300.0;
+	if(game->player.look < 0)
+		softness = 200;
 	// Circular flashlight falloff
 	dist = (dx * dx + dy * dy);
 	circ_intensity = 1.0 - (dist / (2 * softness * softness));
@@ -109,14 +112,15 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	else
 	{
 		screen_dist = abs(y - HEIGHT / 2);
-		max_dist = 40 + game->player.look;
-		if(max_dist < 0)
+		max_dist = 35 + game->player.look;
+		if(max_dist <= 0)
 			dist_intensity = (1.0 - (2/ max_dist));
 		else
 			dist_intensity = -(1.0 - (screen_dist / max_dist));
 	}
 	// if(dist_intensity > dy + 900)
 	// 	dist_intensity = AMBIENT;
+	// old_soft = softness;
 	intensity = AMBIENT + (1.0 - AMBIENT) * circ_intensity * dist_intensity;
 	if (intensity < AMBIENT)
 		intensity = AMBIENT;
@@ -140,7 +144,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	if (game->meth.orientation == 0)
 		color = 0x0000FF;
 	else
-		color = 0xFFFFFF;
+		color = 0x0000FA;
 	if (game->meth.orientation == 0)
 		door = 0x964B00;
 	else
