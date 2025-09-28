@@ -68,7 +68,7 @@ void	look_left(t_game *game)
 
 int	key_press(int keycode, t_game *game)
 {
-	printf("key code = %d\n", keycode);
+	// printf("key code = %d\n", keycode);
 	if (keycode == 65307)
 		closex(game);
 	if (keycode == W)

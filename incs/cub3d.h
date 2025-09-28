@@ -134,6 +134,7 @@ typedef struct s_game
 	int			i;
 	void		*mlx;
 	void		*win;
+	int edraw;
 
 }				t_game;
 

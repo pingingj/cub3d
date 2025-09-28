@@ -90,16 +90,15 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	double	dy;
 	double	dist;
 	double	screen_dist;
-	// static double old_soft;
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = 300.0;
-	if(game->player.look < 0)
-		softness = 200;
-	// Circular flashlight falloff
-	dist = (dx * dx + dy * dy);
-	circ_intensity = 1.0 - (dist / (2 * softness * softness));
+
+	softness = 300.0 + game->player.look / 2.0;
+	if (softness < 80.0)
+		softness = 80.0;
+	dist = dx * dx + dy * dy;
+	circ_intensity = 1.0 - (dist / (2.0 * softness * softness));
 	if (circ_intensity < 0.0)
 		circ_intensity = 0.0;
 	if (is_wall)
@@ -111,22 +110,34 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	}
 	else
 	{
-		screen_dist = abs(y - HEIGHT / 2);
-		max_dist = 35 + game->player.look;
-		if(max_dist <= 0)
-			dist_intensity = (1.0 - (2/ max_dist));
+		if (game->player.look < 0)
+		{
+			double horizon = (double)HEIGHT / 2.0 + game->player.look;
+			if (horizon < -HEIGHT)
+				horizon = -HEIGHT;
+			if (horizon > HEIGHT * 2)
+				horizon = HEIGHT * 2;
+			double d = (double)y - horizon;
+			if (d < 0.0)
+				d = 0.0;
+			max_dist = 35.0;
+			dist_intensity = -(1.0 - (d / max_dist));
+			if (dist_intensity < 0.0)
+				dist_intensity = 0.0;
+		}
 		else
+		{
+			screen_dist = abs(y - HEIGHT / 2);
+			max_dist = 35.0 + game->player.look;
 			dist_intensity = -(1.0 - (screen_dist / max_dist));
+		}
 	}
-	// if(dist_intensity > dy + 900)
-	// 	dist_intensity = AMBIENT;
-	// old_soft = softness;
 	intensity = AMBIENT + (1.0 - AMBIENT) * circ_intensity * dist_intensity;
 	if (intensity < AMBIENT)
 		intensity = AMBIENT;
 	if (intensity > 1.0)
 		intensity = 1.0;
-	return (intensity);
+	return intensity;
 }
 
 /*->here now that i have the the heigth of the wall,
@@ -153,6 +164,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	while (y < HEIGHT)
 	{
 		intensity = flashlight(x, y, game, true);
+		game->edraw = edraw;
 		// intensity = 1;
 		if (y < sdraw)
 			my_mlx_pixel_put(&game->bg_img, x, y,
