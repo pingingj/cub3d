@@ -93,7 +93,6 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-
 	softness = 300.0 + game->player.look / 2.0;
 	if (softness < 80.0)
 		softness = 80.0;

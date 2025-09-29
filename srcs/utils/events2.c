@@ -87,16 +87,8 @@ int	key_press(int keycode, t_game *game)
 		game->move[6] = 1;
 	if (keycode == ARROW_DOWN)
 		game->move[7] = 1;
-	if (keycode == SPACE)
-		game->move[8] = 1;
 	if (keycode == SHIFT && game->player.sneak == 0)
 		game->player.speed = RUN_SPEED;
-	if (keycode == CTRL)
-	{
-		game->player.speed = MOVE_SPEED / 2;
-		game->player.sneak = -100;
-		create_frame(game);
-	}
 	if (keycode == F)
 		open_door(game, game->player.posx + game->player.dirx * MOVE_SPEED,
 			game->player.posy + game->player.diry * MOVE_SPEED);
@@ -121,16 +113,8 @@ int	key_release(int keycode, t_game *game)
 		game->move[6] = 0;
 	if (keycode == ARROW_DOWN)
 		game->move[7] = 0;
-	if (keycode == SPACE)
-		game->move[8] = 0;
 	if (keycode == SHIFT && game->player.sneak == 0)
 		game->player.speed = MOVE_SPEED;
-	if (keycode == CTRL)
-	{
-		game->player.speed = MOVE_SPEED;
-		game->player.sneak = 0;
-		create_frame(game);
-	}
 	return (0);
 }
 int	jump(t_game *game)
@@ -180,8 +164,6 @@ int	move(t_game *game)
 		if(game->player.look < -300)
 			game->player.look +=20;
 	}
-	if (game->move[8] == 1)
-		jump(game);
 	if (game->move[0] == 1 || game->move[1] == 1 || game->move[2] == 1
 		|| game->move[3] == 1 || game->move[4] == 1 || game->move[5] == 1
 		|| game->move[6] == 1 || game->move[7] == 1 || game->move[8] == 1)
