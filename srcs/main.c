@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/27 18:16:03 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:06:41 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(int argc, char **argv)
 	{
 		if (parse(&game, argv[1]) == false)
 			return (1);
-		game.mlx = mlx_init();
 		print_info(game);
+		game.mlx = mlx_init();
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);

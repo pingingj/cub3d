@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/28 16:10:15 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:10:47 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # define MINI_CENTER_X 150
 # define MINI_CENTER_Y 150
 # define TILE_SIZE 60
+# define MINIMAP_SIZE 300
+# define MINIMAP_RADIUS 2
+# define MINIMAP_TILES 5
+# define HALF (MINIMAP_TILES / 2)
 
 //keys
 # define W 119
@@ -170,7 +174,7 @@ void			look_right(t_game *game);
 void			draw_wall(t_game *game, int cx, int cy);
 void			draw_floor(t_game *game, int cx, int cy);
 int				draw_minimap(t_game *game);
-//parse
+// parse
 bool			parse(t_game *game, char *filename);
 void			print_errors(t_game *game, int error, char *msg, int fd);
 void			free_game(t_game *game);
