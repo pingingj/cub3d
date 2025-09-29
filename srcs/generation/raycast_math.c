@@ -123,9 +123,8 @@ void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 	int add;
 
 	add = 0;
-	if(game->player.sneak != 0)
-		add = game->player.sneak;
-	add +=game->player.look;
+
+	add +=game->player.look+game->bob;
 	(void)game;
 	if (walldist <= 0.000001)
 		walldist = 0.000001;

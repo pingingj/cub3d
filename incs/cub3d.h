@@ -73,7 +73,6 @@ typedef struct s_player
 	double		diry;
 	double		planex;
 	double		planey;
-	int			sneak;
 	int			look;
 }				t_player;
 
@@ -134,8 +133,7 @@ typedef struct s_game
 	int			i;
 	void		*mlx;
 	void		*win;
-	int edraw;
-
+	int 		bob;
 }				t_game;
 
 // generation

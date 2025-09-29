@@ -163,7 +163,6 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	while (y < HEIGHT)
 	{
 		intensity = flashlight(x, y, game, true);
-		game->edraw = edraw;
 		// intensity = 1;
 		if (y < sdraw)
 			my_mlx_pixel_put(&game->bg_img, x, y,
@@ -184,7 +183,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 
 void	map_gen(t_game *game)
 {
-	game->move = ft_calloc(10, sizeof(int));
+	game->move = ft_calloc(9, sizeof(int));
 	if (!game->move)
 		exit(1);
 	printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
