@@ -90,6 +90,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	double	dy;
 	double	dist;
 	double	screen_dist;
+	double horizon;
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
@@ -102,7 +103,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 		circ_intensity = 0.0;
 	if (is_wall)
 	{
-		max_dist = 15.0;
+		max_dist = 15.0-game->bob/10;
 		dist_intensity = 1.0 - (game->walldist / max_dist);
 		if (dist_intensity < 0.0)
 			dist_intensity = 0.0;
@@ -111,16 +112,16 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	{
 		if (game->player.look < 0)
 		{
-			double horizon = (double)HEIGHT / 2.0 + game->player.look;
+			horizon = (double)HEIGHT / 2.0 + game->player.look - game->bob;
 			if (horizon < -HEIGHT)
 				horizon = -HEIGHT;
 			if (horizon > HEIGHT * 2)
 				horizon = HEIGHT * 2;
-			double d = (double)y - horizon;
-			if (d < 0.0)
-				d = 0.0;
+			screen_dist = (double)y - horizon;
+			if (screen_dist < 0.0)
+				screen_dist = 0.0;
 			max_dist = 35.0;
-			dist_intensity = -(1.0 - (d / max_dist));
+			dist_intensity = -(1.0 - (screen_dist / max_dist));
 			if (dist_intensity < 0.0)
 				dist_intensity = 0.0;
 		}

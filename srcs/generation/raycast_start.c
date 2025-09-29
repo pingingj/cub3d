@@ -65,14 +65,14 @@ void	create_frame(t_game *game)
 
 	if (bob_flag == 0)
 	{
-		game->bob += 3;
-		if(game->bob > 9)
+		game->bob += 2;
+		if(game->bob > 6)
 			bob_flag = 1;
 	}
 	else
 	{
-		game->bob -= 3;
-		if(game->bob < -9)
+		game->bob -= 2;
+		if(game->bob < -6)
 			bob_flag = 0;
 	}
 	math_with_an_e(game);
