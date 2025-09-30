@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/25 15:46:26 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/30 10:50:11 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,15 +163,19 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	y = 0;
 	while (y < HEIGHT)
 	{
-		intensity = flashlight(x, y, game, true);
-		// intensity = 1;
 		if (y < sdraw)
 			my_mlx_pixel_put(&game->bg_img, x, y,
 				add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));
 		else if (y >= sdraw && y <= edraw && game->meth.door == false)
+		{
+			intensity = flashlight(x, y, game, true);
 			my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
+		}
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
+		{
+			intensity = flashlight(x, y, game, true);
 			my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
+		}
 		else
 		{
 			intensity = flashlight(x, y, game, false);
