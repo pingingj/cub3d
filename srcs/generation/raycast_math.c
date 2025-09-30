@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 16:51:30 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/25 10:59:42 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	hit_wall(t_game *game)
 
 	hit = 0;
 	side = 0;
+	game->meth.door = false;
 	while (hit == 0)
 	{
 		if (game->meth.sidedistx < game->meth.sidedisty)
@@ -95,6 +96,13 @@ int	hit_wall(t_game *game)
 		}
 		if (game->map.grid[game->meth.mapy][game->meth.mapx] == '1')
 			hit = 1;
+		else if (game->map.grid[game->meth.mapy][game->meth.mapx] == 'd')
+		{
+			game->meth.door = true;
+			hit = 1;
+		}
+		if(game->map.grid[game->meth.mapy][game->meth.mapx] == 'D')
+			game->meth.looking_door = true;
 	}
 	return (side);
 }
@@ -112,15 +120,19 @@ double	calc_wall_dist(t_game *game)
 void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 {
 	int	line_heigth;
+	int add;
 
+	add = 0;
+
+	add +=game->player.look+game->bob;
 	(void)game;
 	if (walldist <= 0.000001)
 		walldist = 0.000001;
 	line_heigth = (int)(HEIGHT / walldist);
-	(*sdraw) = HEIGHT / 2 - line_heigth / 2;
+	(*sdraw) = HEIGHT / 2 - line_heigth / 2 + add;
 	if ((*sdraw) < 0)
 		(*sdraw) = 0;
-	(*edraw) = HEIGHT / 2 + line_heigth / 2;
+	(*edraw) = HEIGHT / 2 + line_heigth / 2 + add;
 	if ((*edraw) < 0)
 		(*edraw) = 0;
 }

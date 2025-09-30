@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/27 18:16:23 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:22:21 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,25 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
-# define MOVE_SPEED 0.03
-# define RUN_SPEED 0.05
+# define AMBIENT 0.03
+# define MOVE_SPEED 0.12
+# define RUN_SPEED 0.19
+# define CTRL 65507
+# define SPACE 32
 # define W 119
 # define S 115
 # define A 97
 # define D 100
+# define F 102
+# define PI 3.14159265358979323846
+# define RADIUS 0.1
+# define ARROW_LEFT 65361
+# define ARROW_UP 65362
+# define ARROW_RIGHT 65363
+# define ARROW_DOWN 65364
+# define ANGLE_NUMBERS 8
+# define rot_speed 0.09
 # define M 109
-# define rot_speed 0.03
 # define SHIFT 65505
 # define NO 0
 # define EA 1
@@ -63,6 +74,7 @@ typedef struct s_player
 	double		diry;
 	double		planex;
 	double		planey;
+	int			look;
 }				t_player;
 
 typedef struct s_math
@@ -79,6 +91,8 @@ typedef struct s_math
 	double		sidedistx;
 	double		sidedisty;
 	int			orientation;
+	bool		door;
+	bool		looking_door;
 }				t_math;
 
 typedef struct s_color
@@ -114,12 +128,13 @@ typedef struct s_game
 	t_player	player;
 	t_img		mini_map;
 	t_math		meth;
-	bool		mini;
+	double		light;
+	double		walldist;
 	int			*move;
 	int			i;
 	void		*mlx;
 	void		*win;
-
+	int 		bob;
 }				t_game;
 
 // generation
@@ -132,6 +147,7 @@ int				hit_wall(t_game *game);
 double			calc_wall_dist(t_game *game);
 void			wall_size(t_game *game, double walldist, int *sdraw,
 					int *edraw);
+void			create_frame(t_game *game);
 void			artistic_moment(t_game *game, int x, int sdraw, int edraw);
 // clean
 int				closex(t_game *mlx);
@@ -148,11 +164,13 @@ void			move_back(t_game *game, double speed);
 void			move_left(t_game *game, double speed);
 void			move_right(t_game *game, double speed);
 void			look_right(t_game *game);
+void			look_left(t_game *game);
+bool			hit_box(t_game *game, double x, double y);
 // drawing map
 void			draw_wall(t_game *game, int cx, int cy);
 void			draw_floor(t_game *game, int cx, int cy);
 int				draw_minimap(t_game *game);
-//parse
+// parse
 bool			parse(t_game *game, char *filename);
 void			print_errors(t_game *game, int error, char *msg, int fd);
 void			free_game(t_game *game);
@@ -165,4 +183,6 @@ void			parse_map(t_game *game, int fd, char *filename);
 bool			get_map(t_game *game, int fd, char *filename);
 bool			flood_map(t_map *map, int x, int y);
 void			print_info(t_game game);
+int				convert_dec(char *hexa);
+void			convert_hexa(int color, char **result, char *base, int *i);
 #endif

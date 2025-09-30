@@ -6,12 +6,33 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 16:51:15 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/24 18:24:50 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
+
+bool	hit_box(t_game *game,double x,double y)
+{
+	int i;
+	double new_x;
+	double new_y;
+	double angle;
+
+	i = 0;
+	while(i < ANGLE_NUMBERS)
+	{
+		angle = (2 * PI/ANGLE_NUMBERS) * i;
+		new_x = x + cos(angle) * RADIUS;
+		new_y = y + sin(angle) * RADIUS;
+		if(game->map.grid[(int)new_y][(int)new_x] == '1' || game->map.grid[(int)new_y][(int)new_x] == 'd')
+			return (false);
+		i++;
+	}
+	// printf("true\n");
+	return(true);
+}
 void	move_foward(t_game *game, double speed)
 {
 	double	new_x;
@@ -19,11 +40,17 @@ void	move_foward(t_game *game, double speed)
 
 	new_x = game->player.posx + game->player.dirx * speed;
 	new_y = game->player.posy + game->player.diry * speed;
-	if (game->map.grid[(int)new_y][(int)new_x] == 'o')
-	{
+
+	if(hit_box(game,new_x,game->player.posy) == true)
 		game->player.posx = new_x;
+	if(hit_box(game,game->player.posx,new_y) == true)
 		game->player.posy = new_y;
-	}
+		
+	// if (game->map.grid[(int)new_y][(int)new_x] == 'o')
+	// {
+	// 	game->player.posx = new_x;
+	// 	game->player.posy = new_y;
+	// }
 }
 
 void	move_back(t_game *game, double speed)
@@ -33,11 +60,10 @@ void	move_back(t_game *game, double speed)
 
 	new_x = game->player.posx - game->player.dirx * speed;
 	new_y = game->player.posy - game->player.diry * speed;
-	if (game->map.grid[(int)new_y][(int)new_x] == 'o')
-	{
+	if(hit_box(game,new_x,game->player.posy) == true)
 		game->player.posx = new_x;
+	if(hit_box(game,game->player.posx,new_y) == true)
 		game->player.posy = new_y;
-	}
 }
 
 void	move_left(t_game *game, double speed)
@@ -47,11 +73,10 @@ void	move_left(t_game *game, double speed)
 
 	new_x = game->player.posx - game->player.planex * speed;
 	new_y = game->player.posy - game->player.planey * speed;
-	if (game->map.grid[(int)new_y][(int)new_x] == 'o')
-	{
+	if(hit_box(game,new_x,game->player.posy) == true)
 		game->player.posx = new_x;
+	if(hit_box(game,game->player.posx,new_y) == true)
 		game->player.posy = new_y;
-	}
 }
 
 void	move_right(t_game *game, double speed)
@@ -61,11 +86,10 @@ void	move_right(t_game *game, double speed)
 
 	new_x = game->player.posx + game->player.planex * speed;
 	new_y = game->player.posy + game->player.planey * speed;
-	if (game->map.grid[(int)new_y][(int)new_x] == 'o')
-	{
+	if(hit_box(game,new_x,game->player.posy) == true)
 		game->player.posx = new_x;
+	if(hit_box(game,game->player.posx,new_y) == true)
 		game->player.posy = new_y;
-	}
 }
 
 /*to lookj in both direction i use a formula that rotates vectors,
