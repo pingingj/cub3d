@@ -17,12 +17,12 @@ static void	background_gen(t_game *game)
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "NEETs");
 	game->bg_img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
-			&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
-			&game->bg_img.endian);
+		&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
+		&game->bg_img.endian);
 	game->mini_map.img = mlx_new_image(game->mlx, 300, 300);
 	game->mini_map.addr = mlx_get_data_addr(game->mini_map.img,
-			&game->mini_map.bits_per_pixel, &game->mini_map.line_length,
-			&game->mini_map.endian);
+		&game->mini_map.bits_per_pixel, &game->mini_map.line_length,
+		&game->mini_map.endian);
 }
 
 // camera plane is the fov

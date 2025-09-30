@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 18:20:56 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:08:42 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int	closex(t_game *mlx)
 void	print_info(t_game game)
 {
 	int	i;
+	int	j;
 
+	j = 0;
 	i = 0;
 	printf("NO = %s\n", game.ass.walls[NO].filename);
 	printf("EA = %s\n", game.ass.walls[EA].filename);
@@ -47,12 +49,22 @@ void	print_info(t_game game)
 	printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
 	while (i < game.map.pos.y)
 	{
-		ft_printf("%s", game.map.grid[i]);
+		j = 0;
+		while(j <= game.map.pos.x)
+		{
+			if (game.map.grid[i][j] == ' ')
+				ft_printf("v");
+			else if (game.map.grid[i][j] == '1')
+				ft_printf("1");
+			else if (game.map.grid[i][j] == 'o')
+				ft_printf("o");
+			else if (game.map.grid[i][j] == '\0')
+				ft_printf("\n");
+			j++;
+		}
 		i++;
 	}
-	// ft_printf("PLAYER positions X = %d, Y = %d\n", map.player.pos.x,
-	// 	map.player.pos.y);
-	// ft_printf("COLLETIBLE AMOUNT = %d\n", map.c_amount);
+	// ft_printf("COLLETIBLE AMOUNT = %d\n", game.c_amount);
 	// ft_printf("EXIT position: X = %d, Y = %d\n",
 	// 	map.exit.pos.x, map.exit.pos.y);
 }
@@ -76,9 +88,14 @@ void	free_game(t_game *game)
 	}
 }
 
+/// @brief Printing errors of program
+/// @param game struct to free
+/// @param error if error = 1 it will free game struct
+/// @param msg msg to print
+/// @param fd closes open fd
 void	print_errors(t_game *game, int error, char *msg, int fd)
 {
-	if (fd > 0)
+	if (fd > 2)
 		close(fd);
 	ft_dprintf(2, "Error\n%s\n", msg);
 	if (error == 1)

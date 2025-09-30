@@ -22,6 +22,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 
+//pixels
 # define WIDTH 1920
 # define HEIGHT 1080
 # define AMBIENT 0.03
@@ -29,6 +30,15 @@
 # define RUN_SPEED 0.19
 # define CTRL 65507
 # define SPACE 32
+# define MINI_CENTER_X 150
+# define MINI_CENTER_Y 150
+# define TILE_SIZE 60
+# define MINIMAP_SIZE 300
+# define MINIMAP_RADIUS 2
+# define MINIMAP_TILES 5
+# define HALF (MINIMAP_TILES / 2)
+
+//keys
 # define W 119
 # define S 115
 # define A 97
@@ -43,7 +53,22 @@
 # define ANGLE_NUMBERS 8
 # define rot_speed 0.09
 # define M 109
+# define F 102
 # define SHIFT 65505
+# define ARROW_RIGHT 65363
+# define ARROW_LEFT 65361
+
+//movement
+# define MOVE_SPEED 0.03
+# define RUN_SPEED 0.05
+# define rot_speed 0.04
+
+//circle bullshit
+# define PI 3.14159265358979323846
+# define RADIUS 5
+# define ANGLE_NUMBERS 50
+
+// parser
 # define NO 0
 # define EA 1
 # define WE 2
