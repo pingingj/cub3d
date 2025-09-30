@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_minimap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:31:40 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 16:25:00 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/08/28 12:51:00 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	draw_wall(t_game *game, int cx, int cy)
 		while (x < 60)
 		{
 			my_mlx_pixel_put(&game->mini_map, cx * 60 + x - 60, cy * 60 + y
-				- 60, 0x00FF00);
+				- 60, 0x000000);
 			x++;
 		}
 		y++;
@@ -45,7 +45,7 @@ void	draw_floor(t_game *game, int cx, int cy)
 		while (x < 60)
 		{
 			my_mlx_pixel_put(&game->mini_map, cx * 60 + x - 60, cy * 60 + y
-				- 60, 0xFFFFFF);
+				- 60, 0x0000AF);
 			x++;
 		}
 		y++;

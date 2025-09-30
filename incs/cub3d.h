@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
 /*   Updated: 2025/09/25 15:22:21 by dpaes-so         ###   ########.fr       */
@@ -42,6 +42,7 @@
 # define ARROW_DOWN 65364
 # define ANGLE_NUMBERS 8
 # define rot_speed 0.09
+# define M 109
 # define SHIFT 65505
 # define NO 0
 # define EA 1
