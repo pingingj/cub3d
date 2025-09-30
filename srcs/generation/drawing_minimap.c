@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/25 14:46:00 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/09/30 14:56:34 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,29 @@ void	draw_square(t_game *game, int cx, int cy, int hexa)
 		x = 0;
 		while (x < 60)
 		{
-			my_mlx_pixel_put(&game->mini_map, cx + x, cy + y, hexa);
+			my_mlx_pixel_put(&game->bg_img, cx + x, cy + y, hexa);
 			x++;
 		}
 		y++;
 	}
 }
 
-void clear_minimap_image(t_game *game)
+void clear_minimap_image(t_game *game, t_pos area)
 {
-    for (int y = 0; y < 300; y++)
-        for (int x = 0; x < 300; x++)
-            my_mlx_pixel_put(&game->mini_map, x, y, 0); // Or your background color
+	int y;
+	int x;
+	
+	y = 0;
+    while (y < area.y)
+	{
+		x = 0;
+        while (x < area.x)
+		{
+            my_mlx_pixel_put(&game->bg_img, x + game->mini.offset, y + game->mini.offset, 0xFFFFFF);
+			x++;
+		}
+		y++;
+	}
 }
 
 void draw_filled_circle_mlx(t_game *game, int cx, int cy, int color)
@@ -45,46 +56,118 @@ void draw_filled_circle_mlx(t_game *game, int cx, int cy, int color)
     int x;
     int y;
 
-    y = cy - RADIUS;
-    while (y <= cy + RADIUS)
+    y = cy - RADIUS_MINI;
+    while (y <= cy + RADIUS_MINI)
     {
-        x = cx - RADIUS;
-        while (x <= cx + RADIUS)
+        x = cx - RADIUS_MINI;
+        while (x <= cx + RADIUS_MINI)
         {
-            if ((x - cx) * (x - cx) + (y - cy) * (y - cy) <= RADIUS * RADIUS)
-                my_mlx_pixel_put(&game->mini_map, x, y, color);
+            if ((x - cx) * (x - cx) + (y - cy) * (y - cy) <= RADIUS_MINI * RADIUS_MINI)
+                my_mlx_pixel_put(&game->bg_img, x, y, color);
             x++;
         }
         y++;
     }
 }
 
-void draw_circle_mlx(t_game *game, int cx, int cy, int color)
+void draw_circle_mlx(t_game *game, t_pos center, int color)
 {
 	int i;
 	int	x;
 	int	y;
 
 	i = 0;
-    while (i < ANGLE_NUMBERS)
+    while (i < ANGLE_NUMBERS_MINI)
     {
-		double angle = (2 * PI * i) / ANGLE_NUMBERS;
-		x = (int)(cx + cos(angle) * 5);
-		y = (int)(cy + sin(angle) * 5);
+		double angle = (2 * PI * i) / ANGLE_NUMBERS_MINI;
+		x = (int)(center.x + cos(angle) * 5);
+		y = (int)(center.y + sin(angle) * 5);
 		draw_filled_circle_mlx(game, x, y, color);
 		i++;
     }
 }
 
+void	mini_init(t_game *game)
+{
+	game->mini.height = game->pos.y;
+	game->mini.width = game->pos.x;
+	printf("mini height = %d width %d ", game->mini.height, game->mini.width);
+	game->mini.offset = 30;
+	game->mini.size.x = WIDTH * 0.25;
+	game->mini.size.y = HEIGHT * 0.25;
+	game->mini.center.x = game->mini.size.x / 2 + game->mini.offset;
+	game->mini.center.y = game->mini.size.y / 2 + game->mini.offset;
+}
 
+void	draw_colorblock(t_img *bg, int color, t_pos area, t_pos win)
+{
+	int	wid;
+	int	hei;
+
+	hei = -1;
+	while (++hei < area.y)
+	{
+		wid = -1;
+		while (++wid < area.x)
+			my_mlx_pixel_put(bg, win.x + wid, win.y + hei, color);
+	}
+}
+
+void	draw_minimap_row(t_game game, t_pos map_cord, t_pos  win_cord,
+		t_pos area)
+{
+	while (map_cord.x < game.mini.width && win_cord.x <= game.mini.offset + game.mini.size.x)
+	{
+		area.x = 50;
+		if (map_cord.x >= 0)
+		{
+			if (win_cord.x < game.mini.offset)
+			{
+				area.x -= game.mini.offset - win_cord.x;
+				win_cord.x = game.mini.offset;
+			}
+			if (win_cord.x + area.x > game.mini.offset + game.mini.size.x)
+				area.x -= (win_cord.x + area.x) - (game.mini.offset + game.mini.size.x);
+			if (game.map.grid[(int)map_cord.y][(int)map_cord.x] == '1')
+				draw_colorblock(&game.bg_img, 0x9DD1E0, area, win_cord);
+			if (game.map.grid[(int)map_cord.y][(int)map_cord.x] == 'o')
+				draw_colorblock(&game.bg_img, 0x223030, area, win_cord);
+		}
+		map_cord.x++;
+		win_cord.x += area.x;
+	}
+}
+
+void	draw_minimap_tiles(t_game game, t_pos map_cord, t_pos win_cord)
+{
+	t_pos	area;
+
+	while (map_cord.y < game.mini.height && win_cord.y <= game.mini.offset + game.mini.size.y)
+	{
+		printf("map cord y = %f\n", map_cord.y);
+		area.y = 50;
+		if (map_cord.y >= 0)
+		{
+			if (win_cord.y < game.mini.offset)
+			{
+				area.y -= game.mini.offset - win_cord.y;
+				win_cord.y = game.mini.offset;
+			}
+			if (win_cord.y + area.y > game.mini.offset + game.mini.size.y)
+				area.y -= (win_cord.y + area.y) - (game.mini.offset + game.mini.size.y);
+			draw_minimap_row(game, map_cord, win_cord, area);
+		}
+		map_cord.y++;
+		win_cord.y += area.y;
+	}
+}
 
 void draw_minimap_loop(t_game *game, double playerx, double playery)
 {
-    clear_minimap_image(game);
-    (void)playerx;
-    (void)playery;
-    
-    draw_circle_mlx(game, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, 0xFFFFFF);
+	mini_init(game);
+    clear_minimap_image(game, game->mini.size);
+	draw_minimap_tiles(*game, (t_pos){playerx - 4,playery - 3}, (t_pos){game->mini.center.x - 50 * (playerx - floor(playerx) + 4), game->mini.center.y - 50 * (playery - floor(playery) + 3 )});
+    draw_circle_mlx(game, game->mini.center, 0xFF0000);
 }
 
 

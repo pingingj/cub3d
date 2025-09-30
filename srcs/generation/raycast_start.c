@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_start.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/02 16:19:29 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/30 14:58:56 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,8 @@ void	create_frame(t_game *game)
 			bob_flag = 0;
 	}
 	math_with_an_e(game);
-	// draw_minimap(game);
 	mlx_clear_window(game->mlx, game->win);
+	// if (game->mini.show == true)
+	// 	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-	// mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,
-	// 20);
 }
