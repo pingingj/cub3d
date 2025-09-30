@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/30 14:46:00 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/09/30 16:46:39 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define WIDTH 1440
 # define HEIGHT 1080
 # define AMBIENT 0.03
-# define MOVE_SPEED 0.12
-# define RUN_SPEED 0.19
+# define MOVE_SPEED 0.09
+# define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
 # define TILE_SIZE 60
@@ -149,7 +149,6 @@ typedef struct s_game
 {
 	t_map		map;
 	t_assets	ass;
-	t_pos		pos;
 	t_img		bg_img;
 	t_player	player;
 	t_math		meth;

@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/30 12:24:03 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:35:27 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	ft_bzero(&game, sizeof(t_game));
-	(void)argv;
 	if (argc == 2)
 	{
 		if (parse(&game, argv[1]) == false)
