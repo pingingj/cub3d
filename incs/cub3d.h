@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/25 15:22:21 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/30 14:46:00 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,20 @@
 # include <stddef.h>
 # include <stdlib.h>
 
-# define WIDTH 1920
+//pixels
+# define WIDTH 1440
 # define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.12
 # define RUN_SPEED 0.19
 # define CTRL 65507
 # define SPACE 32
+# define TILE_SIZE 60
+# define MINIMAP_RADIUS 2
+# define MINIMAP_TILES 5
+# define HALF (MINIMAP_TILES / 2)
+
+//keys
 # define W 119
 # define S 115
 # define A 97
@@ -43,7 +50,16 @@
 # define ANGLE_NUMBERS 8
 # define rot_speed 0.09
 # define M 109
+# define F 102
 # define SHIFT 65505
+# define ARROW_RIGHT 65363
+# define ARROW_LEFT 65361
+
+//circle bullshit
+# define RADIUS_MINI 5
+# define ANGLE_NUMBERS_MINI 50
+
+// parser
 # define NO 0
 # define EA 1
 # define WE 2
@@ -61,8 +77,8 @@ typedef struct s_img
 
 typedef struct s_pos
 {
-	int			x;
-	int			y;
+	double			x;
+	double			y;
 }				t_pos;
 
 typedef struct s_player
@@ -119,6 +135,16 @@ typedef struct s_map
 	bool		exists;
 }				t_map;
 
+typedef struct s_mini
+{
+	bool		show;
+	int			height;
+	int			width;
+	int			offset;
+	t_pos		size;
+	t_pos		center;
+}				t_mini;
+
 typedef struct s_game
 {
 	t_map		map;
@@ -126,8 +152,8 @@ typedef struct s_game
 	t_pos		pos;
 	t_img		bg_img;
 	t_player	player;
-	t_img		mini_map;
 	t_math		meth;
+	t_mini		mini;
 	double		light;
 	double		walldist;
 	int			*move;

@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/24 18:04:48 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:24:03 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int mouse(int x, int y,t_game *game)
 		mlx_mouse_move(game->mlx,game->win,WIDTH/2,HEIGHT/2);
 	return(0);
 }
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -38,8 +39,8 @@ int	main(int argc, char **argv)
 	{
 		if (parse(&game, argv[1]) == false)
 			return (1);
-		game.mlx = mlx_init();
 		print_info(game);
+		game.mlx = mlx_init();
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);
