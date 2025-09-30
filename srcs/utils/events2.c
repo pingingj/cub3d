@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/25 10:54:54 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:26:34 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,15 @@ int	key_press(int keycode, t_game *game)
 		closex(game);
 	if (keycode == M)
 	{
-		if (game->mini == false)
+		if (game->mini.show == false)
 		{
-			game->mini = true;
-			mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,20);
+			game->mini.show = true;
+			create_frame(game);
 		}
 		else
 		{
-			mlx_clear_window(game->mlx, game->win);
-			mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
-			game->mini = false;
+			game->mini.show = false;
+			create_frame(game);
 		}
 	}
 	if (keycode == W)
