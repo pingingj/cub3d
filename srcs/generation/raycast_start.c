@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/27 15:44:38 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:19:29 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
   to the base,using the direction he is looking, the fov,
 	and how far left or rigth the ray should be*/
 
-	
 void	setup_ray(t_game *game, int x)
 {
 	game->meth.camerax = 2 * x / (double)WIDTH - 1;
@@ -39,20 +38,47 @@ void	setup_ray(t_game *game, int x)
 
 void	math_with_an_e(t_game *game)
 {
-	double	walldist;
 	int		sdraw;
 	int		edraw;
 	int		i;
 
 	i = 0;
+	game->meth.looking_door = false;
 	while (i < WIDTH)
 	{
 		setup_ray(game, i);
 		dda_prep(game);
 		game->meth.orientation = hit_wall(game);
-		walldist = calc_wall_dist(game);
-		wall_size(game, walldist, &sdraw, &edraw);
+		if(game->meth.door == true)
+			game->meth.looking_door = true;
+		game->walldist = calc_wall_dist(game);
+		wall_size(game, game->walldist, &sdraw, &edraw);
 		artistic_moment(game, i, sdraw, edraw);
 		i++;
 	}
+	
+}
+
+void	create_frame(t_game *game)
+{
+	static int bob_flag;
+
+	if (bob_flag == 0)
+	{
+		game->bob += 2;
+		if(game->bob > 6)
+			bob_flag = 1;
+	}
+	else
+	{
+		game->bob -= 2;
+		if(game->bob < -6)
+			bob_flag = 0;
+	}
+	math_with_an_e(game);
+	// draw_minimap(game);
+	mlx_clear_window(game->mlx, game->win);
+	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+	// mlx_put_image_to_window(game->mlx, game->win, game->mini_map.img, 20,
+	// 20);
 }
