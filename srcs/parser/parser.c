@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/24 18:24:40 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:36:33 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ bool	parse(t_game *game, char *filename)
 	int	fd;
 
 	fd = open(filename, O_RDONLY);
+	game->mini.show = true;
 	game->player.posx = -1;
 	game->player.posy = -1;
 	game->player.look = 0;

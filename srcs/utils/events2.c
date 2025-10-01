@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/30 12:26:34 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:08:57 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ void	look_left(t_game *game)
 	double	old_planex;
 
 	old_dirx = game->player.dirx;
-	game->player.dirx = game->player.dirx * cos(-rot_speed) - game->player.diry
-		* sin(-rot_speed);
-	game->player.diry = old_dirx * sin(-rot_speed) + game->player.diry
-		* cos(-rot_speed);
+	game->player.dirx = game->player.dirx * cos(game->mouse.x * game->angle) - game->player.diry
+		* sin(game->mouse.x * game->angle);
+	game->player.diry = old_dirx * sin(game->mouse.x * game->angle) + game->player.diry
+		* cos(game->mouse.x * game->angle);
 	old_planex = game->player.planex;
-	game->player.planex = game->player.planex * cos(-rot_speed)
-		- game->player.planey * sin(-rot_speed);
-	game->player.planey = old_planex * sin(-rot_speed) + game->player.planey
-		* cos(-rot_speed);
+	game->player.planex = game->player.planex * cos(game->mouse.x * game->angle)
+		- game->player.planey * sin(game->mouse.x * game->angle);
+	game->player.planey = old_planex * sin(game->mouse.x * game->angle) + game->player.planey
+		* cos(game->mouse.x * game->angle);
 }
 
 int	key_press(int keycode, t_game *game)
@@ -147,15 +147,15 @@ int	move(t_game *game)
 		look_left(game);
 	if (game->move[6] == 1)
 	{
-		game->player.look += 20;
+		game->player.look += 10;
 		if(game->player.look > 300)
-			game->player.look -=20;
+			game->player.look -=10;
 	}
 	if (game->move[7] == 1)
 	{
-		game->player.look -= 20;
+		game->player.look -= 10;
 		if(game->player.look < -300)
-			game->player.look +=20;
+			game->player.look +=10;
 	}
 	if (game->move[0] == 1 || game->move[1] == 1 || game->move[2] == 1
 		|| game->move[3] == 1 || game->move[4] == 1 || game->move[5] == 1
