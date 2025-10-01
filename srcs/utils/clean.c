@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/30 12:29:45 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:23:52 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	print_info(t_game game)
 				ft_printf("1");
 			else if (game.map.grid[i][j] == 'o')
 				ft_printf("o");
+			else if (game.map.grid[i][j] == 'd')
+				ft_printf("d");
 			else if (game.map.grid[i][j] == '\0')
 				ft_printf("\n");
 			j++;

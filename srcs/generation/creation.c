@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/30 12:29:22 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:00:58 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	background_gen(t_game *game)
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "NEETs");
 	game->bg_img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
-		&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
-		&game->bg_img.endian);
+			&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
+			&game->bg_img.endian);
 }
 
 // camera plane is the fov
@@ -86,11 +86,11 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	double	dy;
 	double	dist;
 	double	screen_dist;
-	double horizon;
+	double	horizon;
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = 300.0 + game->player.look / 2.0;
+	softness = 300.0 + game->player.look / 10.0;
 	if (softness < 80.0)
 		softness = 80.0;
 	dist = dx * dx + dy * dy;
@@ -99,7 +99,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 		circ_intensity = 0.0;
 	if (is_wall)
 	{
-		max_dist = 15.0-game->bob/10;
+		max_dist = 15.0 - game->bob / 10;
 		dist_intensity = 1.0 - (game->walldist / max_dist);
 		if (dist_intensity < 0.0)
 			dist_intensity = 0.0;
@@ -133,7 +133,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 		intensity = AMBIENT;
 	if (intensity > 1.0)
 		intensity = 1.0;
-	return intensity;
+	return (intensity);
 }
 
 /*->here now that i have the the heigth of the wall,
@@ -159,6 +159,13 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	y = 0;
 	while (y < HEIGHT)
 	{
+		if ((x > game->mini.offset && x < game->mini.offset + game->mini.size.x)
+			&& (y > game->mini.offset && y < game->mini.offset
+				+ game->mini.size.y) && game->mini.show == true)
+		{
+			y++;
+			continue ;
+		}
 		if (y < sdraw)
 			my_mlx_pixel_put(&game->bg_img, x, y,
 				add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));

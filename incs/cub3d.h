@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/30 14:46:00 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:03:40 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 # include <stdlib.h>
 
 //pixels
-# define WIDTH 1440
+# define WIDTH 1920
 # define HEIGHT 1080
 # define AMBIENT 0.03
-# define MOVE_SPEED 0.12
-# define RUN_SPEED 0.19
+# define MOVE_SPEED 0.09
+# define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
 # define TILE_SIZE 60
@@ -48,7 +48,8 @@
 # define ARROW_RIGHT 65363
 # define ARROW_DOWN 65364
 # define ANGLE_NUMBERS 8
-# define rot_speed 0.09
+# define rot_speed 0.0003
+# define arrow_rot_speed 0.01
 # define M 109
 # define F 102
 # define SHIFT 65505
@@ -149,11 +150,12 @@ typedef struct s_game
 {
 	t_map		map;
 	t_assets	ass;
-	t_pos		pos;
 	t_img		bg_img;
 	t_player	player;
-	t_math		meth;
 	t_mini		mini;
+	t_math		meth;
+	t_pos		mouse;
+	double		angle;
 	double		light;
 	double		walldist;
 	int			*move;
