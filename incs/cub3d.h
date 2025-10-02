@@ -23,7 +23,7 @@
 # include <stdlib.h>
 
 //pixels
-# define WIDTH 1920
+# define WIDTH 1440
 # define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
