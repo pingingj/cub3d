@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/30 15:36:33 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/02 14:54:23 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,15 +120,15 @@ bool	parse(t_game *game, char *filename)
 	game->player.posy = -1;
 	game->player.look = 0;
 	if (fd == -1)
-		print_errors(game, 0, "Invalid file or no file provided", fd);
+	print_errors(game, 0, "Invalid file or no file provided", fd);
 	if (ft_strcmp(filename + ft_strlen(filename) - 4, ".cub") != 0)
-		print_errors(game, 0, "File is not in the correct format", fd);
+	print_errors(game, 0, "File is not in the correct format", fd);
 	if (get_textures(game, fd) == false)
-		print_errors(game, 1, "Invalid texture", fd);
+	print_errors(game, 1, "Invalid texture", fd);
 	if (!game->ass.ceiling.nums || !game->ass.floor.nums
 		|| !game->ass.walls[NO].filename || !game->ass.walls[EA].filename
 		|| !game->ass.walls[WE].filename || !game->ass.walls[SO].filename)
-		print_errors(game, 1, "Missing texture or color", fd);
+	print_errors(game, 1, "Missing texture or color", fd);
 	parse_colors(game, fd);
 	parse_map(game, fd, filename);
 	close(fd);

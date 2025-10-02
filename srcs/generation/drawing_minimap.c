@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_minimap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/30 17:02:27 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/02 14:47:26 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ void	draw_minimap_tiles(t_game game, t_pos map_cord, t_pos win_cord)
 
 	while (map_cord.y < game.mini.height && win_cord.y <= game.mini.offset + game.mini.size.y)
 	{
-		printf("map cord y = %f\n", map_cord.y);
 		area.y = 60;
 		if (map_cord.y >= 0)
 		{

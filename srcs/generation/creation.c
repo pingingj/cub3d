@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/01 15:07:11 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/02 11:11:17 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	y = 0;
 	while (y < HEIGHT)
 	{
-		intensity = 1;
+		// intensity = 1;
 		if ((x > game->mini.offset && x < game->mini.offset + game->mini.size.x)
 			&& (y > game->mini.offset && y < game->mini.offset
 				+ game->mini.size.y) && game->mini.show == true)
@@ -172,17 +172,17 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 				add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));
 		else if (y >= sdraw && y <= edraw && game->meth.door == false)
 		{
-			// intensity = flashlight(x, y, game, true);
+			intensity = flashlight(x, y, game, true);
 			my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
 		}
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
 		{
-			// intensity = flashlight(x, y, game, true);
+			intensity = flashlight(x, y, game, true);
 			my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
 		}
 		else
 		{
-			// intensity = flashlight(x, y, game, false);
+			intensity = flashlight(x, y, game, false);
 			my_mlx_pixel_put(&game->bg_img, x, y,
 				add_light(game->ass.floor.hexa, intensity));
 		}
