@@ -23,8 +23,8 @@
 # include <stdlib.h>
 
 // pixels
-# define WIDTH 1440
-# define HEIGHT 900
+# define WIDTH 1920
+# define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define RUN_SPEED 0.12
@@ -74,6 +74,8 @@ typedef struct s_img
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	int			w;
+	int			h;
 	char		*filename;
 }				t_img;
 
@@ -126,8 +128,8 @@ typedef struct s_sprite
 {
 	t_img		texture;
 	t_pos		cords;
-	int			x;
-	int			y;
+	int			width;
+	int			height;
 }				t_sprite;
 
 typedef struct s_assets
@@ -135,7 +137,8 @@ typedef struct s_assets
 	t_img		walls[4];
 	t_color		ceiling;
 	t_color		floor;
-	t_sprite	collectible;
+	t_img		barrel;
+	t_sprite	*collectible;
 	t_sprite	collectible2;
 	int			collect_amount;
 }				t_assets;

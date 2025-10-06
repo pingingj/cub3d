@@ -14,27 +14,21 @@
 
 int	textures(t_game *game)
 {
-	int *order;
-	int *sprite_dist;
-	int i;
+	game->ass.barrel.img = mlx_xpm_file_to_image(game->mlx,
+			"/incs/textures/barrel.xpm", &game->ass.barrel.w,
+			&game->ass.barrel.h);
+	game->ass.barrel.addr = mlx_get_data_addr(game->mlx,
+			&game->ass.barrel.bits_per_pixel,
+			&game->ass.barrel.line_length,
+			&game->ass.barrel.endian);
 	
-	// (void)game;
-	i = -1;
-	game->ass.collectible.texture.img = mlx_xpm_file_to_image(game->mlx,
-			"/incs/textures/barrel.xpm", &game->ass.collectible.x,
-			&game->ass.collectible.y);
-	game->ass.collectible.texture.addr = mlx_get_data_addr(game->mlx,
-			&game->ass.collectible.texture.bits_per_pixel,
-			&game->ass.collectible.texture.line_length,
-			&game->ass.collectible.texture.endian);
-	// printf("player cords x = %f     y = %f\n",game->player.posx,game->player.posy);
-	order = ft_calloc(game->ass.collect_amount,sizeof(int));
-	sprite_dist = ft_calloc(game->ass.collect_amount,sizeof(int));
-
-	while(++i < game->ass.collect_amount)
-	{
-		order[i] = i;
-		sprite_dist[i] 
-	}
+	//hard code
+	game->ass.collect_amount = 2;
+	game->ass.collectible = ft_calloc(game->ass.collect_amount,sizeof(t_sprite));
+	game->ass.collectible[0].cords.x = 3.5;
+	game->ass.collectible[0].cords.y = 26.5;
+	game->ass.collectible[1].cords.x = 3.5;
+	game->ass.collectible[1].cords.y = 28.5;
+	//hard code
 	return (1);
 }
