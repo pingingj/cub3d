@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/01 12:19:37 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/02 17:06:22 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void	setup_ray(t_game *game, int x)
 	game->meth.mapy = (int)game->player.posy;
 }
 
+// void draw_sprites()
+// {
+// 	int order[2]
+// }
 void	math_with_an_e(t_game *game)
 {
 	int		sdraw;
@@ -52,32 +56,35 @@ void	math_with_an_e(t_game *game)
 		if(game->meth.door == true)
 			game->meth.looking_door = true;
 		game->walldist = calc_wall_dist(game);
+		game->wall_dist_sp[i] = game->walldist;
 		wall_size(game, game->walldist, &sdraw, &edraw);
 		artistic_moment(game, i, sdraw, edraw);
 		i++;
 	}
+	// draw_sprites();
 	
 }
 
 void	create_frame(t_game *game)
 {
-	static int bob_flag;
+	// static int bob_flag;
 
-	if (bob_flag == 0)
-	{
-		game->bob += 2;
-		if(game->bob > 6)
-			bob_flag = 1;
-	}
-	else
-	{
-		game->bob -= 2;
-		if(game->bob < -6)
-			bob_flag = 0;
-	}
+	// if (bob_flag == 0)
+	// {
+	// 	game->bob += 2;
+	// 	if(game->bob > 6)
+	// 		bob_flag = 1;
+	// }
+	// else
+	// {
+	// 	game->bob -= 2;
+	// 	if(game->bob < -6)
+	// 		bob_flag = 0;
+	// }
 	math_with_an_e(game);
 	mlx_clear_window(game->mlx, game->win);
 	if (game->mini.show == true)
 		draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+	
 }
