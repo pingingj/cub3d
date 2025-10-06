@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/01 14:08:57 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:19:25 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,29 @@ void	look_left(t_game *game)
 {
 	double	old_dirx;
 	double	old_planex;
+	double angle;
+	int x;
 
+	if(game->look_flag == true)
+	{
+		x= -1;
+		angle = arrow_rot_speed;
+	}
+	else
+	{
+		x = game->mouse.x;
+		angle = rot_speed;
+	}
 	old_dirx = game->player.dirx;
-	game->player.dirx = game->player.dirx * cos(game->mouse.x * game->angle) - game->player.diry
-		* sin(game->mouse.x * game->angle);
-	game->player.diry = old_dirx * sin(game->mouse.x * game->angle) + game->player.diry
-		* cos(game->mouse.x * game->angle);
+	game->player.dirx = game->player.dirx * cos(x * angle) - game->player.diry
+		* sin(x * angle);
+	game->player.diry = old_dirx * sin(x * angle) + game->player.diry
+		* cos(x * angle);
 	old_planex = game->player.planex;
-	game->player.planex = game->player.planex * cos(game->mouse.x * game->angle)
-		- game->player.planey * sin(game->mouse.x * game->angle);
-	game->player.planey = old_planex * sin(game->mouse.x * game->angle) + game->player.planey
-		* cos(game->mouse.x * game->angle);
+	game->player.planex = game->player.planex * cos(x * angle)
+		- game->player.planey * sin(x * angle);
+	game->player.planey = old_planex * sin(x * angle) + game->player.planey
+		* cos(x * angle);
 }
 
 int	key_press(int keycode, t_game *game)
@@ -93,9 +105,15 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == D)
 		game->move[3] = 1;
 	if (keycode == ARROW_RIGHT)
+	{
+		game->look_flag = true;
 		game->move[4] = 1;
+	}
 	if (keycode == ARROW_LEFT)
+	{
+		game->look_flag = true;
 		game->move[5] = 1;
+	}
 	if (keycode == ARROW_UP)
 		game->move[6] = 1;
 	if (keycode == ARROW_DOWN)
@@ -119,9 +137,15 @@ int	key_release(int keycode, t_game *game)
 	if (keycode == D)
 		game->move[3] = 0;
 	if (keycode == ARROW_RIGHT)
+	{
+		game->look_flag = false;
 		game->move[4] = 0;
+	}
 	if (keycode == ARROW_LEFT)
+	{
+		game->look_flag = false;
 		game->move[5] = 0;
+	}
 	if (keycode == ARROW_UP)
 		game->move[6] = 0;
 	if (keycode == ARROW_DOWN)

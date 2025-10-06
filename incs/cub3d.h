@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/01 14:03:40 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/02 17:07:39 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # include <stddef.h>
 # include <stdlib.h>
 
-//pixels
+// pixels
 # define WIDTH 1440
-# define HEIGHT 1080
+# define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define RUN_SPEED 0.12
@@ -34,8 +34,9 @@
 # define MINIMAP_RADIUS 2
 # define MINIMAP_TILES 5
 # define HALF (MINIMAP_TILES / 2)
+# define texture_amount 3
 
-//keys
+// keys
 # define W 119
 # define S 115
 # define A 97
@@ -56,7 +57,7 @@
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
 
-//circle bullshit
+// circle bullshit
 # define RADIUS_MINI 5
 # define ANGLE_NUMBERS_MINI 50
 
@@ -78,8 +79,8 @@ typedef struct s_img
 
 typedef struct s_pos
 {
-	double			x;
-	double			y;
+	double		x;
+	double		y;
 }				t_pos;
 
 typedef struct s_player
@@ -121,11 +122,22 @@ typedef struct s_color
 	int			hexa;
 }				t_color;
 
+typedef struct s_sprite
+{
+	t_img		texture;
+	t_pos		cords;
+	int			x;
+	int			y;
+}				t_sprite;
+
 typedef struct s_assets
 {
 	t_img		walls[4];
 	t_color		ceiling;
 	t_color		floor;
+	t_sprite	collectible;
+	t_sprite	collectible2;
+	int			collect_amount;
 }				t_assets;
 
 typedef struct s_map
@@ -155,14 +167,14 @@ typedef struct s_game
 	t_mini		mini;
 	t_math		meth;
 	t_pos		mouse;
-	double		angle;
-	double		light;
-	double		walldist;
-	int			*move;
-	int			i;
+	bool		look_flag;
 	void		*mlx;
 	void		*win;
-	int 		bob;
+	double		light;
+	double		walldist;
+	int			wall_dist_sp[WIDTH];
+	int			*move;
+	int			bob;
 }				t_game;
 
 // generation
@@ -213,4 +225,7 @@ bool			flood_map(t_map *map, int x, int y);
 void			print_info(t_game game);
 int				convert_dec(char *hexa);
 void			convert_hexa(int color, char **result, char *base, int *i);
+
+// textures
+int				textures(t_game *game);
 #endif

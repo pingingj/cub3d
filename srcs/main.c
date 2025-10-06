@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/01 14:07:57 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/02 17:11:21 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	mouse(int x, int y, t_game *game)
 {
-	game->angle = rot_speed;
 	game->mouse.x = x - WIDTH / 2;
 	if (x > WIDTH / 2)
 		game->move[4] = 1;
@@ -25,24 +24,30 @@ int	mouse(int x, int y, t_game *game)
 		game->move[4] = 0;
 		game->move[5] = 0;
 	}
-	// game->mouse.y = y - HEIGHT / 2;
-	// if (y > HEIGHT / 2 + 50)
-	// {
-	// 	game->player.look -= 20;
-	// 	if(game->player.look < -500)
-	// 		game->player.look +=20;
-	// }
-	// if (y < HEIGHT / 2 + 50)
-	// {
-	// 	game->player.look += 20;
-	// 	if(game->player.look > 500)
-	// 		game->player.look -=20;
-	// }
+	game->mouse.y = y - HEIGHT / 2;
+	if (y > HEIGHT / 2)
+	{
+		game->player.look -= game->mouse.y/10;
+		if(game->player.look < -1000)
+			game->player.look +=game->mouse.y/10;
+	}
+	if (y < HEIGHT / 2)
+	{
+		game->player.look += -game->mouse.y/10;
+		if(game->player.look > 1000)
+			game->player.look -= -game->mouse.y/10;
+	}
 	if (x != WIDTH / 2 || y != HEIGHT / 2)
 		mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
 	return (0);
 }
 
+void hard_sprites(t_game *game)
+{
+	game->ass.collect_amount = 1;
+	game->ass.collectible.cords.x = 20.5;
+	game->ass.collectible.cords.y = 17.5;
+}
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -52,8 +57,10 @@ int	main(int argc, char **argv)
 	{
 		if (parse(&game, argv[1]) == false)
 			return (1);
+		hard_sprites(&game);
 		print_info(game);
 		game.mlx = mlx_init();
+		textures(&game);
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);

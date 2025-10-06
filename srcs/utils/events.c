@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/01 14:06:02 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/01 14:18:22 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,27 @@ void	look_right(t_game *game)
 {
 	double	old_dirx;
 	double	old_planex;
+	double angle;
+	int x;
 
+	if(game->look_flag == true)
+	{
+		x= 1;
+		angle = arrow_rot_speed;
+	}
+	else
+	{
+		x = game->mouse.x;
+		angle = rot_speed;
+	}
 	old_dirx = game->player.dirx;
-	game->player.dirx = game->player.dirx * cos(game->mouse.x * game->angle) - game->player.diry
-		* sin(game->mouse.x * game->angle);
-	game->player.diry = old_dirx * sin(game->mouse.x * game->angle) + game->player.diry
-		* cos(game->mouse.x * game->angle);
+	game->player.dirx = game->player.dirx * cos(x * angle) - game->player.diry
+		* sin(x * angle);
+	game->player.diry = old_dirx * sin(x * angle) + game->player.diry
+		* cos(x * angle);
 	old_planex = game->player.planex;
-	game->player.planex = game->player.planex * cos(game->mouse.x * game->angle)
-		- game->player.planey * sin(game->mouse.x * game->angle);
-	game->player.planey = old_planex * sin(game->mouse.x * game->angle) + game->player.planey
-		* cos(game->mouse.x * game->angle);
+	game->player.planex = game->player.planex * cos(x * angle)
+		- game->player.planey * sin(x * angle);
+	game->player.planey = old_planex * sin(x * angle) + game->player.planey
+		* cos(x * angle);
 }

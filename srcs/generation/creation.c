@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/01 14:00:58 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/02 11:11:17 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	y = 0;
 	while (y < HEIGHT)
 	{
+		// intensity = 1;
 		if ((x > game->mini.offset && x < game->mini.offset + game->mini.size.x)
 			&& (y > game->mini.offset && y < game->mini.offset
 				+ game->mini.size.y) && game->mini.show == true)
