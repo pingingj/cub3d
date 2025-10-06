@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/02 17:15:34 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/06 15:58:50 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	textures(t_game *game)
 	order = ft_calloc(game->ass.collect_amount,sizeof(int));
 	sprite_dist = ft_calloc(game->ass.collect_amount,sizeof(int));
 
-	while(++i < game->ass.collect_amount)
-	{
-		order[i] = i;
-		sprite_dist[i] 
-	}
+	// while(++i < game->ass.collect_amount)
+	// {
+	// 	order[i] = i;
+	// 	sprite_dist[i] 
+	// }
 	return (1);
 }
