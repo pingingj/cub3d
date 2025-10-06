@@ -36,10 +36,124 @@ void	setup_ray(t_game *game, int x)
 	game->meth.mapy = (int)game->player.posy;
 }
 
-// void draw_sprites()
-// {
-// 	int order[2]
-// }
+void sort_dist(int *order, double *sprit_distance,t_game *game)
+{
+	int i;
+	int j;
+	int temp_order;
+	double temp_dist;
+
+	i = 0;
+	while (i < game->ass.collect_amount - 1)
+	{
+		j = i + 1;
+		while (j < game->ass.collect_amount)
+		{
+			if(sprit_distance[i] < sprit_distance[j])
+			{
+				temp_dist = sprit_distance[i];
+				sprit_distance[i] = sprit_distance[j];
+				sprit_distance[j] = temp_dist;
+				temp_order = order[i];
+				order[i] = order[j];
+				order[j] = temp_order;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void hande_sprites(t_game *game)
+{
+	int i;
+	int order[game->ass.collect_amount];
+	double mathx;
+	double mathy;
+	double transformx;
+	double transformy;
+	double sprite_dist[game->ass.collect_amount];
+	double inverse;
+	double spritexlocation;
+	double sprite_height;
+	double sprite_width;
+	int sdrawx;
+	int sdrawy;
+	int edrawx;
+	int edrawy;
+	int sp_index;
+	int texx;
+	int add;
+
+	i = -1;
+	while(++i < game->ass.collect_amount)
+	{
+		order[i] = i;
+		mathx = game->player.posx - game->ass.collectible[i].cords.x;
+		mathy = game->player.posy - game->ass.collectible[i].cords.y;
+		sprite_dist[i] = mathx * mathx + mathy * mathy;
+	}
+	i = 0;
+	sort_dist(order,sprite_dist,game);
+	while(i < game->ass.collect_amount)
+	{
+		mathx = game->ass.collectible[order[i]].cords.x - game->player.posx;
+		mathy = game->ass.collectible[order[i]].cords.y - game->player.posy;
+		inverse = 1.0 / (game->player.planex * game->player.diry - game->player.dirx * game->player.planey);
+		transformx = inverse * (game->player.diry * mathx - game->player.dirx * mathy);
+		transformy = inverse * (-game->player.planey * mathx + game->player.planex * mathy);
+		
+		spritexlocation = (WIDTH / 2) * (1 + transformx / transformy);
+		add = game->player.look + game->bob;
+		sprite_height = fabs(HEIGHT / transformy);
+		sdrawy = -sprite_height / 2 + HEIGHT / 2 + add;
+		edrawy = sprite_height / 2 + HEIGHT / 2 + add;
+
+		sprite_width = fabs(HEIGHT / transformy);
+		sdrawx = -sprite_width / 2 + spritexlocation;
+		edrawx = sprite_width / 2 + spritexlocation;
+		if (sdrawx < 0)
+			sdrawx = 0;
+		if (edrawx >= WIDTH)
+			edrawx = WIDTH - 1;
+		if (sdrawy < 0)
+			sdrawy = 0;
+		if (edrawy >= HEIGHT)
+			edrawy = HEIGHT - 1;
+		sp_index = sdrawx;
+		while(sp_index < edrawx)
+		{
+			texx = (int)(256 * (sp_index - (-sprite_width / 2 + spritexlocation)) * game->ass.barrel.w/ sprite_width) / 256;
+			if (transformy > 0 && sp_index >= 0 && sp_index < WIDTH && transformy < game->wall_dist_sp[sp_index])
+			{
+				int py = sdrawy;
+				while (py < edrawy)
+				{
+					int d = py * 256 - HEIGHT * 128 + sprite_height * 128;
+					int texy = ((d * game->ass.barrel.h) / sprite_height) / 256;
+					if (texx < 0)
+						texx = 0;
+					if (texx >= game->ass.barrel.w)
+						texx = game->ass.barrel.w - 1;
+					if (texy < 0)
+						texy = 0;
+					if (texy >= game->ass.barrel.h)
+						texy = game->ass.barrel.h - 1;
+					int color = pixel_get(&game->ass.barrel, texx, texy);
+					if ((color & 0x00FFFFFF) != 0)
+					{
+						double intensity = flashlight(sp_index, py, game, true);
+
+						my_mlx_pixel_put(&game->bg_img, sp_index, py,add_light(color,intensity));
+					}
+					py++;
+				}
+			}
+			sp_index++;
+		}
+		i++;
+	}
+}
 void	math_with_an_e(t_game *game)
 {
 	int		sdraw;
@@ -61,8 +175,7 @@ void	math_with_an_e(t_game *game)
 		artistic_moment(game, i, sdraw, edraw);
 		i++;
 	}
-	// draw_sprites();
-	
+	hande_sprites(game);
 }
 
 void	create_frame(t_game *game)

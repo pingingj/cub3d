@@ -23,8 +23,8 @@
 # include <stdlib.h>
 
 // pixels
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1440
+# define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define RUN_SPEED 0.12
@@ -192,6 +192,8 @@ void			wall_size(t_game *game, double walldist, int *sdraw,
 					int *edraw);
 void			create_frame(t_game *game);
 void			artistic_moment(t_game *game, int x, int sdraw, int edraw);
+int	add_light(int color, double intensity);
+double	flashlight(int x, int y, t_game *game, bool is_wall);
 // clean
 int				closex(t_game *mlx);
 // mlx_adds
