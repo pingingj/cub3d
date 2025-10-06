@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/30 15:23:52 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/06 16:41:18 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ void	print_info(t_game game)
 	printf("EA = %s\n", game.ass.walls[EA].filename);
 	printf("SO = %s\n", game.ass.walls[SO].filename);
 	printf("WE = %s\n", game.ass.walls[WE].filename);
-	printf("Ceiling = %s\n", game.ass.ceiling.nums);
-	printf("R = %d\n", game.ass.ceiling.red);
-	printf("G = %d\n", game.ass.ceiling.green);
-	printf("B = %d\n", game.ass.ceiling.blue);
-	printf("Floor = %s\n", game.ass.floor.nums);
-	printf("R = %d\n", game.ass.floor.red);
-	printf("G = %d\n", game.ass.floor.green);
-	printf("B = %d\n", game.ass.floor.blue);
+	printf("length = %f\n", game.map.pos.x);
+	printf("height = %f\n", game.map.pos.y);
+	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
+	// printf("R = %d\n", game.ass.ceiling.red);
+	// printf("G = %d\n", game.ass.ceiling.green);
+	// printf("B = %d\n", game.ass.ceiling.blue);
+	// printf("Floor = %s\n", game.ass.floor.nums);
+	// printf("R = %d\n", game.ass.floor.red);
+	// printf("G = %d\n", game.ass.floor.green);
+	// printf("B = %d\n", game.ass.floor.blue);
 	printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
 	printf("hexa floor = %d\n", game.ass.floor.hexa);
 	printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);

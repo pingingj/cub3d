@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/06 16:07:02 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/06 16:09:28 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,23 +169,22 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 		}
 		//might broke something becuz removed add light to color param same on the other pixel put below door, pls dont forget to put back later
 		if (y < sdraw)
-			my_mlx_pixel_put(&game->bg_img, x, y,
-				add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));
+			my_mlx_pixel_put(&game->bg_img, x, y, game->ass.ceiling.hexa);
 		else if (y >= sdraw && y <= edraw && game->meth.door == false)
 		{
 			intensity = flashlight(x, y, game, true);
-			my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
+			my_mlx_pixel_put(&game->bg_img, x, y, color);
 		}
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
 		{
 			intensity = flashlight(x, y, game, true);
-			my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
+			my_mlx_pixel_put(&game->bg_img, x, y, door);
 		}
 		else
 		{
 			intensity = flashlight(x, y, game, false);
 			my_mlx_pixel_put(&game->bg_img, x, y,
-				add_light(game->ass.floor.hexa, intensity));
+				game->ass.floor.hexa);
 		}
 		y++;
 	}

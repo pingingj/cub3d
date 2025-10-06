@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:50:51 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/28 13:16:49 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/06 16:56:59 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ bool	get_map(t_game *game, int fd, char *filename)
 		if (game->map.exists)
 		{
 			if (ft_strlen(line) > game->map.pos.x)
-				game->map.pos.x = ft_strlen(line);
+				game->map.pos.x = ft_strlen(line) - 1;
 			game->map.pos.y++;
 		}
 		free(line);

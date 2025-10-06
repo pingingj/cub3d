@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/02 17:07:39 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:33:04 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 # define SPACE 32
 # define TILE_SIZE 60
 # define MINIMAP_RADIUS 2
-# define MINIMAP_TILES 5
-# define HALF (MINIMAP_TILES / 2)
 # define texture_amount 3
 
 // keys
@@ -49,8 +47,8 @@
 # define ARROW_RIGHT 65363
 # define ARROW_DOWN 65364
 # define ANGLE_NUMBERS 8
-# define rot_speed 0.0003
-# define arrow_rot_speed 0.01
+# define rot_speed 0.001
+# define arrow_rot_speed 0.05
 # define M 109
 # define F 102
 # define SHIFT 65505

@@ -3,67 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_minimap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/02 14:47:26 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:33:22 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
-void clear_minimap_image(t_game *game, t_pos area)
+void	clear_minimap_image(t_game *game, t_pos area)
 {
-	int y;
-	int x;
-	
+	int	y;
+	int	x;
+
 	y = 0;
-    while (y < area.y)
+	while (y < area.y)
 	{
 		x = 0;
-        while (x < area.x)
+		while (x < area.x)
 		{
-            my_mlx_pixel_put(&game->bg_img, x + game->mini.offset, y + game->mini.offset, 0xFFFFFF);
+			my_mlx_pixel_put(&game->bg_img, x + game->mini.offset, y
+					+ game->mini.offset, 0xFFFFFF);
 			x++;
 		}
 		y++;
 	}
 }
 
-void draw_filled_circle_mlx(t_game *game, int cx, int cy, int color)
+void	draw_filled_circle_mlx(t_game *game, int cx, int cy, int color)
 {
-    int x;
-    int y;
-
-    y = cy - RADIUS_MINI;
-    while (y <= cy + RADIUS_MINI)
-    {
-        x = cx - RADIUS_MINI;
-        while (x <= cx + RADIUS_MINI)
-        {
-            if ((x - cx) * (x - cx) + (y - cy) * (y - cy) <= RADIUS_MINI * RADIUS_MINI)
-                my_mlx_pixel_put(&game->bg_img, x, y, color);
-            x++;
-        }
-        y++;
-    }
-}
-
-void draw_circle_mlx(t_game *game, t_pos center, int color)
-{
-	int i;
 	int	x;
 	int	y;
 
+	y = cy - RADIUS_MINI;
+	while (y <= cy + RADIUS_MINI)
+	{
+		x = cx - RADIUS_MINI;
+		while (x <= cx + RADIUS_MINI)
+		{
+			if ((x - cx) * (x - cx) + (y - cy) * (y - cy) <= RADIUS_MINI
+				* RADIUS_MINI)
+				my_mlx_pixel_put(&game->bg_img, x, y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
+void	draw_circle_mlx(t_game *game, t_pos center, int color)
+{
+	int		i;
+	int		x;
+	int		y;
+	double	angle;
+
 	i = 0;
-    while (i < ANGLE_NUMBERS_MINI)
-    {
-		double angle = (2 * PI * i) / ANGLE_NUMBERS_MINI;
+	while (i < ANGLE_NUMBERS_MINI)
+	{
+		angle = (2 * PI * i) / ANGLE_NUMBERS_MINI;
 		x = (int)(center.x + cos(angle) * 5);
 		y = (int)(center.y + sin(angle) * 5);
 		draw_filled_circle_mlx(game, x, y, color);
 		i++;
-    }
+	}
 }
 
 void	mini_init(t_game *game)
@@ -91,12 +94,13 @@ void	draw_square(t_img *bg, int color, t_pos area, t_pos win)
 	}
 }
 
-void	draw_minimap_row(t_game game, t_pos map_cord, t_pos  win_cord,
+void	draw_minimap_row(t_game game, t_pos map_cord, t_pos win_cord,
 		t_pos area)
 {
-	while (map_cord.x < game.mini.width && win_cord.x <= game.mini.offset + game.mini.size.x)
+	while (map_cord.x < game.mini.width && win_cord.x <= game.mini.offset
+		+ game.mini.size.x)
 	{
-		area.x = 60;
+		area.x = TILE_SIZE;
 		if (map_cord.x >= 0)
 		{
 			if (win_cord.x < game.mini.offset)
@@ -105,7 +109,8 @@ void	draw_minimap_row(t_game game, t_pos map_cord, t_pos  win_cord,
 				win_cord.x = game.mini.offset;
 			}
 			if (win_cord.x + area.x > game.mini.offset + game.mini.size.x)
-				area.x -= (win_cord.x + area.x) - (game.mini.offset + game.mini.size.x);
+				area.x -= (win_cord.x + area.x) - (game.mini.offset
+						+ game.mini.size.x);
 			if (game.map.grid[(int)map_cord.y][(int)map_cord.x] == '1')
 				draw_square(&game.bg_img, 0x9DD1E0, area, win_cord);
 			if (game.map.grid[(int)map_cord.y][(int)map_cord.x] == 'o')
@@ -124,9 +129,10 @@ void	draw_minimap_tiles(t_game game, t_pos map_cord, t_pos win_cord)
 {
 	t_pos	area;
 
-	while (map_cord.y < game.mini.height && win_cord.y <= game.mini.offset + game.mini.size.y)
+	while (map_cord.y < game.mini.height && win_cord.y <= game.mini.offset
+		+ game.mini.size.y)
 	{
-		area.y = 60;
+		area.y = TILE_SIZE;
 		if (map_cord.y >= 0)
 		{
 			if (win_cord.y < game.mini.offset)
@@ -135,7 +141,8 @@ void	draw_minimap_tiles(t_game game, t_pos map_cord, t_pos win_cord)
 				win_cord.y = game.mini.offset;
 			}
 			if (win_cord.y + area.y > game.mini.offset + game.mini.size.y)
-				area.y -= (win_cord.y + area.y) - (game.mini.offset + game.mini.size.y);
+				area.y -= (win_cord.y + area.y) - (game.mini.offset
+						+ game.mini.size.y);
 			draw_minimap_row(game, map_cord, win_cord, area);
 		}
 		map_cord.y++;
@@ -143,36 +150,42 @@ void	draw_minimap_tiles(t_game game, t_pos map_cord, t_pos win_cord)
 	}
 }
 
-void draw_miniframe(t_game *game)
+void	draw_miniframe(t_game *game)
 {
-	int x;
+	int	x;
 	int	y;
 
 	y = game->mini.offset;
-	while(y < game->mini.size.y + game->mini.offset)
+	while (y < game->mini.size.y + game->mini.offset)
 	{
 		x = game->mini.offset;
-		while(x < game->mini.size.x + game->mini.offset)
+		while (x < game->mini.size.x + game->mini.offset)
 		{
 			if (x < game->mini.offset + 10 || x > game->mini.size.x + 20)
 				my_mlx_pixel_put(&game->bg_img, x, y, 0xBB0000);
 			if (y < game->mini.offset + 10 || y > game->mini.size.y + 20)
 				my_mlx_pixel_put(&game->bg_img, x, y, 0xBB0000);
-			x++;	
+			x++;
 		}
 		y++;
 	}
 }
 
-void draw_minimap_loop(t_game *game, double playerx, double playery)
+void	draw_minimap_loop(t_game *game, double playerx, double playery)
 {
-	mini_init(game);
-    clear_minimap_image(game, game->mini.size);
-	draw_minimap_tiles(*game, (t_pos){playerx - 4,playery - 3}, (t_pos){game->mini.center.x - 60 * (playerx - floor(playerx) + 4), game->mini.center.y - 60 * (playery - floor(playery) + 3 )});
-	draw_miniframe(game);
-    draw_circle_mlx(game, game->mini.center, 0xFF0000);
-}
+	t_pos	map_pos;
+	t_pos	win_pos;
 
+	mini_init(game);
+	clear_minimap_image(game, game->mini.size);
+	map_pos.x = playerx - 5;
+	map_pos.y = playery - 4;
+	win_pos.x = game->mini.center.x - TILE_SIZE * (playerx - floor(playerx) + 5);
+	win_pos.y = game->mini.center.y - TILE_SIZE * (playery - floor(playery) + 4);
+	draw_minimap_tiles(*game, map_pos, win_pos);
+	draw_miniframe(game);
+	draw_circle_mlx(game, game->mini.center, 0xFF0000);
+}
 
 int	draw_minimap(t_game *game)
 {
