@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/02 11:11:17 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:46:24 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,10 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	}
 	intensity = AMBIENT + (1.0 - AMBIENT) * circ_intensity * dist_intensity;
 	if (intensity < AMBIENT)
+	{
+		// printf("intensity = %f\n",intensity);
 		intensity = AMBIENT;
+	}
 	if (intensity > 1.0)
 		intensity = 1.0;
 	return (intensity);
@@ -195,7 +198,7 @@ void	map_gen(t_game *game)
 	game->move = ft_calloc(9, sizeof(int));
 	if (!game->move)
 		exit(1);
-	printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
+	// printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
 	player_init(game);
 	background_gen(game);
 	create_frame(game);

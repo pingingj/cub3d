@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/02 17:15:34 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:51:02 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	textures(t_game *game)
 	//hard code
 	game->ass.collect_amount = 2;
 	game->ass.collectible = ft_calloc(game->ass.collect_amount,sizeof(t_sprite));
-	game->ass.collectible[0].cords.x = 19.5;
+	game->ass.collectible[0].cords.x = 5.5;
 	game->ass.collectible[0].cords.y = 17.5;
 	game->ass.collectible[1].cords.x = 21.5;
 	game->ass.collectible[1].cords.y = 17.5;

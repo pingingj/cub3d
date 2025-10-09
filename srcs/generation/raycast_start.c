@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/02 17:06:22 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/09 17:02:36 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,29 @@ void sort_dist(int *order, double *sprit_distance,t_game *game)
 	}
 }
 
+double sprite_flashlight(int x, int y, t_game *game, double sprite_dist)
+{
+    double dx = x - WIDTH / 2;
+    double dy = y - HEIGHT / 2;
+    double softness = 300.0 + game->player.look / 10.0;
+    if (softness < 80.0)
+        softness = 80.0;
+    double dist = dx * dx + dy * dy; 
+    double circ_intensity = 1.0 - (dist / (2.0 * softness * softness));
+    if (circ_intensity < 0.0)
+        circ_intensity = 0.0;
+    double max_dist = 15.0 - game->bob / 10.0;
+    double dist_intensity = 1.0 - (sprite_dist / max_dist);
+    if (dist_intensity < 0.0)
+        dist_intensity = 0.0;
+    double intensity = AMBIENT + (1.0 - AMBIENT) * circ_intensity * dist_intensity;
+    if (intensity < AMBIENT)
+        intensity = AMBIENT;
+    if (intensity > 1.0)
+        intensity = 1.0;
+    return intensity;
+}
+
 void hande_sprites(t_game *game)
 {
 	int i;
@@ -83,7 +106,6 @@ void hande_sprites(t_game *game)
 	int edrawy;
 	int sp_index;
 	int texx;
-	int add;
 
 	i = -1;
 	while(++i < game->ass.collect_amount)
@@ -104,11 +126,12 @@ void hande_sprites(t_game *game)
 		transformy = inverse * (-game->player.planey * mathx + game->player.planex * mathy);
 		
 		spritexlocation = (WIDTH / 2) * (1 + transformx / transformy);
-		add = game->player.look + game->bob;
 		sprite_height = fabs(HEIGHT / transformy);
-		sdrawy = -sprite_height / 2 + HEIGHT / 2 + add;
-		edrawy = sprite_height / 2 + HEIGHT / 2 + add;
+		int screen_center = HEIGHT / 2 + game->player.look;
+		sdrawy = screen_center - sprite_height / 2;
+		edrawy = screen_center + sprite_height / 2;
 
+		
 		sprite_width = fabs(HEIGHT / transformy);
 		sdrawx = -sprite_width / 2 + spritexlocation;
 		edrawx = sprite_width / 2 + spritexlocation;
@@ -129,7 +152,7 @@ void hande_sprites(t_game *game)
 				int py = sdrawy;
 				while (py < edrawy)
 				{
-					int d = py * 256 - HEIGHT * 128 + sprite_height * 128;
+					int d = (py - screen_center + sprite_height / 2) * 256;
 					int texy = ((d * game->ass.barrel.h) / sprite_height) / 256;
 					if (texx < 0)
 						texx = 0;
@@ -142,8 +165,8 @@ void hande_sprites(t_game *game)
 					int color = pixel_get(&game->ass.barrel, texx, texy);
 					if ((color & 0x00FFFFFF) != 0)
 					{
-						double intensity = flashlight(sp_index, py, game, true);
-
+						// double intensity = 1;
+						double intensity = sprite_flashlight(sp_index, py, game, transformy);
 						my_mlx_pixel_put(&game->bg_img, sp_index, py,add_light(color,intensity));
 					}
 					py++;
