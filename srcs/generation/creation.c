@@ -177,18 +177,18 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 		else if (y >= sdraw && y <= edraw && game->meth.door == false)
 		{
 			intensity = flashlight(x, y, game, true);
-			my_mlx_pixel_put(&game->bg_img, x, y, color);
+			my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
 		}
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
 		{
 			intensity = flashlight(x, y, game, true);
-			my_mlx_pixel_put(&game->bg_img, x, y, door);
+			my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
 		}
 		else
 		{
 			intensity = flashlight(x, y, game, false);
 			my_mlx_pixel_put(&game->bg_img, x, y,
-				game->ass.floor.hexa);
+				add_light(game->ass.floor.hexa, intensity));
 		}
 		y++;
 	}

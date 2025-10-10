@@ -63,7 +63,7 @@ fclean: clean
 re: fclean all
 
 map1: all
-	@./$(NAME) maps/map1.ber
+	@./$(NAME) maps/map1.cub
 
 map2: all
 	@./$(NAME) maps/map2.ber

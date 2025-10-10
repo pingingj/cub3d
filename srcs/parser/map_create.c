@@ -26,6 +26,8 @@ static void	change_grid(t_map *map, int x, int y)
 		map->grid[y][x] = 'o';
 	else if (map->grid[y][x] == 'D')
 		map->grid[y][x] = 'd';
+	else if (map->grid[y][x] == 'C')
+		map->grid[y][x] = 'c';
 }
 
 bool	flood_map(t_map *map, int x, int y)
@@ -37,7 +39,7 @@ bool	flood_map(t_map *map, int x, int y)
 		return (true);
 	if (y < 0 || y >= map->pos.y || x < 0
 		|| x >= ft_strlen(map->grid[y]) || map->grid[y][x] == '\0'
-		|| ft_strchr("10DocedNEWSnews", map->grid[y][x]) == NULL)
+		|| ft_strchr("10oDdCcNEWSnews", map->grid[y][x]) == NULL)
 		return (false);
 	change_grid(map, x, y);
 	if (flood_map(map, x - 1, y) == false)
@@ -56,7 +58,7 @@ static void	find_map(t_game *game, char *line)
 	int	i;
 
 	i = 0;
-	if (in_string(line, "10NEWSD") == false && game->map.exists == false)
+	if (in_string(line, "10NEWSDC") == false && game->map.exists == false)
 		game->map.breakp++;
 	else
 		game->map.exists = true;

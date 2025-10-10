@@ -167,7 +167,7 @@ void hande_sprites(t_game *game)
 					{
 						// double intensity = 1;
 						double intensity = sprite_flashlight(sp_index, py, game, transformy);
-						my_mlx_pixel_put(&game->bg_img, sp_index, py,add_light(color,intensity));
+						my_mlx_pixel_put(&game->bg_img, sp_index, py, add_light(color,intensity));
 					}
 					py++;
 				}

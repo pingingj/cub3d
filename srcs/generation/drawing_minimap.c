@@ -115,6 +115,8 @@ void	draw_minitile_row(t_game game, t_pos tile_pos, t_pos win_cord,
 				draw_tile(&game.bg_img, 0xFFBB23, area, win_cord);
 			else if (grid == 'D')
 				draw_tile(&game.bg_img, 0x8599BA, area, win_cord);
+			else if (grid == 'c')
+				draw_tile(&game.bg_img, 0x223030, area, win_cord);
 		}
 		tile_pos.x++;
 		win_cord.x += area.x;
@@ -173,7 +175,6 @@ void	draw_minimap_loop(t_game *game, double playerx, double playery)
 	t_pos	tile_pos;
 	t_pos	win_pos;
 	
-	printf("tilesize = %d\n", game->mini.tile_size);
 	mini_init(game);
 	clear_minimap_image(game, game->mini.size);
 	scale_tiles.x = round((game->mini.size.x / game->mini.tile_size + 1) / 2);

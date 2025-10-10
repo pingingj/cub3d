@@ -15,6 +15,7 @@
 int	closex(t_game *mlx)
 {
 	ft_printf("\n\nGAME CLOSING\n");
+	mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
 	mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
 	free(mlx->move);
 	mlx_destroy_window(mlx->mlx, mlx->win);
@@ -61,10 +62,18 @@ void	print_info(t_game game)
 				ft_printf("o");
 			else if (game.map.grid[i][j] == 'd')
 				ft_printf("d");
+			else if (game.map.grid[i][j] == 'c')
+				ft_printf("c");
 			else if (game.map.grid[i][j] == '\0')
 				ft_printf("\n");
 			j++;
 		}
+		i++;
+	}
+	i = 0;
+	while(i < game.ass.collect_amount)
+	{
+		printf("collectible cords x = %f y = %f\n", game.ass.collectible[i].cords.x, game.ass.collectible->cords.y);
 		i++;
 	}
 	// ft_printf("COLLETIBLE AMOUNT = %d\n", game.c_amount);
@@ -77,6 +86,8 @@ void	free_game(t_game *game)
 	int	i;
 
 	i = 0;
+	if (game->ass.collectible)
+		free(game->ass.collectible);
 	if (game->ass.ceiling.nums)
 		free(game->ass.ceiling.nums);
 	if (game->ass.floor.nums)

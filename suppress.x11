@@ -1,0 +1,18 @@
+
+{
+  X11_writev
+  Memcheck:Param
+  writev(vector[0])
+  fun:writev
+  obj:/usr/lib/x86_64-linux-gnu/libxcb.so.*
+}
+
+{
+  Xcursor_reachable
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  fun:malloc
+  fun:XcursorSupportsARGB
+  obj:/usr/lib/x86_64-linux-gnu/libXcursor.so.*
+  obj:/usr/lib/x86_64-linux-gnu/libX11.so.*
+}
