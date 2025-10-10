@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/06 16:07:02 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/06 16:09:28 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	y = 0;
 	while (y < HEIGHT)
 	{
-		intensity = 1;
+		// intensity = 1;
 		if ((x > game->mini.offset && x < game->mini.offset + game->mini.size.x)
 			&& (y > game->mini.offset && y < game->mini.offset
 				+ game->mini.size.y) && game->mini.show == true)
@@ -170,7 +170,6 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 			y++;
 			continue ;
 		}
-		//might broke something becuz removed add light to color param same on the other pixel put below door, pls dont forget to put back later
 		if (y < sdraw)
 			my_mlx_pixel_put(&game->bg_img, x, y,
 				add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));
@@ -196,7 +195,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 
 void	map_gen(t_game *game)
 {
-	game->move = ft_calloc(9, sizeof(int));
+	game->move = ft_calloc(10, sizeof(int));
 	if (!game->move)
 		exit(1);
 	// printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
