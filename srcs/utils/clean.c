@@ -95,7 +95,7 @@ void	free_game(t_game *game)
 /// @param game struct to free
 /// @param error if error = 1 it will free game struct
 /// @param msg msg to print
-/// @param fd closes open fd
+/// @param fd closes open fd send -1 if no fd needs to be closed
 void	print_errors(t_game *game, int error, char *msg, int fd)
 {
 	if (fd > 2)

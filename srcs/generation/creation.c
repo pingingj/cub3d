@@ -147,6 +147,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	int		door;
 	int		y;
 	double	intensity;
+	(void)intensity;
 
 	if (game->meth.orientation == 0)
 		color = 0x0000FF;
@@ -192,7 +193,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 
 void	map_gen(t_game *game)
 {
-	game->move = ft_calloc(9, sizeof(int));
+	game->move = ft_calloc(10, sizeof(int));
 	if (!game->move)
 		exit(1);
 	printf("x = %f   y = %f\n", game->player.posx, game->player.posy);

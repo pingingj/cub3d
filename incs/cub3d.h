@@ -30,7 +30,7 @@
 # define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
-# define TILE_SIZE 60
+# define TILE_SIZE 40
 # define MINIMAP_RADIUS 2
 # define texture_amount 3
 
@@ -148,6 +148,7 @@ typedef struct s_map
 
 typedef struct s_mini
 {
+	int			tile_size;
 	bool		show;
 	int			height;
 	int			width;
