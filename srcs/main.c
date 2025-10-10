@@ -42,6 +42,28 @@ int	mouse(int x, int y, t_game *game)
 	return (0);
 }
 
+// void	img_init(t_game *game, char *filename, t_img *img)
+// {
+// 	img->img = mlx_xpm_file_to_image(game->mlx,
+// 			filename, &img->bits_per_pixel,
+// 			&img->line_length);
+// 	img->addr = mlx_get_data_addr(img->img,
+// 			&img->bits_per_pixel,
+// 			&img->line_length,
+// 			&img->endian);
+// }
+
+void	get_imgs(t_game *game)
+{
+	game->ass.barrel.img = mlx_xpm_file_to_image(game->mlx,
+			"incs/textures/barrel.xpm", &game->ass.barrel.w,
+			&game->ass.barrel.h);
+	game->ass.barrel.addr = mlx_get_data_addr(game->ass.barrel.img,
+			&game->ass.barrel.bits_per_pixel,
+			&game->ass.barrel.line_length,
+			&game->ass.barrel.endian);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -51,9 +73,9 @@ int	main(int argc, char **argv)
 	{
 		if (parse(&game, argv[1]) == false)
 			return (1);
-		// print_info(game);
+		print_info(game);
 		game.mlx = mlx_init();
-		textures(&game);
+		get_imgs(&game);
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);

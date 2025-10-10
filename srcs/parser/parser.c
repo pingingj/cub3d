@@ -127,6 +127,58 @@ void get_error(t_game *game, int fd)
 		print_errors(game, 1, "Error validating textures or colors", fd);
 }
 
+void	coin_pos(t_game *game)
+{
+	int	x;
+	int	y;
+	int	index;
+
+	y = 0;
+	index = 0;
+	game->ass.collectible = ft_calloc(game->ass.collect_amount, sizeof(t_sprite));
+	if (game->ass.collectible == NULL)
+		print_errors(game, 1, "Failed malloc in collectibles", -1);
+	while (y < game->map.pos.y)
+	{
+		x = 0;
+		while (game->map.grid[y][x])
+		{
+			if (game->map.grid[y][x] == 'c')
+			{
+				game->ass.collectible[index].cords.x = x + 0.5;
+				game->ass.collectible[index].cords.y = y + 0.5;
+				index++;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	make_collectible(t_game *game)
+{
+	int			x;
+	int			y;
+	int			amount;
+
+	amount = 0;
+	y = 0;
+	while (y < game->map.pos.y)
+	{
+		x = 0;
+		while (game->map.grid[y][x])
+		{
+			if (game->map.grid[y][x] == 'c')
+				amount++;
+			x++;
+		}
+		y++;
+	}
+	game->ass.collect_amount = amount;
+	coin_pos(game);
+}
+
+
 bool parse(t_game *game, char *filename)
 {
 	int fd;
@@ -147,6 +199,7 @@ bool parse(t_game *game, char *filename)
 		print_errors(game, 1, "Missing texture or color", fd);
 	parse_colors(game, fd);
 	parse_map(game, fd, filename);
+	make_collectible(game);
 	close(fd);
 	return (true);
 }

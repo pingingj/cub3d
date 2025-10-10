@@ -23,7 +23,7 @@ bool	flood_fill(t_map *map)
 		x = 0;
 		while (map->grid[y][x])
 		{
-			if (ft_strchr("0NEWSD", map->grid[y][x]) != NULL)
+			if (ft_strchr("0NEWSDC", map->grid[y][x]) != NULL)
 				if (flood_map(map, x, y) == false)
 					return (false);
 			x++;
@@ -44,7 +44,7 @@ bool	check_map(t_game *game)
 		x = 0;
 		while (game->map.grid[y][x])
 		{
-			if (ft_strchr("01 NEWSD\n", game->map.grid[y][x]) == NULL)
+			if (ft_strchr("01 NEWSDC\n", game->map.grid[y][x]) == NULL)
 				return (false);
 			x++;
 		}
