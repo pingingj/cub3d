@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/09/29 17:02:26 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/06 16:46:43 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ bool	get_player(t_game *game)
 		{
 			if (ft_strchr("NEWS", game->map.grid[y][x]))
 			{
-				game->player.dirx = 0;
-				game->player.diry = 0;
-				game->player.planex = 0;
-				game->player.planey = 0;
 				if (game->map.grid[y][x] == 'N')
 				{
 					game->player.diry = -1;
@@ -100,7 +96,7 @@ bool	get_player(t_game *game)
 		y++;
 	}
 	if (game->player.posx == -1 || game->player.posy == -1)
-		return (false);
+		print_errors(game, 1, "Missing player in map", -1);
 	return (true);
 }
 

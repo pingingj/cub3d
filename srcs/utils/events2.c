@@ -77,7 +77,8 @@ void	look_left(t_game *game)
 
 int	key_press(int keycode, t_game *game)
 {
-	// printf("key code = %d\n", keycode);
+	// if (keycode)
+	// 	printf("key code = %d\n", keycode);
 	if (keycode == 65307)
 		closex(game);
 	if (keycode == M)
@@ -120,6 +121,10 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == F)
 		open_door(game, game->player.posx + game->player.dirx * MOVE_SPEED,
 			game->player.posy + game->player.diry * MOVE_SPEED);
+	if (keycode == 44)
+		game->move[8] = 1;
+	if (keycode == 46)
+		game->move[9] = 1;
 	return (0);
 }
 
@@ -149,6 +154,10 @@ int	key_release(int keycode, t_game *game)
 		game->move[7] = 0;
 	if (keycode == SHIFT)
 		game->player.speed = MOVE_SPEED;
+	if (keycode == 44)
+		game->move[8] = 0;
+	if (keycode == 46)
+		game->move[9] = 0;
 	return (0);
 }
 
@@ -178,9 +187,19 @@ int	move(t_game *game)
 		if(game->player.look < -1000)
 		game->player.look +=10;
 	}
+	if (game->move[8] == 1)
+	{
+		if (game->mini.tile_size < 80)
+			game->mini.tile_size++;
+	}
+	if (game->move[9] == 1)
+	{
+		if (game->mini.tile_size > 10)
+			game->mini.tile_size--;
+	}
 	if (game->move[0] == 1 || game->move[1] == 1 || game->move[2] == 1
 		|| game->move[3] == 1 || game->move[4] == 1 || game->move[5] == 1
-		|| game->move[6] == 1 || game->move[7] == 1)
+		|| game->move[6] == 1 || game->move[7] == 1 || game->move[8] == 1 || game->move[9] == 1)
 
 	{
 

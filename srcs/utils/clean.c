@@ -35,14 +35,16 @@ void	print_info(t_game game)
 	printf("EA = %s\n", game.ass.walls[EA].filename);
 	printf("SO = %s\n", game.ass.walls[SO].filename);
 	printf("WE = %s\n", game.ass.walls[WE].filename);
-	printf("Ceiling = %s\n", game.ass.ceiling.nums);
-	printf("R = %d\n", game.ass.ceiling.red);
-	printf("G = %d\n", game.ass.ceiling.green);
-	printf("B = %d\n", game.ass.ceiling.blue);
-	printf("Floor = %s\n", game.ass.floor.nums);
-	printf("R = %dARROW_ROT_SPEED", game.ass.floor.red);
-	printf("G = %d\n", game.ass.floor.green);
-	printf("B = %d\n", game.ass.floor.blue);
+	printf("length = %f\n", game.map.pos.x);
+	printf("height = %f\n", game.map.pos.y);
+	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
+	// printf("R = %d\n", game.ass.ceiling.red);
+	// printf("G = %d\n", game.ass.ceiling.green);
+	// printf("B = %d\n", game.ass.ceiling.blue);
+	// printf("Floor = %s\n", game.ass.floor.nums);
+	// printf("R = %d\n", game.ass.floor.red);
+	// printf("G = %d\n", game.ass.floor.green);
+	// printf("B = %d\n", game.ass.floor.blue);
 	printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
 	printf("hexa floor = %d\n", game.ass.floor.hexa);
 	printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
@@ -93,7 +95,7 @@ void	free_game(t_game *game)
 /// @param game struct to free
 /// @param error if error = 1 it will free game struct
 /// @param msg msg to print
-/// @param fd closes open fd
+/// @param fd closes open fd send -1 if no fd needs to be closed
 void	print_errors(t_game *game, int error, char *msg, int fd)
 {
 	if (fd > 2)

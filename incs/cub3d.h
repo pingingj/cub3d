@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
 /*   Updated: 2025/10/09 14:08:16 by dpaes-so         ###   ########.fr       */
@@ -30,7 +30,7 @@
 # define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
-# define TILE_SIZE 60
+# define TILE_SIZE 40
 # define MINIMAP_RADIUS 2
 # define MINIMAP_TILES 5
 
@@ -151,6 +151,7 @@ typedef struct s_map
 
 typedef struct s_mini
 {
+	int			tile_size;
 	bool		show;
 	int			height;
 	int			width;

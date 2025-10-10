@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:50:51 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/08/28 13:16:49 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/06 16:56:59 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,15 @@ static void	find_map(t_game *game, char *line)
 	i++;
 }
 
-static bool	get_grid(t_game *game, int fd)
+static bool	get_grid(t_game *game, char *filename)
 {
 	int		i;
+	int		fd;
 	char	*line;
 
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		print_errors(game, 1, "Wasn't able to open file", -1);
 	i = 0;
 	while (i < game->map.breakp)
 	{
@@ -80,9 +84,10 @@ static bool	get_grid(t_game *game, int fd)
 	{
 		game->map.grid[i] = get_next_line(fd);
 		if (game->map.grid[i] == NULL)
-			return (true);
+			return (close(fd), true);
 		i++;
 	}
+	close(fd);
 	return (true);
 }
 
@@ -98,7 +103,9 @@ bool	get_map(t_game *game, int fd, char *filename)
 		find_map(game, line);
 		if (game->map.exists)
 		{
-			if (ft_strlen(line) > game->map.pos.x)
+			if (ft_strlen(line) > game->map.pos.x && line[ft_strlen(line) - 1] == '\n')
+				game->map.pos.x = ft_strlen(line) - 1;
+			else if (ft_strlen(line) > game->map.pos.x)
 				game->map.pos.x = ft_strlen(line);
 			game->map.pos.y++;
 		}
@@ -109,7 +116,6 @@ bool	get_map(t_game *game, int fd, char *filename)
 	if (game->map.grid == NULL)
 		return (false);
 	close(fd);
-	fd = open(filename, O_RDONLY);
-	get_grid(game, fd);
+	get_grid(game, filename);
 	return (true);
 }
