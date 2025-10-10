@@ -150,7 +150,6 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	int		door;
 	int		y;
 	double	intensity;
-	(void)intensity;
 
 	if (game->meth.orientation == 0)
 		color = 0x0000FF;
@@ -163,7 +162,7 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	y = 0;
 	while (y < HEIGHT)
 	{
-		intensity = 1;
+		// intensity = 1;
 		if ((x > game->mini.offset && x < game->mini.offset + game->mini.size.x)
 			&& (y > game->mini.offset && y < game->mini.offset
 				+ game->mini.size.y) && game->mini.show == true)
@@ -171,24 +170,24 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 			y++;
 			continue ;
 		}
-		//might broke something becuz removed add light to color param same on the other pixel put below door, pls dont forget to put back later
 		if (y < sdraw)
-			my_mlx_pixel_put(&game->bg_img, x, y, game->ass.ceiling.hexa);
+			my_mlx_pixel_put(&game->bg_img, x, y,
+				add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));
 		else if (y >= sdraw && y <= edraw && game->meth.door == false)
 		{
 			intensity = flashlight(x, y, game, true);
-			my_mlx_pixel_put(&game->bg_img, x, y, color);
+			my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
 		}
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
 		{
 			intensity = flashlight(x, y, game, true);
-			my_mlx_pixel_put(&game->bg_img, x, y, door);
+			my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
 		}
 		else
 		{
 			intensity = flashlight(x, y, game, false);
 			my_mlx_pixel_put(&game->bg_img, x, y,
-				game->ass.floor.hexa);
+				add_light(game->ass.floor.hexa, intensity));
 		}
 		y++;
 	}
