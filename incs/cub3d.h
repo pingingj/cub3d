@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/06 18:33:04 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:08:16 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define SPACE 32
 # define TILE_SIZE 40
 # define MINIMAP_RADIUS 2
-# define texture_amount 3
+# define MINIMAP_TILES 5
 
 // keys
 # define W 119
@@ -47,8 +47,8 @@
 # define ARROW_RIGHT 65363
 # define ARROW_DOWN 65364
 # define ANGLE_NUMBERS 8
-# define rot_speed 0.001
-# define arrow_rot_speed 0.05
+# define ROT_SPEED 0.0003
+# define ARROW_ROT_SPEED 0.06
 # define M 109
 # define F 102
 # define SHIFT 65505
@@ -72,6 +72,8 @@ typedef struct s_img
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	int			w;
+	int			h;
 	char		*filename;
 }				t_img;
 
@@ -124,8 +126,8 @@ typedef struct s_sprite
 {
 	t_img		texture;
 	t_pos		cords;
-	int			x;
-	int			y;
+	int			width;
+	int			height;
 }				t_sprite;
 
 typedef struct s_assets
@@ -133,7 +135,8 @@ typedef struct s_assets
 	t_img		walls[4];
 	t_color		ceiling;
 	t_color		floor;
-	t_sprite	collectible;
+	t_img		barrel;
+	t_sprite	*collectible;
 	t_sprite	collectible2;
 	int			collect_amount;
 }				t_assets;
@@ -166,7 +169,8 @@ typedef struct s_game
 	t_mini		mini;
 	t_math		meth;
 	t_pos		mouse;
-	bool		look_flag;
+	bool		look_flag_right;
+	bool		look_flag_left;
 	void		*mlx;
 	void		*win;
 	double		light;
@@ -188,6 +192,8 @@ void			wall_size(t_game *game, double walldist, int *sdraw,
 					int *edraw);
 void			create_frame(t_game *game);
 void			artistic_moment(t_game *game, int x, int sdraw, int edraw);
+int	add_light(int color, double intensity);
+double	flashlight(int x, int y, t_game *game, bool is_wall);
 // clean
 int				closex(t_game *mlx);
 // mlx_adds

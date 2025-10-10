@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/01 14:18:22 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:54:45 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,12 @@ void	look_right(t_game *game)
 	double angle;
 	int x;
 
-	if(game->look_flag == true)
-	{
-		x= 1;
-		angle = arrow_rot_speed;
-	}
-	else
+	x= 1;
+	angle = ARROW_ROT_SPEED;
+	if(game->look_flag_right == false)
 	{
 		x = game->mouse.x;
-		angle = rot_speed;
+		angle = ROT_SPEED;
 	}
 	old_dirx = game->player.dirx;
 	game->player.dirx = game->player.dirx * cos(x * angle) - game->player.diry
@@ -123,3 +120,5 @@ void	look_right(t_game *game)
 	game->player.planey = old_planex * sin(x * angle) + game->player.planey
 		* cos(x * angle);
 }
+
+

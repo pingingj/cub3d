@@ -42,12 +42,6 @@ int	mouse(int x, int y, t_game *game)
 	return (0);
 }
 
-void hard_sprites(t_game *game)
-{
-	game->ass.collect_amount = 1;
-	game->ass.collectible.cords.x = 20.5;
-	game->ass.collectible.cords.y = 17.5;
-}
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -57,8 +51,7 @@ int	main(int argc, char **argv)
 	{
 		if (parse(&game, argv[1]) == false)
 			return (1);
-		hard_sprites(&game);
-		print_info(game);
+		// print_info(game);
 		game.mlx = mlx_init();
 		textures(&game);
 		map_gen(&game);
