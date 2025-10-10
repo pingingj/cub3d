@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/09/30 15:23:52 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:47:18 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_info(t_game game)
 	printf("G = %d\n", game.ass.ceiling.green);
 	printf("B = %d\n", game.ass.ceiling.blue);
 	printf("Floor = %s\n", game.ass.floor.nums);
-	printf("R = %d\n", game.ass.floor.red);
+	printf("R = %dARROW_ROT_SPEED", game.ass.floor.red);
 	printf("G = %d\n", game.ass.floor.green);
 	printf("B = %d\n", game.ass.floor.blue);
 	printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
