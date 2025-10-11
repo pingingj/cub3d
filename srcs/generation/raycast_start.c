@@ -147,7 +147,7 @@ void hande_sprites(t_game *game)
 		while(sp_index < edrawx)
 		{
 			texx = (int)(256 * (sp_index - (-sprite_width / 2 + spritexlocation)) * game->ass.barrel.w/ sprite_width) / 256;
-			if (transformy > 0 && sp_index >= 0 && sp_index < WIDTH && transformy < game->wall_dist_sp[sp_index])
+			if (transformy > 0 && sp_index >= 0 && sp_index < WIDTH && transformy < game->wall_dist_sp[sp_index] + 0.6)
 			{
 				int py = sdrawy;
 				while (py < edrawy)
