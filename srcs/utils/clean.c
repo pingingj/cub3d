@@ -32,12 +32,12 @@ void	print_info(t_game game)
 
 	j = 0;
 	i = 0;
-	printf("NO = %s\n", game.ass.walls[NO].filename);
-	printf("EA = %s\n", game.ass.walls[EA].filename);
-	printf("SO = %s\n", game.ass.walls[SO].filename);
-	printf("WE = %s\n", game.ass.walls[WE].filename);
-	printf("length = %f\n", game.map.pos.x);
-	printf("height = %f\n", game.map.pos.y);
+	// printf("NO = %s\n", game.ass.walls[NO].filename);
+	// printf("EA = %s\n", game.ass.walls[EA].filename);
+	// printf("SO = %s\n", game.ass.walls[SO].filename);
+	// printf("WE = %s\n", game.ass.walls[WE].filename);
+	// printf("length = %f\n", game.map.pos.x);
+	// printf("height = %f\n", game.map.pos.y);
 	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
 	// printf("R = %d\n", game.ass.ceiling.red);
 	// printf("G = %d\n", game.ass.ceiling.green);
@@ -46,9 +46,9 @@ void	print_info(t_game game)
 	// printf("R = %d\n", game.ass.floor.red);
 	// printf("G = %d\n", game.ass.floor.green);
 	// printf("B = %d\n", game.ass.floor.blue);
-	printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
-	printf("hexa floor = %d\n", game.ass.floor.hexa);
-	printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
+	// printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
+	// printf("hexa floor = %d\n", game.ass.floor.hexa);
+	// printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
 	while (i < game.map.pos.y)
 	{
 		j = 0;

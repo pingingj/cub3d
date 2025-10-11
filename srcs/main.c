@@ -73,8 +73,8 @@ int	main(int argc, char **argv)
 	{
 		if (parse(&game, argv[1]) == false)
 			return (1);
-		print_info(game);
 		game.mlx = mlx_init();
+		print_info(game);
 		get_imgs(&game);
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);

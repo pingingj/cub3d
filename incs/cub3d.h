@@ -23,8 +23,8 @@
 # include <stdlib.h>
 
 // pixels
-# define WIDTH 1440
-# define HEIGHT 900
+# define WIDTH 900
+# define HEIGHT 500
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define RUN_SPEED 0.12
