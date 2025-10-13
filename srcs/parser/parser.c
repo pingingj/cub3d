@@ -182,7 +182,9 @@ void	make_collectible(t_game *game)
 bool parse(t_game *game, char *filename)
 {
 	int fd;
+	int map_height;
 
+	map_height = 0;
 	fd = open(filename, O_RDONLY);
 	game->mini.tile_size = 60;
 	game->mini.show = true;
@@ -201,5 +203,7 @@ bool parse(t_game *game, char *filename)
 	parse_map(game, fd, filename);
 	make_collectible(game);
 	close(fd);
+	while(game->map.grid[map_height])
+		map_height++;
 	return (true);
 }

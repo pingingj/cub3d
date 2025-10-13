@@ -23,8 +23,8 @@
 # include <stdlib.h>
 
 // pixels
-# define WIDTH 900
-# define HEIGHT 500
+# define WIDTH 1440
+# define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define RUN_SPEED 0.12
@@ -76,6 +76,13 @@ typedef struct s_img
 	int			h;
 	char		*filename;
 }				t_img;
+
+
+typedef struct s_point
+{
+	int		x;
+	int		y;
+}				t_point;
 
 typedef struct s_pos
 {
@@ -137,7 +144,7 @@ typedef struct s_assets
 	t_color		floor;
 	t_img		barrel;
 	t_sprite	*collectible;
-	t_sprite	collectible2;
+	t_sprite	enemy;
 	int			collect_amount;
 }				t_assets;
 
@@ -147,6 +154,7 @@ typedef struct s_map
 	int			breakp;
 	t_pos		pos;
 	bool		exists;
+	int			height;
 }				t_map;
 
 typedef struct s_mini
@@ -178,6 +186,8 @@ typedef struct s_game
 	int			wall_dist_sp[WIDTH];
 	int			*move;
 	int			bob;
+	int 		**visited;
+	t_point 	**parent;
 }				t_game;
 
 // generation

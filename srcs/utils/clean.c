@@ -48,7 +48,7 @@ void	print_info(t_game game)
 	// printf("B = %d\n", game.ass.floor.blue);
 	// printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
 	// printf("hexa floor = %d\n", game.ass.floor.hexa);
-	// printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
+	printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
 	while (i < game.map.pos.y)
 	{
 		j = 0;
@@ -71,11 +71,11 @@ void	print_info(t_game game)
 		i++;
 	}
 	i = 0;
-	while(i < game.ass.collect_amount)
-	{
-		printf("collectible cords x = %f y = %f\n", game.ass.collectible[i].cords.x, game.ass.collectible->cords.y);
-		i++;
-	}
+	// while(i < game.ass.collect_amount)
+	// {
+	// 	printf("collectible cords x = %f y = %f\n", game.ass.collectible[i].cords.x, game.ass.collectible->cords.y);
+	// 	i++;
+	// }
 	// ft_printf("COLLETIBLE AMOUNT = %d\n", game.c_amount);
 	// ft_printf("EXIT position: X = %d, Y = %d\n",
 	// 	map.exit.pos.x, map.exit.pos.y);
