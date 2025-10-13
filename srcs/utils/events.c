@@ -45,12 +45,8 @@ void	move_foward(t_game *game, double speed)
 		game->player.posx = new_x;
 	if(hit_box(game,game->player.posx,new_y) == true)
 		game->player.posy = new_y;
-		
-	// if (game->map.grid[(int)new_y][(int)new_x] == 'o')
-	// {
-	// 	game->player.posx = new_x;
-	// 	game->player.posy = new_y;
-	// }
+	if(game->map.grid[(int)new_y][(int)new_x] == 'c')
+		game->map.grid[(int)new_y][(int)new_x] = 'o';
 }
 
 void	move_back(t_game *game, double speed)
@@ -64,6 +60,8 @@ void	move_back(t_game *game, double speed)
 		game->player.posx = new_x;
 	if(hit_box(game,game->player.posx,new_y) == true)
 		game->player.posy = new_y;
+	if(game->map.grid[(int)new_y][(int)new_x] == 'c')
+		game->map.grid[(int)new_y][(int)new_x] = 'o';
 }
 
 void	move_left(t_game *game, double speed)
@@ -77,6 +75,8 @@ void	move_left(t_game *game, double speed)
 		game->player.posx = new_x;
 	if(hit_box(game,game->player.posx,new_y) == true)
 		game->player.posy = new_y;
+	if(game->map.grid[(int)new_y][(int)new_x] == 'c')
+		game->map.grid[(int)new_y][(int)new_x] = 'o';
 }
 
 void	move_right(t_game *game, double speed)
@@ -90,6 +90,8 @@ void	move_right(t_game *game, double speed)
 		game->player.posx = new_x;
 	if(hit_box(game,game->player.posx,new_y) == true)
 		game->player.posy = new_y;
+	if(game->map.grid[(int)new_y][(int)new_x] == 'c')
+		game->map.grid[(int)new_y][(int)new_x] = 'o';
 }
 
 /*to lookj in both direction i use a formula that rotates vectors,

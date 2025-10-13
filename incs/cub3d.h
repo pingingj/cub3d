@@ -77,6 +77,13 @@ typedef struct s_img
 	char		*filename;
 }				t_img;
 
+
+typedef struct s_point
+{
+	int		x;
+	int		y;
+}				t_point;
+
 typedef struct s_pos
 {
 	double		x;
@@ -137,7 +144,7 @@ typedef struct s_assets
 	t_color		floor;
 	t_img		barrel;
 	t_sprite	*collectible;
-	t_sprite	collectible2;
+	t_sprite	enemy;
 	int			collect_amount;
 }				t_assets;
 
@@ -147,6 +154,7 @@ typedef struct s_map
 	int			breakp;
 	t_pos		pos;
 	bool		exists;
+	int			height;
 }				t_map;
 
 typedef struct s_mini
@@ -178,6 +186,8 @@ typedef struct s_game
 	int			wall_dist_sp[WIDTH];
 	int			*move;
 	int			bob;
+	int 		**visited;
+	t_point 	**parent;
 }				t_game;
 
 // generation
