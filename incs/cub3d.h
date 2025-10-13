@@ -27,6 +27,7 @@
 # define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
+# define MONSTER_SPEED 0.08
 # define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
@@ -137,6 +138,7 @@ typedef struct s_sprite
 	int			height;
 }				t_sprite;
 
+
 typedef struct s_assets
 {
 	t_img		walls[4];
@@ -187,7 +189,10 @@ typedef struct s_game
 	int			*move;
 	int			bob;
 	int 		**visited;
-	t_point 	**parent;
+	t_point 	**prev;
+	int monster_target_x;
+	int monster_target_y;
+	int monster_has_target;
 }				t_game;
 
 // generation

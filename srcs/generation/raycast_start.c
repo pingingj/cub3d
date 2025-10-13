@@ -119,8 +119,8 @@ void hande_sprites(t_game *game)
 	sort_dist(order,sprite_dist,game);
 	while(++i < game->ass.collect_amount)
 	{
-		if(game->map.grid[(int)game->ass.collectible[order[i]].cords.y][(int)game->ass.collectible[order[i]].cords.x] != 'c')
-			continue;
+		// if(game->map.grid[(int)game->ass.collectible[order[i]].cords.y][(int)game->ass.collectible[order[i]].cords.x] != 'c')
+		// 	continue;
 		mathx = game->ass.collectible[order[i]].cords.x - game->player.posx;
 		mathy = game->ass.collectible[order[i]].cords.y - game->player.posy;
 		inverse = 1.0 / (game->player.planex * game->player.diry - game->player.dirx * game->player.planey);

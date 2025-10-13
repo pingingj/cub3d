@@ -202,7 +202,7 @@ int	move(t_game *game)
 		|| game->move[6] == 1 || game->move[7] == 1 || game->move[8] == 1 || game->move[9] == 1)
 
 	{
-		create_frame(game);
+		// create_frame(game);
 	}
 	return (0);
 }

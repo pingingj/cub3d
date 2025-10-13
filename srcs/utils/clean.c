@@ -36,8 +36,8 @@ void	print_info(t_game game)
 	// printf("EA = %s\n", game.ass.walls[EA].filename);
 	// printf("SO = %s\n", game.ass.walls[SO].filename);
 	// printf("WE = %s\n", game.ass.walls[WE].filename);
-	// printf("length = %f\n", game.map.pos.x);
-	// printf("height = %f\n", game.map.pos.y);
+	printf("length = %f\n", game.map.pos.x);
+	printf("height = %f\n", game.map.pos.y);
 	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
 	// printf("R = %d\n", game.ass.ceiling.red);
 	// printf("G = %d\n", game.ass.ceiling.green);

@@ -135,7 +135,7 @@ void	coin_pos(t_game *game)
 
 	y = 0;
 	index = 0;
-	game->ass.collectible = ft_calloc(game->ass.collect_amount, sizeof(t_sprite));
+	game->ass.collectible = ft_calloc(game->ass.collect_amount + 1, sizeof(t_sprite));
 	if (game->ass.collectible == NULL)
 		print_errors(game, 1, "Failed malloc in collectibles", -1);
 	while (y < game->map.pos.y)
@@ -153,6 +153,8 @@ void	coin_pos(t_game *game)
 		}
 		y++;
 	}
+	game->ass.collectible[game->ass.collect_amount -1].cords.x = 30;
+	game->ass.collectible[game->ass.collect_amount - 1].cords.y = 19;
 }
 
 void	make_collectible(t_game *game)
@@ -182,9 +184,7 @@ void	make_collectible(t_game *game)
 bool parse(t_game *game, char *filename)
 {
 	int fd;
-	int map_height;
 
-	map_height = 0;
 	fd = open(filename, O_RDONLY);
 	game->mini.tile_size = 60;
 	game->mini.show = true;
@@ -203,7 +203,5 @@ bool parse(t_game *game, char *filename)
 	parse_map(game, fd, filename);
 	make_collectible(game);
 	close(fd);
-	while(game->map.grid[map_height])
-		map_height++;
 	return (true);
 }

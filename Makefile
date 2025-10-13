@@ -41,7 +41,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 
 $(LIBFT):
 	@echo compiling...
-	@make bonus  -C ./incs/libft -s
+	@make bonus -C ./incs/libft -s
 
 $(MLX):
 	@make -C ./incs/minilibx-linux -s
