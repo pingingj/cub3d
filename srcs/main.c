@@ -118,59 +118,49 @@ void free_queue(t_list *queue)
         queue = tmp;
     }
 }
-
 int	monster(t_game *game)
 {
-	double	target_cx;
-	double	target_cy;
-	double	dist_to_target;
-	double	dx;
-	double	dy;
-	double	dist;
-	t_point	path_cell;
-	t_point	next_cell;
-	t_list	*queue;
+	double target_cx;
+	double target_cy;
+	double dx;
+	double dy;
+	double dist;
+	t_list *queue;
+	t_point path_cell;
+	t_point next_cell;
 
-	target_cx = game->monster_target_x + 0.5;
-	target_cy = game->monster_target_y + 0.5;
-	dist_to_target = sqrt(
-		(game->ass.enemy.cords.x - target_cx) * (game->ass.enemy.cords.x - target_cx) +
-		(game->ass.enemy.cords.y - target_cy) * (game->ass.enemy.cords.y - target_cy)
-	);
-	if (!game->monster_has_target || dist_to_target < 0.05)
+	queue = monster_bfs_set_up(game);
+	check_space(game, queue);
+	path_cell.x = (int)game->player.posx;
+	path_cell.y = (int)game->player.posy;
+	next_cell = game->prev[path_cell.y][path_cell.x];
+	while (!(next_cell.x == (int)game->ass.enemy.cords.x &&
+			 next_cell.y == (int)game->ass.enemy.cords.y))
 	{
-		queue = monster_bfs_set_up(game);
-		check_space(game, queue);
-		path_cell.x = (int)game->player.posx;
-		path_cell.y = (int)game->player.posy;
+		path_cell.x = next_cell.x;
+		path_cell.y = next_cell.y;
 		next_cell = game->prev[path_cell.y][path_cell.x];
-		while (!(next_cell.x == (int)game->ass.enemy.cords.x &&
-				 next_cell.y == (int)game->ass.enemy.cords.y))
-		{
-			path_cell.x = next_cell.x;
-			path_cell.y = next_cell.y;
-			next_cell = game->prev[path_cell.y][path_cell.x];
-		}
-		game->monster_target_x = path_cell.x;
-		game->monster_target_y = path_cell.y;
-		game->monster_has_target = 1;
-		free_queue(queue);
-		target_cx = game->monster_target_x + 0.5;
-		target_cy = game->monster_target_y + 0.5;
-		dist_to_target = sqrt(
-			(game->ass.enemy.cords.x - target_cx) * (game->ass.enemy.cords.x - target_cx) +
-			(game->ass.enemy.cords.y - target_cy) * (game->ass.enemy.cords.y - target_cy)
-		);
 	}
+	free_queue(queue);
+	target_cx = path_cell.x + 0.5;
+	target_cy = path_cell.y + 0.5;
 	dx = target_cx - game->ass.enemy.cords.x;
 	dy = target_cy - game->ass.enemy.cords.y;
 	dist = sqrt(dx * dx + dy * dy);
 	if (dist > 0.01)
 	{
-		game->ass.enemy.cords.x += MONSTER_SPEED * (dx / dist);
-		game->ass.enemy.cords.y += MONSTER_SPEED * (dy / dist);
-		game->ass.collectible[game->ass.collect_amount - 1].cords.x = game->ass.enemy.cords.x;
-		game->ass.collectible[game->ass.collect_amount - 1].cords.y = game->ass.enemy.cords.y;
+		double move_x = game->ass.enemy.cords.x + MONSTER_SPEED * (dx / dist);
+		double move_y = game->ass.enemy.cords.y + MONSTER_SPEED * (dy / dist);
+
+		int grid_x = (int)move_x;
+		int grid_y = (int)move_y;
+		if (game->map.grid[grid_y][grid_x] != '1')
+		{
+			game->ass.enemy.cords.x = move_x;
+			game->ass.enemy.cords.y = move_y;
+			game->ass.collectible[game->ass.collect_amount - 1].cords.x = game->ass.enemy.cords.x;
+			game->ass.collectible[game->ass.collect_amount - 1].cords.y = game->ass.enemy.cords.y;
+		}
 	}
 	return (0);
 }
