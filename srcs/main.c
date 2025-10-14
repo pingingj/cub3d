@@ -93,7 +93,7 @@ void check_space(t_game *game,t_list *q)
 			new_y = curr->y + dy[i];
 			if (new_y >= 0 && new_y < game->map.pos.y && 
 				new_x >= 0 && new_x < (int)strlen(game->map.grid[new_y]) && 
-				game->map.grid[new_y][new_x] != '1' && game->visited[new_y][new_x] == 0)
+				game->map.grid[new_y][new_x] != '1' && game->map.grid[new_y][new_x] != 'd'  && game->visited[new_y][new_x] == 0)
 			{
 					game->visited[new_y][new_x] = 1;
 					game->prev[new_y][new_x] = *curr;
@@ -217,7 +217,7 @@ int	monster(t_game *game)
 		double move_x = game->ass.enemy.cords.x + MONSTER_SPEED * (dx / dist);
 		double move_y = game->ass.enemy.cords.y + MONSTER_SPEED * (dy / dist);
 
-		if (game->map.grid[(int)move_y][(int)move_x] != '1')
+		if (game->map.grid[(int)move_y][(int)move_x] != '1' && game->map.grid[(int)move_y][(int)move_x] != 'd')
 		{
 			game->ass.enemy.cords.x = move_x;
 			game->ass.enemy.cords.y = move_y;
