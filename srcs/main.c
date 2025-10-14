@@ -118,19 +118,70 @@ void free_queue(t_list *queue)
         queue = tmp;
     }
 }
+
+// Returns 1 if there is a clear line of sight from (x0, y0) to (x1, y1) (no walls '1' between)
+// All coordinates are grid positions (you can cast your float positions to int)
+int has_line_of_sight(t_game *game, double x0, double y0, double x1, double y1)
+{
+	int x = (int)x0;
+	int y = (int)y0;
+	int end_x = (int)x1;
+	int end_y = (int)y1;
+	int dx = abs(end_x - x);
+	int dy = abs(end_y - y);
+	int sx = x < end_x ? 1 : -1;
+	int sy = y < end_y ? 1 : -1;
+	int err = dx - dy;
+
+	while (x != end_x || y != end_y)
+	{
+		// If in bounds, check for wall
+		if (y >= 0 && y < game->map.pos.y &&
+			x >= 0 && x < (int)strlen(game->map.grid[y]) &&
+			game->map.grid[y][x] == '1')
+			return 0;
+		int e2 = 2 * err;
+		if (e2 > -dy)
+		{
+			err -= dy;
+			x += sx;
+		}
+		if (e2 < dx)
+		{
+			err += dx;
+			y += sy;
+		}
+	}
+	return 1;
+}
+
+int is_near_wall(t_game *game, double x, double y)
+{
+	int cx = (int)x;
+	int cy = (int)y;
+	int dx[4] = {0, 0, -1, 1};
+	int dy[4] = {-1, 1, 0, 0};
+	for (int i = 0; i < 4; ++i) {
+		int nx = cx + dx[i];
+		int ny = cy + dy[i];
+		if (ny >= 0 && ny < game->map.pos.y &&
+			nx >= 0 && nx < (int)strlen(game->map.grid[ny]) &&
+			game->map.grid[ny][nx] == '1')
+			return 1;
+	}
+	return 0;
+}
+
 int	monster(t_game *game)
 {
-	double target_cx;
-	double target_cy;
-	double dx;
-	double dy;
-	double dist;
+	double target_cx, target_cy, dx, dy, dist;
 	t_list *queue;
-	t_point path_cell;
-	t_point next_cell;
+	t_point path_cell, next_cell;
 
+	// BFS setup
 	queue = monster_bfs_set_up(game);
 	check_space(game, queue);
+
 	path_cell.x = (int)game->player.posx;
 	path_cell.y = (int)game->player.posy;
 	next_cell = game->prev[path_cell.y][path_cell.x];
@@ -142,19 +193,31 @@ int	monster(t_game *game)
 		next_cell = game->prev[path_cell.y][path_cell.x];
 	}
 	free_queue(queue);
-	target_cx = path_cell.x + 0.5;
-	target_cy = path_cell.y + 0.5;
-	dx = target_cx - game->ass.enemy.cords.x;
-	dy = target_cy - game->ass.enemy.cords.y;
+
+	// --- Hybrid logic ---
+	int can_direct_chase = !is_near_wall(game, game->ass.enemy.cords.x, game->ass.enemy.cords.y) &&
+		has_line_of_sight(game, game->ass.enemy.cords.x, game->ass.enemy.cords.y,
+			game->player.posx, game->player.posy);
+
+	if (can_direct_chase)
+	{
+		dx = game->player.posx - game->ass.enemy.cords.x;
+		dy = game->player.posy - game->ass.enemy.cords.y;
+	}
+	else
+	{
+		target_cx = path_cell.x + 0.5;
+		target_cy = path_cell.y + 0.5;
+		dx = target_cx - game->ass.enemy.cords.x;
+		dy = target_cy - game->ass.enemy.cords.y;
+	}
 	dist = sqrt(dx * dx + dy * dy);
 	if (dist > 0.01)
 	{
 		double move_x = game->ass.enemy.cords.x + MONSTER_SPEED * (dx / dist);
 		double move_y = game->ass.enemy.cords.y + MONSTER_SPEED * (dy / dist);
 
-		int grid_x = (int)move_x;
-		int grid_y = (int)move_y;
-		if (game->map.grid[grid_y][grid_x] != '1')
+		if (game->map.grid[(int)move_y][(int)move_x] != '1')
 		{
 			game->ass.enemy.cords.x = move_x;
 			game->ass.enemy.cords.y = move_y;
@@ -177,8 +240,8 @@ void  enemy(t_game *game)
 	game->ass.enemy.cords.y = 19;
 	while (y < game->map.pos.y)
 	{
-		row_length = strlen(game->map.grid[y]);
-		game->visited[y] = calloc(row_length, sizeof(int));
+		row_length = ft_strlen(game->map.grid[y]);
+		game->visited[y] = ft_calloc(row_length, sizeof(int));
 		game->prev[y] = malloc(sizeof(t_point) * row_length);
 		y++;
 	}
