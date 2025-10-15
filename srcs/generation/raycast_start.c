@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 14:55:42 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:25:33 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,18 +111,18 @@ void hande_sprites(t_game *game)
 	while(++i < game->ass.collect_amount)
 	{
 		order[i] = i;
-		mathx = game->player.posx - game->ass.collectible[i].cords.x;
-		mathy = game->player.posy - game->ass.collectible[i].cords.y;
+		mathx = game->player.posx - game->ass.sprites[i].cords.x;
+		mathy = game->player.posy - game->ass.sprites[i].cords.y;
 		sprite_dist[i] = mathx * mathx + mathy * mathy;
 	}
 	i = -1;
 	sort_dist(order,sprite_dist,game);
 	while(++i < game->ass.collect_amount)
 	{
-		if(game->ass.collectible[order[i]].exists == false)
+		if(game->ass.sprites[order[i]].exists == false)
 			continue;
-		mathx = game->ass.collectible[order[i]].cords.x - game->player.posx;
-		mathy = game->ass.collectible[order[i]].cords.y - game->player.posy;
+		mathx = game->ass.sprites[order[i]].cords.x - game->player.posx;
+		mathy = game->ass.sprites[order[i]].cords.y - game->player.posy;
 		inverse = 1.0 / (game->player.planex * game->player.diry - game->player.dirx * game->player.planey);
 		transformx = inverse * (game->player.diry * mathx - game->player.dirx * mathy);
 		transformy = inverse * (-game->player.planey * mathx + game->player.planex * mathy);
@@ -174,83 +174,6 @@ void hande_sprites(t_game *game)
 			}
 			sp_index++;
 		}
-	}
-}
-
-
-void hande_enemy(t_game *game)
-{
-	double mathx;
-	double mathy;
-	double transformx;
-	double transformy;
-	double sprite_dist;
-	double inverse;
-	double spritexlocation;
-	double sprite_height;
-	double sprite_width;
-	int sdrawx;
-	int sdrawy;
-	int edrawx;
-	int edrawy;
-	int sp_index;
-	int texx;
-
-	mathx = game->player.posx -game->ass.enemy.cords.x;
-	mathy = game->player.posy -game->ass.enemy.cords.y;
-	sprite_dist = mathx * mathx + mathy * mathy;
-	mathx = game->ass.enemy.cords.x - game->player.posx;
-	mathy = game->ass.enemy.cords.y - game->player.posy;
-	inverse = 1.0 / (game->player.planex * game->player.diry - game->player.dirx * game->player.planey);
-	transformx = inverse * (game->player.diry * mathx - game->player.dirx * mathy);
-	transformy = inverse * (-game->player.planey * mathx + game->player.planex * mathy);
-	spritexlocation = (WIDTH / 2) * (1 + transformx / transformy);
-	sprite_height = fabs(HEIGHT / transformy);
-	int screen_center = HEIGHT / 2 + game->player.look;
-	sdrawy = screen_center - sprite_height / 2;
-	edrawy = screen_center + sprite_height / 2;
-	sprite_width = fabs(HEIGHT / transformy);
-	sdrawx = -sprite_width / 2 + spritexlocation;
-	edrawx = sprite_width / 2 + spritexlocation;
-	if (sdrawx < 0)
-		sdrawx = 0;
-	if (edrawx >= WIDTH)
-		edrawx = WIDTH - 1;
-	if (sdrawy < 0)
-		sdrawy = 0;
-	if (edrawy >= HEIGHT)
-		edrawy = HEIGHT - 1;
-	sp_index = sdrawx;
-	while(sp_index < edrawx)
-	{
-		texx = (int)(256 * (sp_index - (-sprite_width / 2 + spritexlocation)) * game->ass.barrel.w/ sprite_width) / 256;
-		if (transformy > 0 && sp_index >= 0 && sp_index < WIDTH && transformy < game->wall_dist_sp[sp_index] + 0.6)
-		{
-			int py = sdrawy;
-			while (py < edrawy)
-			{
-				int d = (py - screen_center + sprite_height / 2) * 256;
-				int texy = ((d * game->ass.barrel.h) / sprite_height) / 256;
-				if (texx < 0)
-					texx = 0;
-				if (texx >= game->ass.barrel.w)
-					texx = game->ass.barrel.w - 1;
-				if (texy < 0)
-					texy = 0;
-				if (texy >= game->ass.barrel.h)
-					texy = game->ass.barrel.h - 1;
-				int color = pixel_get(&game->ass.barrel, texx, texy);
-				if ((color & 0x00FFFFFF) != 0)
-				{
-					// double intensity = 1;
-					double intensity = sprite_flashlight(sp_index, py, game, transformy);
-					my_mlx_pixel_put(&game->bg_img, sp_index, py, add_light(color,intensity));
-					// my_mlx_pixel_put(&game->bg_img, sp_index, py,color);
-				}
-				py++;
-			}
-		}
-		sp_index++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 14:53:58 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:20:32 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_color
 
 typedef struct s_sprite
 {
+	bool			enemy;
 	bool 			exists;
 	t_img			texture;
 	t_pos			cords;
@@ -144,7 +145,7 @@ typedef struct s_assets
 	t_color			ceiling;
 	t_color			floor;
 	t_img			barrel;
-	t_sprite		*collectible;
+	t_sprite		*sprites;
 	t_sprite		enemy;
 	int				collect_amount;
 }					t_assets;

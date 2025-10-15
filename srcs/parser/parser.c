@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 14:55:12 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:20:32 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,9 @@ void	coin_pos(t_game *game)
 
 	y = 0;
 	index = 0;
-	game->ass.collectible = ft_calloc(game->ass.collect_amount + 1, sizeof(t_sprite));
-	if (game->ass.collectible == NULL)
-		print_errors(game, 1, "Failed malloc in collectibles", -1);
+	game->ass.sprites = ft_calloc(game->ass.collect_amount + 1, sizeof(t_sprite));
+	if (game->ass.sprites == NULL)
+		print_errors(game, 1, "Failed malloc in spritess", -1);
 	while (y < game->map.pos.y)
 	{
 		x = 0;
@@ -145,20 +145,20 @@ void	coin_pos(t_game *game)
 		{
 			if (game->map.grid[y][x] == 'c')
 			{
-				game->ass.collectible[index].exists = true;
-				game->ass.collectible[index].cords.x = x + 0.5;
-				game->ass.collectible[index].cords.y = y + 0.5;
+				game->ass.sprites[index].exists = true;
+				game->ass.sprites[index].cords.x = x + 0.5;
+				game->ass.sprites[index].cords.y = y + 0.5;
 				index++;
 			}
 			x++;
 		}
 		y++;
 	}
-	game->ass.collectible[game->ass.collect_amount -1].cords.x = 30;
-	game->ass.collectible[game->ass.collect_amount - 1].cords.y = 19;
+	game->ass.sprites[game->ass.collect_amount -1].cords.x = 30;
+	game->ass.sprites[game->ass.collect_amount - 1].cords.y = 19;
 }
 
-void	make_collectible(t_game *game)
+void	make_sprites(t_game *game)
 {
 	int			x;
 	int			y;
@@ -172,7 +172,7 @@ void	make_collectible(t_game *game)
 		while (game->map.grid[y][x])
 		{
 			if (game->map.grid[y][x] == 'C')
-				print_errors(game, 1, "Not reachable collectible found", -1);	
+				print_errors(game, 1, "Not reachable sprites found", -1);	
 			if (game->map.grid[y][x] == 'c')
 				amount++;
 			x++;
@@ -255,6 +255,6 @@ bool parse(t_game *game, char *filename)
 	parse_map(game, fd, filename);
 	close(fd);
 	make_enemy(game);
-	make_collectible(game);
+	make_sprites(game);
 	return (true);
 }

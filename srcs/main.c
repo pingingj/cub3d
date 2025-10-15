@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 14:27:44 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:32:16 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ int	monster(t_game *game)
 		dy = target_cy - game->ass.enemy.cords.y;
 	}
 	dist = sqrt(dx * dx + dy * dy);
-	if (dist > 0.01)
+	if (dist > 0.10)
 	{
 		double move_x = game->ass.enemy.cords.x + MONSTER_SPEED * (dx / dist);
 		double move_y = game->ass.enemy.cords.y + MONSTER_SPEED * (dy / dist);
@@ -247,9 +247,13 @@ int	monster(t_game *game)
 		{
 			game->ass.enemy.cords.x = move_x;
 			game->ass.enemy.cords.y = move_y;
-			game->ass.collectible[game->ass.collect_amount - 1].cords.x = game->ass.enemy.cords.x;
-			game->ass.collectible[game->ass.collect_amount - 1].cords.y = game->ass.enemy.cords.y;
+			game->ass.sprites[game->ass.collect_amount - 1].cords.x = game->ass.enemy.cords.x;
+			game->ass.sprites[game->ass.collect_amount - 1].cords.y = game->ass.enemy.cords.y;
 		}
+	}
+	else
+	{
+		closex(game);
 	}
 	return (0);
 }
@@ -274,15 +278,13 @@ int	main(int argc, char **argv)
 		game.mlx = mlx_init();
 		print_info(game);
 		textures(&game);
-		// enemy(&game);
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 		mlx_hook(game.win, 3, 1L << 1, key_release, &game);
 		mlx_hook(game.win, 6, 1L << 6, mouse, &game);
 		mlx_loop_hook(game.mlx, main_loop, &game);
-		// mlx_loop_hook(game.mlx, monster, &game);
-		mlx_mouse_hide(game.mlx, game.win);
+		// mlx_mouse_hide(game.mlx, game.win);
 		mlx_loop(game.mlx);
 		free_game(&game);
 		return (1);

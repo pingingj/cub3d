@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 15:09:06 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:20:36 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	move_foward(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.collectible[i].cords.x == (int)new_x && (int)game->ass.collectible[i].cords.y == (int)new_y)
-				game->ass.collectible[i].exists = false;
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+				game->ass.sprites[i].exists = false;
 			i++;
 		}
 	}
@@ -75,8 +75,8 @@ void	move_back(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.collectible[i].cords.x == (int)new_x && (int)game->ass.collectible[i].cords.y == (int)new_y)
-				game->ass.collectible[i].exists = false;
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+				game->ass.sprites[i].exists = false;
 			i++;
 		}
 	}
@@ -88,7 +88,7 @@ void	move_left(t_game *game, double speed)
 	double	new_y;
 	int i;
 
-	new_x = game->player.posx - game->player.planex * speed;
+	new_x = game->player.posx - game->player.planex * speed; 
 	new_y = game->player.posy - game->player.planey * speed;
 	if(hit_box(game,new_x,game->player.posy) == true)
 		game->player.posx = new_x;
@@ -99,8 +99,8 @@ void	move_left(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.collectible[i].cords.x == (int)new_x && (int)game->ass.collectible[i].cords.y == (int)new_y)
-				game->ass.collectible[i].exists = false;
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+				game->ass.sprites[i].exists = false;
 			i++;
 		}
 	}
@@ -123,8 +123,8 @@ void	move_right(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.collectible[i].cords.x == (int)new_x && (int)game->ass.collectible[i].cords.y == (int)new_y)
-				game->ass.collectible[i].exists = false;
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+				game->ass.sprites[i].exists = false;
 			i++;
 		}
 	}
