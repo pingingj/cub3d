@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 15:20:36 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:39:44 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	move_foward(t_game *game, double speed)
 			i++;
 		}
 	}
+	printf("pos x  =%f      pos y   =  %f\n",game->player.posx,game->player.posy);
 }
 
 void	move_back(t_game *game, double speed)

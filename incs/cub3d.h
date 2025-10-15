@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 17:52:50 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:46:58 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@
 # define ANGLE_NUMBERS 8
 # define ROT_SPEED 0.0003
 # define ARROW_ROT_SPEED 0.06
-# define M 109
 # define F 102
+# define M 109
+# define L 108
+# define H 104
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
@@ -185,8 +187,11 @@ typedef struct s_game
 	t_mini			mini;
 	t_math			meth;
 	t_pos			mouse;
+	t_queue			*queue;
+	t_point			**prev;
 	bool			look_flag_right;
 	bool			look_flag_left;
+	bool			laggy_lanter;
 	void			*mlx;
 	void			*win;
 	double			light;
@@ -195,11 +200,9 @@ typedef struct s_game
 	int				*move;
 	int				bob;
 	int				**visited;
-	t_point			**prev;
 	int				monster_target_x;
 	int				monster_target_y;
 	int				monster_has_target;
-	t_queue			*queue;
 }					t_game;
 
 // generation

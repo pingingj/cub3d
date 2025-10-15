@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 18:15:27 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:38:04 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,11 @@ void hande_sprites(t_game *game)
 					int color = pixel_get(&game->ass.barrel, texx, texy);
 					if ((color & 0x00FFFFFF) != 0)
 					{
-						// double intensity = 1;
 						double intensity = sprite_flashlight(sp_index, py, game, transformy);
-						my_mlx_pixel_put(&game->bg_img, sp_index, py, add_light(color,intensity));
-						// my_mlx_pixel_put(&game->bg_img, sp_index, py,color);
+						if(game->laggy_lanter)
+							my_mlx_pixel_put(&game->bg_img, sp_index, py, add_light(color,intensity));
+						else
+							my_mlx_pixel_put(&game->bg_img, sp_index, py,color);
 					}
 					py++;
 				}
@@ -199,7 +200,6 @@ void	math_with_an_e(t_game *game)
 		i++;
 	}
 	hande_sprites(game);
-	// hande_enemy(game);
 }
 
 void	create_frame(t_game *game)

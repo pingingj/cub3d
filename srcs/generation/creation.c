@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 13:35:55 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:29:32 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,26 +172,40 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 		}
 		if (y < sdraw)
 		{
-			my_mlx_pixel_put(&game->bg_img, x, y,add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));
-			// my_mlx_pixel_put(&game->bg_img, x, y,game->ass.ceiling.hexa);
+			if(game->laggy_lanter)
+				my_mlx_pixel_put(&game->bg_img, x, y,add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));
+			else
+				my_mlx_pixel_put(&game->bg_img, x, y,game->ass.ceiling.hexa);
 		}
 		else if (y >= sdraw && y <= edraw && game->meth.door == false)
 		{
-			intensity = flashlight(x, y, game, true);
-			my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
-			// my_mlx_pixel_put(&game->bg_img, x, y,color);
+			if(game->laggy_lanter)
+			{
+				intensity = flashlight(x, y, game, true);
+				my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
+			}
+			else
+				my_mlx_pixel_put(&game->bg_img, x, y,color);
 		}
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
 		{
-			intensity = flashlight(x, y, game, true);
-			my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
-			// my_mlx_pixel_put(&game->bg_img, x, y,door);
+			if(game->laggy_lanter)
+			{
+				intensity = flashlight(x, y, game, true);
+				my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
+			}
+			else
+				my_mlx_pixel_put(&game->bg_img, x, y,door);
 		}
 		else
 		{
-			intensity = flashlight(x, y, game, false);
-			my_mlx_pixel_put(&game->bg_img, x, y,add_light(game->ass.floor.hexa, intensity));
-			// my_mlx_pixel_put(&game->bg_img, x, y,game->ass.floor.hexa);
+			if(game->laggy_lanter)
+			{
+				intensity = flashlight(x, y, game, false);
+				my_mlx_pixel_put(&game->bg_img, x, y,add_light(game->ass.floor.hexa, intensity));
+			}
+			else
+				my_mlx_pixel_put(&game->bg_img, x, y,game->ass.floor.hexa);
 		}
 		y++;
 	}

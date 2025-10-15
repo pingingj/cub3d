@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 17:47:23 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:45:47 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,6 @@ void	coin_pos(t_game *game)
 		}
 		y++;
 	}
-	game->ass.sprites[game->ass.collect_amount -1].cords.x = 30;
-	game->ass.sprites[game->ass.collect_amount - 1].cords.y = 19;
 }
 
 void	make_sprites(t_game *game)
@@ -242,6 +240,7 @@ bool parse(t_game *game, char *filename)
 		print_errors(game, 0, "Invalid file or no file provided", fd);
 	game->mini.tile_size = 60;
 	game->mini.show = true;
+	game->laggy_lanter = true;
 	game->player.posx = -1;
 	game->player.posy = -1;
 	game->player.look = 0;
