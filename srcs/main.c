@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/14 19:01:15 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:27:44 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,68 +139,66 @@ void free_queue(t_queue *queue)
 	
     while (queue)
     {
-		printf("queue x = %d    y = %d \n",queue->content->x,queue->content->y);
 		tmp = queue->next;
         free(queue->content);
         free(queue);       
         queue = tmp;
-		printf("21312\n");
     }
 	// queue = NULL;
 }
 
-// // Returns 1 if there is a clear line of sight from (x0, y0) to (x1, y1) (no walls '1' between)
-// // All coordinates are grid positions (you can cast your float positions to int)
-// int has_line_of_sight(t_game *game, double x0, double y0, double x1, double y1)
-// {
-// 	int x = (int)x0;
-// 	int y = (int)y0;
-// 	int end_x = (int)x1;
-// 	int end_y = (int)y1;
-// 	int dx = abs(end_x - x);
-// 	int dy = abs(end_y - y);
-// 	int sx = x < end_x ? 1 : -1;
-// 	int sy = y < end_y ? 1 : -1;
-// 	int err = dx - dy;
+// Returns 1 if there is a clear line of sight from (x0, y0) to (x1, y1) (no walls '1' between)
+// All coordinates are grid positions (you can cast your float positions to int)
+int has_line_of_sight(t_game *game, double x0, double y0, double x1, double y1)
+{
+	int x = (int)x0;
+	int y = (int)y0;
+	int end_x = (int)x1;
+	int end_y = (int)y1;
+	int dx = abs(end_x - x);
+	int dy = abs(end_y - y);
+	int sx = x < end_x ? 1 : -1;
+	int sy = y < end_y ? 1 : -1;
+	int err = dx - dy;
 
-// 	while (x != end_x || y != end_y)
-// 	{
-// 		// If in bounds, check for wall
-// 		if (y >= 0 && y < game->map.pos.y &&
-// 			x >= 0 && x < (int)strlen(game->map.grid[y]) &&
-// 			game->map.grid[y][x] == '1')
-// 			return 0;
-// 		int e2 = 2 * err;
-// 		if (e2 > -dy)
-// 		{
-// 			err -= dy;
-// 			x += sx;
-// 		}
-// 		if (e2 < dx)
-// 		{
-// 			err += dx;
-// 			y += sy;
-// 		}
-// 	}
-// 	return 1;
-// }
+	while (x != end_x || y != end_y)
+	{
+		// If in bounds, check for wall
+		if (y >= 0 && y < game->map.pos.y &&
+			x >= 0 && x < (int)strlen(game->map.grid[y]) &&
+			game->map.grid[y][x] == '1')
+			return 0;
+		int e2 = 2 * err;
+		if (e2 > -dy)
+		{
+			err -= dy;
+			x += sx;
+		}
+		if (e2 < dx)
+		{
+			err += dx;
+			y += sy;
+		}
+	}
+	return 1;
+}
 
-// int is_near_wall(t_game *game, double x, double y)
-// {
-// 	int cx = (int)x;
-// 	int cy = (int)y;
-// 	int dx[4] = {0, 0, -1, 1};
-// 	int dy[4] = {-1, 1, 0, 0};
-// 	for (int i = 0; i < 4; ++i) {
-// 		int nx = cx + dx[i];
-// 		int ny = cy + dy[i];
-// 		if (ny >= 0 && ny < game->map.pos.y &&
-// 			nx >= 0 && nx < (int)strlen(game->map.grid[ny]) &&
-// 			game->map.grid[ny][nx] == '1')
-// 			return 1;
-// 	}
-// 	return 0;
-// }
+int is_near_wall(t_game *game, double x, double y)
+{
+	int cx = (int)x;
+	int cy = (int)y;
+	int dx[4] = {0, 0, -1, 1};
+	int dy[4] = {-1, 1, 0, 0};
+	for (int i = 0; i < 4; ++i) {
+		int nx = cx + dx[i];
+		int ny = cy + dy[i];
+		if (ny >= 0 && ny < game->map.pos.y &&
+			nx >= 0 && nx < (int)strlen(game->map.grid[ny]) &&
+			game->map.grid[ny][nx] == '1')
+			return 1;
+	}
+	return 0;
+}
 
 int	monster(t_game *game)
 {
@@ -209,7 +207,6 @@ int	monster(t_game *game)
 	t_point path_cell;
 	t_point next_cell;
 
-	printf("banana\n");
 	game->queue = monster_bfs_set_up(game);
 	check_space(game, game->queue);
 	path_cell.x = (int)game->player.posx;
@@ -223,24 +220,23 @@ int	monster(t_game *game)
 		next_cell = game->prev[path_cell.y][path_cell.x];
 	}
 	free_queue(game->queue);
-	printf("laranaja\n");
-	// // --- Hybrid logic ---
-	// int can_direct_chase = !is_near_wall(game, game->ass.enemy.cords.x, game->ass.enemy.cords.y) &&
-	// 	has_line_of_sight(game, game->ass.enemy.cords.x, game->ass.enemy.cords.y,
-	// 		game->player.posx, game->player.posy);
+	// --- Hybrid logic ---
+	int can_direct_chase = !is_near_wall(game, game->ass.enemy.cords.x, game->ass.enemy.cords.y) &&
+		has_line_of_sight(game, game->ass.enemy.cords.x, game->ass.enemy.cords.y,
+			game->player.posx, game->player.posy);
 
-	// if (can_direct_chase)
-	// {
-	// 	dx = game->player.posx - game->ass.enemy.cords.x;
-	// 	dy = game->player.posy - game->ass.enemy.cords.y;
-	// }
-	// else
-	// {
-	target_cx = path_cell.x + 0.5;
-	target_cy = path_cell.y + 0.5;
-	dx = target_cx - game->ass.enemy.cords.x;
-	dy = target_cy - game->ass.enemy.cords.y;
-	// }
+	if (can_direct_chase)
+	{
+		dx = game->player.posx - game->ass.enemy.cords.x;
+		dy = game->player.posy - game->ass.enemy.cords.y;
+	}
+	else
+	{
+		target_cx = path_cell.x + 0.5;
+		target_cy = path_cell.y + 0.5;
+		dx = target_cx - game->ass.enemy.cords.x;
+		dy = target_cy - game->ass.enemy.cords.y;
+	}
 	dist = sqrt(dx * dx + dy * dy);
 	if (dist > 0.01)
 	{
@@ -286,7 +282,7 @@ int	main(int argc, char **argv)
 		mlx_hook(game.win, 6, 1L << 6, mouse, &game);
 		mlx_loop_hook(game.mlx, main_loop, &game);
 		// mlx_loop_hook(game.mlx, monster, &game);
-		// mlx_mouse_hide(game.mlx, game.win);
+		mlx_mouse_hide(game.mlx, game.win);
 		mlx_loop(game.mlx);
 		free_game(&game);
 		return (1);

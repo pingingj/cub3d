@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/14 18:54:38 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:53:58 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 # include <stdlib.h>
 
 // pixels
-# define WIDTH 1440
-# define HEIGHT 900
+# define WIDTH 2000
+# define HEIGHT 1500
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
-# define MONSTER_SPEED 0.09
+# define MONSTER_SPEED 0.06
 # define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
@@ -131,6 +131,7 @@ typedef struct s_color
 
 typedef struct s_sprite
 {
+	bool 			exists;
 	t_img			texture;
 	t_pos			cords;
 	int				width;

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/14 18:27:40 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:55:12 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	coin_pos(t_game *game)
 		{
 			if (game->map.grid[y][x] == 'c')
 			{
+				game->ass.collectible[index].exists = true;
 				game->ass.collectible[index].cords.x = x + 0.5;
 				game->ass.collectible[index].cords.y = y + 0.5;
 				index++;
@@ -239,7 +240,6 @@ bool parse(t_game *game, char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		print_errors(game, 0, "Invalid file or no file provided", fd);
-	
 	game->mini.tile_size = 60;
 	game->mini.show = true;
 	game->player.posx = -1;
