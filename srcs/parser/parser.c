@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 15:20:32 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:47:23 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,10 +215,10 @@ void	make_enemy(t_game *game)
 		game->ass.enemy.cords.x = -1;
 		return ;
 	}
-	game->visited = ft_calloc(game->map.pos.y, sizeof(int *));
+	game->visited = ft_calloc(game->map.pos.y + 1, sizeof(int *));
 	if (game->visited == NULL)
 		print_errors(game, 1, "Malloc fail in make_enemy", -1);
-	game->prev = ft_calloc(game->map.pos.y, sizeof(t_point *));
+	game->prev = ft_calloc(game->map.pos.y + 1, sizeof(t_point *));
 	if (game->prev == NULL)
 	{
 		free(game->visited);

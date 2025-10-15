@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 15:34:09 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:51:57 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ void	free_game(t_game *game)
 		free(game->ass.floor.nums);
 	if (game->map.grid)
 		freetrix(game->map.grid);
-	// if(game->visited)
-	// 	freetrix(game->visited);
-	// if(game->prev)
-	// 	freetrix(game->prev);
+	if(game->visited)
+		freeany(game->visited);
+	if(game->prev)
+		freeany(game->prev);
 	while (i < 4)
 	{
 		if (game->ass.walls[i].filename)

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 15:32:16 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:56:15 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,11 +220,9 @@ int	monster(t_game *game)
 		next_cell = game->prev[path_cell.y][path_cell.x];
 	}
 	free_queue(game->queue);
-	// --- Hybrid logic ---
 	int can_direct_chase = !is_near_wall(game, game->ass.enemy.cords.x, game->ass.enemy.cords.y) &&
 		has_line_of_sight(game, game->ass.enemy.cords.x, game->ass.enemy.cords.y,
 			game->player.posx, game->player.posy);
-
 	if (can_direct_chase)
 	{
 		dx = game->player.posx - game->ass.enemy.cords.x;
@@ -238,7 +236,7 @@ int	monster(t_game *game)
 		dy = target_cy - game->ass.enemy.cords.y;
 	}
 	dist = sqrt(dx * dx + dy * dy);
-	if (dist > 0.10)
+	if (dist > 0.5)
 	{
 		double move_x = game->ass.enemy.cords.x + MONSTER_SPEED * (dx / dist);
 		double move_y = game->ass.enemy.cords.y + MONSTER_SPEED * (dy / dist);

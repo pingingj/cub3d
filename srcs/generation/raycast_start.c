@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 15:25:33 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:15:27 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 	->raydir are the vector that when added will give me the ray,so basicly
 		camra x tells me wich side the ray is
-  the math to get raydirx/y is basicly connecting the the player the pointy
+  the math to get raydirx/y is basicly connecting the player the pointy
   part of the triangle
   to the base,using the direction he is looking, the fov,
 	and how far left or rigth the ray should be*/
