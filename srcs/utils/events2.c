@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 18:46:43 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:32:15 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	look_left(t_game *game)
 int	key_press(int keycode, t_game *game)
 {
 	// if (keycode)
-		printf("key code = %d\n", keycode);
+		// printf("key code = %d\n", keycode);
 	if (keycode == 65307)
 		closex(game);
 	if (keycode == M)
@@ -200,13 +200,6 @@ int	move(t_game *game)
 	{
 		if (game->mini.tile_size > 10)
 			game->mini.tile_size--;
-	}
-	if (game->move[0] == 1 || game->move[1] == 1 || game->move[2] == 1
-		|| game->move[3] == 1 || game->move[4] == 1 || game->move[5] == 1
-		|| game->move[6] == 1 || game->move[7] == 1 || game->move[8] == 1 || game->move[9] == 1)
-
-	{
-		// create_frame(game);
 	}
 	return (0);
 }
