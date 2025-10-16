@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/16 15:47:44 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:21:04 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,34 @@ void	dda_prep(t_game *game)
 	}
 }
 
+int	hit_loop(t_game *game, int *side)
+{
+	int	hit;
+
+	hit = 0;
+	if (game->meth.sidedistx < game->meth.sidedisty)
+	{
+		game->meth.sidedistx += game->meth.deltadistx;
+		game->meth.mapx += game->meth.stepx;
+		*side = 0;
+	}
+	else
+	{
+		game->meth.sidedisty += game->meth.deltadisty;
+		game->meth.mapy += game->meth.stepy;
+		*side = 1;
+	}
+	if (game->map.grid[game->meth.mapy][game->meth.mapx] == '1')
+		hit = 1;
+	else if (game->map.grid[game->meth.mapy][game->meth.mapx] == 'd')
+	{
+		game->meth.door = true;
+		hit = 1;
+	}
+	if (game->map.grid[game->meth.mapy][game->meth.mapx] == 'D')
+		game->meth.looking_door = true;
+	return (hit);
+}
 /*->hit wall we calculate how far the ray goes until it hits a wall,
 	so we need to add the distance the player need to reach the closes wall
    then we just nned to add delta,because its the distance the ray walsk to
@@ -83,27 +111,7 @@ int	hit_wall(t_game *game)
 	game->meth.door = false;
 	while (hit == 0)
 	{
-		if (game->meth.sidedistx < game->meth.sidedisty)
-		{
-			game->meth.sidedistx += game->meth.deltadistx;
-			game->meth.mapx += game->meth.stepx;
-			side = 0;
-		}
-		else
-		{
-			game->meth.sidedisty += game->meth.deltadisty;
-			game->meth.mapy += game->meth.stepy;
-			side = 1;
-		}
-		if (game->map.grid[game->meth.mapy][game->meth.mapx] == '1')
-			hit = 1;
-		else if (game->map.grid[game->meth.mapy][game->meth.mapx] == 'd')
-		{
-			game->meth.door = true;
-			hit = 1;
-		}
-		if (game->map.grid[game->meth.mapy][game->meth.mapx] == 'D')
-			game->meth.looking_door = true;
+		hit = hit_loop(game, &side);
 	}
 	return (side);
 }

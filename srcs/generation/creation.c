@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 18:29:32 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:46:07 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,32 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	return (intensity);
 }
 
+void	paint_exe(t_game *game, int x, int y, int color)
+{
+	double	intensity;
+	bool	flag;
+
+	if (color == game->ass.floor.hexa)
+		flag = false;
+	else
+		flag = true;
+	if (color == game->ass.ceiling.hexa)
+	{
+		if (game->laggy_lanter)
+			my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, AMBIENT
+					+ 0.07));
+		else
+			my_mlx_pixel_put(&game->bg_img, x, y, color);
+		return ;
+	}
+	if (game->laggy_lanter)
+	{
+		intensity = flashlight(x, y, game, flag);
+		my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
+	}
+	else
+		my_mlx_pixel_put(&game->bg_img, x, y, color);
+}
 /*->here now that i have the the heigth of the wall,
 	i start drawing from above,so unitl
    sdraw i draw the ceiling,
@@ -149,7 +175,6 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	int		color;
 	int		door;
 	int		y;
-	double	intensity;
 
 	if (game->meth.orientation == 0)
 		color = 0x0000FF;
@@ -162,7 +187,6 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	y = 0;
 	while (y < HEIGHT)
 	{
-		// intensity = 1;
 		if ((x > game->mini.offset && x < game->mini.offset + game->mini.size.x)
 			&& (y > game->mini.offset && y < game->mini.offset
 				+ game->mini.size.y) && game->mini.show == true)
@@ -171,42 +195,13 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 			continue ;
 		}
 		if (y < sdraw)
-		{
-			if(game->laggy_lanter)
-				my_mlx_pixel_put(&game->bg_img, x, y,add_light(game->ass.ceiling.hexa, AMBIENT + 0.07));
-			else
-				my_mlx_pixel_put(&game->bg_img, x, y,game->ass.ceiling.hexa);
-		}
+			paint_exe(game, x, y, game->ass.ceiling.hexa);
 		else if (y >= sdraw && y <= edraw && game->meth.door == false)
-		{
-			if(game->laggy_lanter)
-			{
-				intensity = flashlight(x, y, game, true);
-				my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
-			}
-			else
-				my_mlx_pixel_put(&game->bg_img, x, y,color);
-		}
+			paint_exe(game, x, y, color);
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
-		{
-			if(game->laggy_lanter)
-			{
-				intensity = flashlight(x, y, game, true);
-				my_mlx_pixel_put(&game->bg_img, x, y, add_light(door, intensity));
-			}
-			else
-				my_mlx_pixel_put(&game->bg_img, x, y,door);
-		}
+			paint_exe(game, x, y, door);
 		else
-		{
-			if(game->laggy_lanter)
-			{
-				intensity = flashlight(x, y, game, false);
-				my_mlx_pixel_put(&game->bg_img, x, y,add_light(game->ass.floor.hexa, intensity));
-			}
-			else
-				my_mlx_pixel_put(&game->bg_img, x, y,game->ass.floor.hexa);
-		}
+			paint_exe(game, x, y, game->ass.floor.hexa);
 		y++;
 	}
 }
