@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 18:46:43 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:56:37 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	look_left(t_game *game)
 int	key_press(int keycode, t_game *game)
 {
 	// if (keycode)
-		printf("key code = %d\n", keycode);
+		// printf("key code = %d\n", keycode);
 	if (keycode == 65307)
 		closex(game);
 	if (keycode == M)

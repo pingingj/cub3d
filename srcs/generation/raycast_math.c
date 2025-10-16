@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/09 14:26:19 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:47:44 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	dda_prep(t_game *game)
 			* game->meth.deltadisty;
 	}
 }
+
 /*->hit wall we calculate how far the ray goes until it hits a wall,
 	so we need to add the distance the player need to reach the closes wall
    then we just nned to add delta,because its the distance the ray walsk to
@@ -101,7 +102,7 @@ int	hit_wall(t_game *game)
 			game->meth.door = true;
 			hit = 1;
 		}
-		if(game->map.grid[game->meth.mapy][game->meth.mapx] == 'D')
+		if (game->map.grid[game->meth.mapy][game->meth.mapx] == 'D')
 			game->meth.looking_door = true;
 	}
 	return (side);
@@ -120,11 +121,10 @@ double	calc_wall_dist(t_game *game)
 void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 {
 	int	line_heigth;
-	int add;
+	int	add;
 
 	add = 0;
-
-	add +=game->player.look+game->bob;
+	add += game->player.look + game->bob;
 	(void)game;
 	if (walldist <= 0.000001)
 		walldist = 0.000001;

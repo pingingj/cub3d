@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 18:38:04 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:46:45 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void hande_sprites(t_game *game)
 					if (texy >= game->ass.barrel.h)
 						texy = game->ass.barrel.h - 1;
 					int color = pixel_get(&game->ass.barrel, texx, texy);
-					if ((color & 0x00FFFFFF) != 0)
+					if ((unsigned int)color != 0xFF000000 )
 					{
 						double intensity = sprite_flashlight(sp_index, py, game, transformy);
 						if(game->laggy_lanter)
