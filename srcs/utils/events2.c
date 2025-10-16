@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/09 16:56:26 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:46:43 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	look_left(t_game *game)
 int	key_press(int keycode, t_game *game)
 {
 	// if (keycode)
-	// 	printf("key code = %d\n", keycode);
+		printf("key code = %d\n", keycode);
 	if (keycode == 65307)
 		closex(game);
 	if (keycode == M)
@@ -102,6 +102,10 @@ int	key_press(int keycode, t_game *game)
 		game->move[2] = 1;
 	if (keycode == D)
 		game->move[3] = 1;
+	if (keycode == L)
+		game->laggy_lanter = !game->laggy_lanter;
+	if (keycode == H)
+		mlx_mouse_hide(game->mlx, game->win);
 	if (keycode == ARROW_RIGHT)
 	{
 		game->look_flag_right = true;
@@ -164,17 +168,17 @@ int	key_release(int keycode, t_game *game)
 int	move(t_game *game)
 {
 	if (game->move[0] == 1)
-	move_foward(game, game->player.speed);
+		move_foward(game, game->player.speed);
 	else if (game->move[1] == 1)
-	move_back(game, game->player.speed);
+		move_back(game, game->player.speed);
 	if (game->move[2] == 1)
-	move_left(game, game->player.speed);
+		move_left(game, game->player.speed);
 	if (game->move[3] == 1)
-	move_right(game, game->player.speed);
+		move_right(game, game->player.speed);
 	if (game->move[4] == 1)
-	look_right(game);
+		look_right(game);
 	if (game->move[5] == 1)
-	look_left(game);
+		look_left(game);
 	if (game->move[6] == 1)
 	{
 		game->player.look += 10;
@@ -202,8 +206,7 @@ int	move(t_game *game)
 		|| game->move[6] == 1 || game->move[7] == 1 || game->move[8] == 1 || game->move[9] == 1)
 
 	{
-
-		create_frame(game);
+		// create_frame(game);
 	}
 	return (0);
 }

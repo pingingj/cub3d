@@ -6,11 +6,38 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/02 17:11:21 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:34:26 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/cub3d.h"
+
+void	ft_queueadd_back(t_queue **lst, t_queue *new)
+{
+	t_queue	*buffer;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	buffer = *lst;
+	while (buffer->next != NULL)
+		buffer = buffer->next;
+	buffer->next = new;
+}
+
+t_queue	*ft_queuenew(void *content)
+{
+	t_queue	*new_node;
+
+	new_node = malloc(sizeof(t_queue));
+	if (new_node == NULL)
+		return (NULL);
+	new_node->content = content;
+	new_node->next = NULL;
+	return (new_node);
+}
 
 int	mouse(int x, int y, t_game *game)
 {
@@ -27,43 +54,249 @@ int	mouse(int x, int y, t_game *game)
 	game->mouse.y = y - HEIGHT / 2;
 	if (y > HEIGHT / 2)
 	{
-		game->player.look -= game->mouse.y/10;
-		if(game->player.look < -1000)
-			game->player.look +=game->mouse.y/10;
+		game->player.look -= game->mouse.y / 10;
+		if (game->player.look < -1000)
+			game->player.look += game->mouse.y / 10;
 	}
 	if (y < HEIGHT / 2)
 	{
-		game->player.look += -game->mouse.y/10;
-		if(game->player.look > 1000)
-			game->player.look -= -game->mouse.y/10;
+		game->player.look += -game->mouse.y / 10;
+		if (game->player.look > 1000)
+			game->player.look -= -game->mouse.y / 10;
 	}
 	if (x != WIDTH / 2 || y != HEIGHT / 2)
 		mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
 	return (0);
 }
 
-// void	img_init(t_game *game, char *filename, t_img *img)
-// {
-// 	img->img = mlx_xpm_file_to_image(game->mlx,
-// 			filename, &img->bits_per_pixel,
-// 			&img->line_length);
-// 	img->addr = mlx_get_data_addr(img->img,
-// 			&img->bits_per_pixel,
-// 			&img->line_length,
-// 			&img->endian);
-// }
-
-void	get_imgs(t_game *game)
+t_queue	*monster_bfs_set_up(t_game *game)
 {
-	game->ass.barrel.img = mlx_xpm_file_to_image(game->mlx,
-			"incs/textures/barrel.xpm", &game->ass.barrel.w,
-			&game->ass.barrel.h);
-	game->ass.barrel.addr = mlx_get_data_addr(game->ass.barrel.img,
-			&game->ass.barrel.bits_per_pixel,
-			&game->ass.barrel.line_length,
-			&game->ass.barrel.endian);
+	int		y;
+	t_point	*monster_pt;
+	t_queue	*queue;
+	int		row_length;
+
+	queue = NULL;
+	y = 0;
+	while (y < game->map.pos.y)
+	{
+		row_length = ft_strlen(game->map.grid[y]);
+		ft_bzero(game->visited[y], sizeof(int) * row_length);
+		ft_bzero(game->prev[y], sizeof(t_point) * row_length);
+		y++;
+	}
+	monster_pt = malloc(sizeof(t_point));
+	monster_pt->x = (int)game->ass.enemy.cords.x;
+	monster_pt->y = (int)game->ass.enemy.cords.y;
+	if (monster_pt->y >= 0 && monster_pt->y < game->map.pos.y
+		&& monster_pt->x >= 0
+		&& monster_pt->x < (int)ft_strlen(game->map.grid[monster_pt->y]))
+	{
+		ft_queueadd_back(&queue, ft_queuenew(monster_pt));
+		game->visited[monster_pt->y][monster_pt->x] = 1;
+		game->prev[monster_pt->y][monster_pt->x] = *monster_pt;
+	}
+	return (queue);
 }
 
+void	check_space(t_game *game, t_queue *q)
+{
+	t_point	*curr;
+	t_point	*next;
+	int		new_x;
+	int		new_y;
+	int		i;
+	int		dx[4] = {0, 0, -1, 1};
+	int		dy[4] = {-1, 1, 0, 0};
+
+	while (q)
+	{
+		curr = q->content;
+		i = 0;
+		while (i < 4)
+		{
+			new_x = curr->x + dx[i];
+			new_y = curr->y + dy[i];
+			if (new_y >= 0 && new_y < game->map.pos.y && new_x >= 0
+				&& new_x < (int)ft_strlen(game->map.grid[new_y])
+				&& game->map.grid[new_y][new_x] != '1'
+				&& game->map.grid[new_y][new_x] != 'd'
+				&& game->visited[new_y][new_x] == 0)
+			{
+				game->visited[new_y][new_x] = 1;
+				game->prev[new_y][new_x] = *curr;
+				next = ft_calloc(1, sizeof(t_point));
+				next->x = new_x;
+				next->y = new_y;
+				ft_queueadd_back(&q, ft_queuenew(next));
+			}
+			i++;
+		}
+		q = q->next;
+	}
+}
+
+void	free_queue(t_queue *queue)
+{
+	t_queue	*tmp;
+
+	while (queue)
+	{
+		tmp = queue->next;
+		free(queue->content);
+		free(queue);
+		queue = tmp;
+	}
+}
+
+int	has_line_of_sight(t_game *game, double ex, double ey, double px, double py)
+{
+	int	x;
+	int	y;
+	int	end_x;
+	int	end_y;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	e2;
+
+	x = (int)ex;
+	y = (int)ey;
+	end_x = (int)px;
+	end_y = (int)py;
+	dx = abs(end_x - x);
+	dy = abs(end_y - y);
+	err = dx - dy;
+	if (x < end_x)
+		sx = 1;
+	else
+		sx = -1;
+	if (y < end_y)
+		sy = 1;
+	else
+		sy = -1;
+	while (x != end_x || y != end_y)
+	{
+		if (y >= 0 && y < game->map.pos.y && x >= 0
+			&& x < (int)ft_strlen(game->map.grid[y])
+			&& game->map.grid[y][x] == '1')
+			return (0);
+		e2 = 2 * err;
+		if (e2 > -dy)
+		{
+			err -= dy;
+			x += sx;
+		}
+		if (e2 < dx)
+		{
+			err += dx;
+			y += sy;
+		}
+	}
+	return (1);
+}
+
+int	is_near_wall(t_game *game, double x, double y)
+{
+	int	cx;
+	int	cy;
+	int	dx[4] = {0, 0, -1, 1};
+	int	dy[4] = {-1, 1, 0, 0};
+	int	i;
+	int	nx;
+	int	ny;
+
+	cx = (int)x;
+	cy = (int)y;
+	i = 0;
+	while (i < 4)
+	{
+		nx = cx + dx[i];
+		ny = cy + dy[i];
+		if (ny >= 0 && ny < game->map.pos.y && nx >= 0
+			&& nx < (int)ft_strlen(game->map.grid[ny])
+			&& game->map.grid[ny][nx] == '1')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	monster(t_game *game)
+{
+	double	target_cx;
+	double	target_cy;
+	double	dx;
+	double	dy;
+	double	dist;
+	int		can_direct_chase;
+	t_point	path_cell;
+	t_point	next_cell;
+	double	move_x;
+	double	move_y;
+
+	game->queue = monster_bfs_set_up(game);
+	check_space(game, game->queue);
+	path_cell.x = (int)game->player.posx;
+	path_cell.y = (int)game->player.posy;
+	next_cell = game->prev[path_cell.y][path_cell.x];
+	while (!(next_cell.x == (int)game->ass.enemy.cords.x
+			&& next_cell.y == (int)game->ass.enemy.cords.y))
+	{
+		path_cell.x = next_cell.x;
+		path_cell.y = next_cell.y;
+		next_cell = game->prev[path_cell.y][path_cell.x];
+	}
+	free_queue(game->queue);
+	can_direct_chase = !is_near_wall(game, game->ass.enemy.cords.x,
+			game->ass.enemy.cords.y) && has_line_of_sight(game,
+			game->ass.enemy.cords.x, game->ass.enemy.cords.y, game->player.posx,
+			game->player.posy);
+	if (can_direct_chase)
+	{
+		dx = game->player.posx - game->ass.enemy.cords.x;
+		dy = game->player.posy - game->ass.enemy.cords.y;
+	}
+	else
+	{
+		target_cx = path_cell.x + 0.5;
+		target_cy = path_cell.y + 0.5;
+		dx = target_cx - game->ass.enemy.cords.x;
+		dy = target_cy - game->ass.enemy.cords.y;
+	}
+	dist = sqrt(dx * dx + dy * dy);
+	if (dist > 0.5)
+	{
+		move_x = game->ass.enemy.cords.x + MONSTER_SPEED * (dx / dist);
+		move_y = game->ass.enemy.cords.y + MONSTER_SPEED * (dy / dist);
+		if (game->map.grid[(int)move_y][(int)move_x] != '1'
+			&& game->map.grid[(int)move_y][(int)move_x] != 'd')
+		{
+			game->ass.enemy.cords.x = move_x;
+			game->ass.enemy.cords.y = move_y;
+			game->ass.sprites[game->ass.collect_amount
+				- 1].cords.x = game->ass.enemy.cords.x;
+			game->ass.sprites[game->ass.collect_amount
+				- 1].cords.y = game->ass.enemy.cords.y;
+		}
+	}
+	else
+	{
+		closex(game);
+	}
+	return (0);
+}
+
+int	main_loop(t_game *game)
+{
+	move(game);
+	if (game->ass.enemy.cords.x != -1)
+		monster(game);
+	create_frame(game);
+	return (0);
+}
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -73,16 +306,15 @@ int	main(int argc, char **argv)
 	{
 		if (parse(&game, argv[1]) == false)
 			return (1);
-		print_info(game);
 		game.mlx = mlx_init();
-		get_imgs(&game);
+		print_info(game);
+		textures(&game);
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 		mlx_hook(game.win, 3, 1L << 1, key_release, &game);
 		mlx_hook(game.win, 6, 1L << 6, mouse, &game);
-		mlx_loop_hook(game.mlx, move, &game);
-		mlx_mouse_hide(game.mlx, game.win);
+		mlx_loop_hook(game.mlx, main_loop, &game);
 		mlx_loop(game.mlx);
 		free_game(&game);
 		return (1);

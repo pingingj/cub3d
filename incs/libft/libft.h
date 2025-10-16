@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:40:49 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/19 18:06:39 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:50:20 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,14 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 
-void				freetrix(char **matrix);
+// void				freetrix(char **matrix);
 
 bool				skip_wspaces(char **input);
 
 char				*get_word(char *line, char c);
 
-bool				in_string(char	*inspect, char *find);
+bool				in_string(char *inspect, char *find);
+
+void				freeany(void *arr);
 
 #endif

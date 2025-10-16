@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/09 17:02:36 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:38:04 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 	->raydir are the vector that when added will give me the ray,so basicly
 		camra x tells me wich side the ray is
-  the math to get raydirx/y is basicly connecting the the player the pointy
+  the math to get raydirx/y is basicly connecting the player the pointy
   part of the triangle
   to the base,using the direction he is looking, the fov,
 	and how far left or rigth the ray should be*/
@@ -111,27 +111,26 @@ void hande_sprites(t_game *game)
 	while(++i < game->ass.collect_amount)
 	{
 		order[i] = i;
-		mathx = game->player.posx - game->ass.collectible[i].cords.x;
-		mathy = game->player.posy - game->ass.collectible[i].cords.y;
+		mathx = game->player.posx - game->ass.sprites[i].cords.x;
+		mathy = game->player.posy - game->ass.sprites[i].cords.y;
 		sprite_dist[i] = mathx * mathx + mathy * mathy;
 	}
-	i = 0;
+	i = -1;
 	sort_dist(order,sprite_dist,game);
-	while(i < game->ass.collect_amount)
+	while(++i < game->ass.collect_amount)
 	{
-		mathx = game->ass.collectible[order[i]].cords.x - game->player.posx;
-		mathy = game->ass.collectible[order[i]].cords.y - game->player.posy;
+		if(game->ass.sprites[order[i]].exists == false)
+			continue;
+		mathx = game->ass.sprites[order[i]].cords.x - game->player.posx;
+		mathy = game->ass.sprites[order[i]].cords.y - game->player.posy;
 		inverse = 1.0 / (game->player.planex * game->player.diry - game->player.dirx * game->player.planey);
 		transformx = inverse * (game->player.diry * mathx - game->player.dirx * mathy);
 		transformy = inverse * (-game->player.planey * mathx + game->player.planex * mathy);
-		
 		spritexlocation = (WIDTH / 2) * (1 + transformx / transformy);
 		sprite_height = fabs(HEIGHT / transformy);
 		int screen_center = HEIGHT / 2 + game->player.look;
 		sdrawy = screen_center - sprite_height / 2;
 		edrawy = screen_center + sprite_height / 2;
-
-		
 		sprite_width = fabs(HEIGHT / transformy);
 		sdrawx = -sprite_width / 2 + spritexlocation;
 		edrawx = sprite_width / 2 + spritexlocation;
@@ -165,18 +164,20 @@ void hande_sprites(t_game *game)
 					int color = pixel_get(&game->ass.barrel, texx, texy);
 					if ((color & 0x00FFFFFF) != 0)
 					{
-						// double intensity = 1;
 						double intensity = sprite_flashlight(sp_index, py, game, transformy);
-						my_mlx_pixel_put(&game->bg_img, sp_index, py, add_light(color,intensity));
+						if(game->laggy_lanter)
+							my_mlx_pixel_put(&game->bg_img, sp_index, py, add_light(color,intensity));
+						else
+							my_mlx_pixel_put(&game->bg_img, sp_index, py,color);
 					}
 					py++;
 				}
 			}
 			sp_index++;
 		}
-		i++;
 	}
 }
+
 void	math_with_an_e(t_game *game)
 {
 	int		sdraw;

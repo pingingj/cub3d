@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/02 14:54:23 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:45:47 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,9 @@ void	coin_pos(t_game *game)
 
 	y = 0;
 	index = 0;
-	game->ass.collectible = ft_calloc(game->ass.collect_amount, sizeof(t_sprite));
-	if (game->ass.collectible == NULL)
-		print_errors(game, 1, "Failed malloc in collectibles", -1);
+	game->ass.sprites = ft_calloc(game->ass.collect_amount + 1, sizeof(t_sprite));
+	if (game->ass.sprites == NULL)
+		print_errors(game, 1, "Failed malloc in spritess", -1);
 	while (y < game->map.pos.y)
 	{
 		x = 0;
@@ -145,8 +145,9 @@ void	coin_pos(t_game *game)
 		{
 			if (game->map.grid[y][x] == 'c')
 			{
-				game->ass.collectible[index].cords.x = x + 0.5;
-				game->ass.collectible[index].cords.y = y + 0.5;
+				game->ass.sprites[index].exists = true;
+				game->ass.sprites[index].cords.x = x + 0.5;
+				game->ass.sprites[index].cords.y = y + 0.5;
 				index++;
 			}
 			x++;
@@ -155,7 +156,7 @@ void	coin_pos(t_game *game)
 	}
 }
 
-void	make_collectible(t_game *game)
+void	make_sprites(t_game *game)
 {
 	int			x;
 	int			y;
@@ -168,6 +169,8 @@ void	make_collectible(t_game *game)
 		x = 0;
 		while (game->map.grid[y][x])
 		{
+			if (game->map.grid[y][x] == 'C')
+				print_errors(game, 1, "Not reachable sprites found", -1);	
 			if (game->map.grid[y][x] == 'c')
 				amount++;
 			x++;
@@ -178,19 +181,69 @@ void	make_collectible(t_game *game)
 	coin_pos(game);
 }
 
+void	make_enemy(t_game *game)
+{
+	int y;
+	int	x;
+	int	amount;
+
+	amount = 0;
+	y = 0;
+	while (y < game->map.pos.y)
+	{
+		x = 0;
+		while (game->map.grid[y][x])
+		{
+			if (game->map.grid[y][x] == 'J')
+				print_errors(game, 1, "Not enough experience", -1);
+			if (game->map.grid[y][x] == 'j')
+			{
+				game->ass.enemy.cords.x = x;
+				game->ass.enemy.cords.y = y;
+				amount++;
+			}
+			x++;
+		}
+		y++;
+	}
+	if (amount > 1)
+		print_errors(game, 1, "Overworked", -1);
+	if (amount == 0)
+	{
+		game->ass.enemy.cords.x = -1;
+		return ;
+	}
+	game->visited = ft_calloc(game->map.pos.y + 1, sizeof(int *));
+	if (game->visited == NULL)
+		print_errors(game, 1, "Malloc fail in make_enemy", -1);
+	game->prev = ft_calloc(game->map.pos.y + 1, sizeof(t_point *));
+	if (game->prev == NULL)
+	{
+		free(game->visited);
+		print_errors(game, 1, "Malloc fail in make_enemy", -1);
+	}
+	y = 0;
+	while (y < game->map.pos.y)
+	{
+		game->visited[y] = ft_calloc(game->map.pos.x, sizeof(int));
+		game->prev[y] = ft_calloc(game->map.pos.x,sizeof(t_point));
+		y++;
+	}
+}
 
 bool parse(t_game *game, char *filename)
 {
 	int fd;
 
 	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		print_errors(game, 0, "Invalid file or no file provided", fd);
 	game->mini.tile_size = 60;
 	game->mini.show = true;
+	game->laggy_lanter = true;
 	game->player.posx = -1;
 	game->player.posy = -1;
 	game->player.look = 0;
-	if (fd == -1)
-		print_errors(game, 0, "Invalid file or no file provided", fd);
 	if (ft_strcmp(filename + ft_strlen(filename) - 4, ".cub") != 0)
 		print_errors(game, 0, "File is not in the correct format", fd);
 	if (get_textures(game, fd) == false)
@@ -199,7 +252,8 @@ bool parse(t_game *game, char *filename)
 		print_errors(game, 1, "Missing texture or color", fd);
 	parse_colors(game, fd);
 	parse_map(game, fd, filename);
-	make_collectible(game);
 	close(fd);
+	make_enemy(game);
+	make_sprites(game);
 	return (true);
 }
