@@ -6,7 +6,7 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/10/02 14:34:31 by dpaes-so         ###   ########.fr        #
+#    Updated: 2025/10/15 13:34:34 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = cub3D
 MLX = 	./incs/minilibx-linux/libmlx.a
 LIBFT = ./incs/libft/libft.a
 
-CC = cc
+CC = cc -O3
 CFLAGS = -Wall -Wextra -Werror -g 
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
@@ -41,7 +41,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 
 $(LIBFT):
 	@echo compiling...
-	@make bonus  -C ./incs/libft -s
+	@make bonus -C ./incs/libft -s
 
 $(MLX):
 	@make -C ./incs/minilibx-linux -s

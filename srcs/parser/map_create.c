@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:50:51 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/06 16:56:59 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/14 16:57:14 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	change_grid(t_map *map, int x, int y)
 		map->grid[y][x] = 'd';
 	else if (map->grid[y][x] == 'C')
 		map->grid[y][x] = 'c';
+	else if (map->grid[y][x] == 'J')
+		map->grid[y][x] = 'j';
 }
 
 bool	flood_map(t_map *map, int x, int y)
@@ -39,7 +41,7 @@ bool	flood_map(t_map *map, int x, int y)
 		return (true);
 	if (y < 0 || y >= map->pos.y || x < 0
 		|| x >= ft_strlen(map->grid[y]) || map->grid[y][x] == '\0'
-		|| ft_strchr("10oDdCcNEWSnews", map->grid[y][x]) == NULL)
+		|| ft_strchr("10oDdCcNEWSnewsJj", map->grid[y][x]) == NULL)
 		return (false);
 	change_grid(map, x, y);
 	if (flood_map(map, x - 1, y) == false)

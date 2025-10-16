@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/09 15:47:18 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:51:57 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	closex(t_game *mlx)
 	ft_printf("\n\nGAME CLOSING\n");
 	mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
 	mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
+	// free_queue(mlx->queue);
 	free(mlx->move);
 	mlx_destroy_window(mlx->mlx, mlx->win);
 	mlx_destroy_display(mlx->mlx);
@@ -36,8 +37,8 @@ void	print_info(t_game game)
 	// printf("EA = %s\n", game.ass.walls[EA].filename);
 	// printf("SO = %s\n", game.ass.walls[SO].filename);
 	// printf("WE = %s\n", game.ass.walls[WE].filename);
-	// printf("length = %f\n", game.map.pos.x);
-	// printf("height = %f\n", game.map.pos.y);
+	printf("length = %f\n", game.map.pos.x);
+	printf("height = %f\n", game.map.pos.y);
 	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
 	// printf("R = %d\n", game.ass.ceiling.red);
 	// printf("G = %d\n", game.ass.ceiling.green);
@@ -73,7 +74,7 @@ void	print_info(t_game game)
 	i = 0;
 	// while(i < game.ass.collect_amount)
 	// {
-	// 	printf("collectible cords x = %f y = %f\n", game.ass.collectible[i].cords.x, game.ass.collectible->cords.y);
+	// 	printf("sprites cords x = %f y = %f\n", game.ass.sprites[i].cords.x, game.ass.sprites->cords.y);
 	// 	i++;
 	// }
 	// ft_printf("COLLETIBLE AMOUNT = %d\n", game.c_amount);
@@ -86,14 +87,18 @@ void	free_game(t_game *game)
 	int	i;
 
 	i = 0;
-	if (game->ass.collectible)
-		free(game->ass.collectible);
+	if (game->ass.sprites)
+		free(game->ass.sprites);
 	if (game->ass.ceiling.nums)
 		free(game->ass.ceiling.nums);
 	if (game->ass.floor.nums)
 		free(game->ass.floor.nums);
 	if (game->map.grid)
 		freetrix(game->map.grid);
+	if(game->visited)
+		freeany(game->visited);
+	if(game->prev)
+		freeany(game->prev);
 	while (i < 4)
 	{
 		if (game->ass.walls[i].filename)
@@ -111,7 +116,8 @@ void	print_errors(t_game *game, int error, char *msg, int fd)
 {
 	if (fd > 2)
 		close(fd);
-	ft_dprintf(2, "Error\n%s\n", msg);
+	if (msg != NULL)
+		ft_dprintf(2, "Error\n%s\n", msg);
 	if (error == 1)
 		free_game(game);
 	exit(error);

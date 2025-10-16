@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_minimap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/06 18:33:22 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:10:24 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ void	draw_minitile_row(t_game game, t_pos tile_pos, t_pos win_cord,
 			else if (grid == 'D')
 				draw_tile(&game.bg_img, 0x8599BA, area, win_cord);
 			else if (grid == 'c')
+				draw_tile(&game.bg_img, 0x223030, area, win_cord);
+			else if (grid == 'j')
 				draw_tile(&game.bg_img, 0x223030, area, win_cord);
 		}
 		tile_pos.x++;
