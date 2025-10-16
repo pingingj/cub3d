@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 18:46:58 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:23:54 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <stdlib.h>
 
 // pixels
-# define WIDTH 2000
-# define HEIGHT 1500
+# define WIDTH 1920
+# define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define MONSTER_SPEED 0.06
