@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 17:30:18 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:36:12 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,13 @@ double	sprite_flashlight(int x, int y, t_game *game, double sprite_dist)
 
 void	hande_sprites(t_game *game)
 {
-	int		i;
 	int		order[game->ass.collect_amount];
+	double	sprite_dist[game->ass.collect_amount];
+	int		i;
 	double	mathx;
 	double	mathy;
 	double	transformx;
 	double	transformy;
-	double	sprite_dist[game->ass.collect_amount];
 	double	inverse;
 	double	spritexlocation;
 	double	sprite_height;
