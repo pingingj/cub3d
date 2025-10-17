@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/16 17:21:04 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:34:00 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ double	calc_wall_dist(t_game *game)
 
 void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 {
-	int	line_heigth;
 	int	add;
 
 	add = 0;
@@ -136,11 +135,11 @@ void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 	(void)game;
 	if (walldist <= 0.000001)
 		walldist = 0.000001;
-	line_heigth = (int)(HEIGHT / walldist);
-	(*sdraw) = HEIGHT / 2 - line_heigth / 2 + add;
+	game->meth.line_height = (int)(HEIGHT / walldist);
+	(*sdraw) = HEIGHT / 2 - game->meth.line_height / 2 + add;
 	if ((*sdraw) < 0)
 		(*sdraw) = 0;
-	(*edraw) = HEIGHT / 2 + line_heigth / 2 + add;
+	(*edraw) = HEIGHT / 2 + game->meth.line_height / 2 + add;
 	if ((*edraw) < 0)
 		(*edraw) = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/16 18:46:21 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:00:54 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ double	sprite_flashlight(int x, int y, t_game *game, double sprite_dist)
 	double	max_dist;
 	double	dist_intensity;
 	double	intensity;
+	double 	max_dist_sq;
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
@@ -81,6 +82,9 @@ double	sprite_flashlight(int x, int y, t_game *game, double sprite_dist)
 	if (softness < 80.0)
 		softness = 80.0;
 	dist = dx * dx + dy * dy;
+	max_dist_sq = 2.0 * softness * softness;
+	if (dist >= max_dist_sq)
+		return (AMBIENT);
 	circ_intensity = 1.0 - (dist / (2.0 * softness * softness));
 	if (circ_intensity < 0.0)
 		circ_intensity = 0.0;
