@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/16 12:23:54 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:33:10 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
-# define MONSTER_SPEED 0.06
+# define MONSTER_SPEED 0.02
 # define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
@@ -48,7 +48,7 @@
 # define ARROW_RIGHT 65363
 # define ARROW_DOWN 65364
 # define ANGLE_NUMBERS 8
-# define ROT_SPEED 0.0003
+# define ROT_SPEED 0.0008
 # define ARROW_ROT_SPEED 0.06
 # define F 102
 # define M 109
@@ -120,6 +120,7 @@ typedef struct s_math
 	int				orientation;
 	bool			door;
 	bool			looking_door;
+	int				line_height;
 }					t_math;
 
 typedef struct s_color
@@ -134,7 +135,7 @@ typedef struct s_color
 typedef struct s_sprite
 {
 	bool			enemy;
-	bool 			exists;
+	bool			exists;
 	t_img			texture;
 	t_pos			cords;
 	int				width;
@@ -219,6 +220,14 @@ void				create_frame(t_game *game);
 void				artistic_moment(t_game *game, int x, int sdraw, int edraw);
 int					add_light(int color, double intensity);
 double				flashlight(int x, int y, t_game *game, bool is_wall);
+// monster
+int					monster(t_game *game);
+t_queue				*monster_bfs_set_up(t_game *game);
+void				while_do(t_game *game, t_queue *q, t_point *curr, int i);
+void				check_space(t_game *game, t_queue *q);
+t_queue				*ft_queuenew(void *content);
+void				ft_queueadd_back(t_queue **lst, t_queue *new);
+void				free_queue(t_queue *queue);
 // clean
 int					closex(t_game *mlx);
 // mlx_adds

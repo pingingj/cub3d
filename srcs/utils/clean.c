@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 17:51:57 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/16 18:43:04 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	print_info(t_game game)
 				ft_printf("d");
 			else if (game.map.grid[i][j] == 'c')
 				ft_printf("c");
+			else if (game.map.grid[i][j] == 'j')
+				ft_printf("j");
 			else if (game.map.grid[i][j] == '\0')
 				ft_printf("\n");
 			j++;
