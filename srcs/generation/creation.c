@@ -87,6 +87,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	double	dist;
 	double	screen_dist;
 	double	horizon;
+	double 	max_dist_sq;
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
@@ -94,6 +95,9 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	if (softness < 80.0)
 		softness = 80.0;
 	dist = dx * dx + dy * dy;
+	max_dist_sq = 2.0 * softness * softness;
+	if (dist >= max_dist_sq)
+		return (AMBIENT);
 	circ_intensity = 1.0 - (dist / (2.0 * softness * softness));
 	if (circ_intensity < 0.0)
 		circ_intensity = 0.0;
@@ -130,10 +134,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	}
 	intensity = AMBIENT + (1.0 - AMBIENT) * circ_intensity * dist_intensity;
 	if (intensity < AMBIENT)
-	{
-		// printf("intensity = %f\n",intensity);
 		intensity = AMBIENT;
-	}
 	if (intensity > 1.0)
 		intensity = 1.0;
 	return (intensity);
