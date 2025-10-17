@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:50:26 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/16 17:13:37 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:18:21 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,8 @@ int	monster(t_game *game)
 		{
 			game->ass.enemy.cords.x = move_x;
 			game->ass.enemy.cords.y = move_y;
-			game->ass.sprites[game->ass.collect_amount
-				- 1].cords.x = game->ass.enemy.cords.x;
-			game->ass.sprites[game->ass.collect_amount
-				- 1].cords.y = game->ass.enemy.cords.y;
+			game->ass.sprites[game->ass.collect_amount- 1].cords.x = game->ass.enemy.cords.x;
+			game->ass.sprites[game->ass.collect_amount- 1].cords.y = game->ass.enemy.cords.y;
 		}
 	}
 	else

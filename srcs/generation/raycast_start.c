@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 14:00:54 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:30:18 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void	hande_sprites(t_game *game)
 	int		texy;
 	int		color;
 	double	intensity;
+	t_img spt;
 
 	i = -1;
 	while (++i < game->ass.collect_amount)
@@ -140,6 +141,10 @@ void	hande_sprites(t_game *game)
 	{
 		if (game->ass.sprites[order[i]].exists == false)
 			continue ;
+		if(game->ass.sprites[order[i]].enemy == true)
+			spt = game->ass.enemy.texture;
+		else
+			spt = game->ass.barrel;
 		mathx = game->ass.sprites[order[i]].cords.x - game->player.posx;
 		mathy = game->ass.sprites[order[i]].cords.y - game->player.posy;
 		inverse = 1.0 / (game->player.planex * game->player.diry
@@ -168,7 +173,7 @@ void	hande_sprites(t_game *game)
 		while (sp_index < edrawx)
 		{
 			texx = (int)(256 * (sp_index - (-sprite_width / 2
-							+ spritexlocation)) * game->ass.barrel.w
+							+ spritexlocation)) * spt.w
 					/ sprite_width) / 256;
 			if (transformy > 0 && sp_index >= 0 && sp_index < WIDTH
 				&& transformy < game->wall_dist_sp[sp_index] + 0.6)
@@ -177,17 +182,17 @@ void	hande_sprites(t_game *game)
 				while (py < edrawy)
 				{
 					d = (py - screen_center + sprite_height / 2) * 256;
-					texy = ((d * game->ass.barrel.h) / sprite_height) / 256;
+					texy = ((d * spt.h) / sprite_height) / 256;
 					if (texx < 0)
 						texx = 0;
-					if (texx >= game->ass.barrel.w)
-						texx = game->ass.barrel.w - 1;
+					if (texx >= spt.w)
+						texx = spt.w - 1;
 					if (texy < 0)
 						texy = 0;
-					if (texy >= game->ass.barrel.h)
-						texy = game->ass.barrel.h - 1;
-					color = pixel_get(&game->ass.barrel, texx, texy);
-					if ((unsigned int)color != 0xFF000000)
+					if (texy >= spt.h)
+						texy = spt.h - 1;
+					color = pixel_get(&spt, texx, texy);
+					if ((unsigned int)color != 0x000000)
 					{
 						intensity = sprite_flashlight(sp_index, py, game,
 								transformy);

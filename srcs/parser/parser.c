@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 18:45:47 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:19:01 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	coin_pos(t_game *game)
 		{
 			if (game->map.grid[y][x] == 'c')
 			{
+				game->ass.sprites[index].enemy = false;
 				game->ass.sprites[index].exists = true;
 				game->ass.sprites[index].cords.x = x + 0.5;
 				game->ass.sprites[index].cords.y = y + 0.5;
@@ -179,6 +180,7 @@ void	make_sprites(t_game *game)
 	}
 	game->ass.collect_amount = amount;
 	coin_pos(game);
+	game->ass.sprites[game->ass.collect_amount- 1].enemy = true;
 }
 
 void	make_enemy(t_game *game)

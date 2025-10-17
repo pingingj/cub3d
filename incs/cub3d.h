@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/17 14:33:10 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:28:58 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ typedef struct s_sprite
 typedef struct s_assets
 {
 	t_img			walls[4];
+	t_img			barrel;
 	t_color			ceiling;
 	t_color			floor;
-	t_img			barrel;
 	t_sprite		*sprites;
 	t_sprite		enemy;
 	int				collect_amount;

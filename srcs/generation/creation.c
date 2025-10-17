@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 15:21:13 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:43:55 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,22 +179,40 @@ int get_color(t_game *game, int sdraw, int y)
     char *pixel;
     int color;
 	int screen_center = HEIGHT/ 2 + game->player.look;
+	t_img sprite;
 
     if (game->meth.orientation == 0)
         wallx = game->player.posy + game->walldist * game->meth.raydiry;
     else
         wallx = game->player.posx + game->walldist * game->meth.raydirx;
     wallx -= floor(wallx);
-    texX = (int)(wallx * (double)game->ass.barrel.w);
     if (game->meth.orientation == 0 && game->meth.raydirx < 0)
-        texX = game->ass.barrel.w - texX - 1;
+	{
+		sprite = game->ass.walls[WE];
+		texX = (int)(wallx * (double)sprite.w);
+        texX = sprite.w - texX - 1;
+	}
+	else if (game->meth.orientation == 0 && game->meth.raydirx > 0)
+	{
+		sprite = game->ass.walls[EA];
+		texX = (int)(wallx * (double)sprite.w);
+	}
     if (game->meth.orientation == 1 && game->meth.raydiry > 0)
-        texX = game->ass.barrel.w - texX - 1;
-    step = 1.0 * game->ass.barrel.h / game->meth.line_height;
+	{
+		sprite = game->ass.walls[SO];
+		texX = (int)(wallx * (double)sprite.w);
+        texX = sprite.w - texX - 1;
+	}
+	else if (game->meth.orientation == 1 && game->meth.raydiry < 0)
+	{
+		sprite = game->ass.walls[NO];
+		texX = (int)(wallx * (double)sprite.w);
+	}
+    step = 1.0 * sprite.h / game->meth.line_height;
     texPos = (sdraw - screen_center  + game->meth.line_height / 2) * step;
     texPosForY = texPos + (y - sdraw) * step;
-    texY = (int)texPosForY % (game->ass.barrel.h - 1);
-    pixel = game->ass.barrel.addr + (texY * game->ass.barrel.line_length + texX * (game->ass.barrel.bits_per_pixel / 8));
+    texY = (int)texPosForY % (sprite.h - 1);
+    pixel = sprite.addr + (texY * sprite.line_length + texX * (sprite.bits_per_pixel / 8));
     color = *(int *)pixel;
     return color;
 }
