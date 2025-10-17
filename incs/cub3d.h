@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/17 17:37:42 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/17 18:47:45 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,32 @@ typedef struct s_queue
 	struct s_queue	*next;
 }					t_queue;
 
+typedef struct s_spath
+{
+	int		i;
+	double	mathx;
+	double	mathy;
+	double	transformx;
+	double	transformy;
+	double	inverse;
+	double	spritexlocation;
+	double	sprite_height;
+	double	sprite_width;
+	int		sdrawx;
+	int		sdrawy;
+	int		edrawx;
+	int		edrawy;
+	int		sp_index;
+	int		texx;
+	int		screen_center;
+	int		py;
+	int		d;
+	int		texy;
+	int		color;
+	double	intensity;
+	t_img spt;
+}					t_spath;
+
 typedef struct s_game
 {
 	t_map			map;
@@ -190,6 +216,7 @@ typedef struct s_game
 	t_pos			mouse;
 	t_queue			*queue;
 	t_point			**prev;
+	t_spath			spath;
 	bool			look_flag_right;
 	bool			look_flag_left;
 	bool			laggy_lanter;
@@ -228,6 +255,15 @@ void				check_space(t_game *game, t_queue *q);
 t_queue				*ft_queuenew(void *content);
 void				ft_queueadd_back(t_queue **lst, t_queue *new);
 void				free_queue(t_queue *queue);
+//sprites
+void	draw_sprite(t_game *game);
+void	draw_sprite_prep(t_game *game);
+void	sprite_math(t_game *game, int *order);
+void	start_sprite_handle(t_game *game, int *order);
+void	hande_sprites(t_game *game);
+void	sort_dist(int *order, double *sprit_distance, t_game *game);
+void	sprite_text_boundary_check(t_game *game);
+double	sprite_flashlight(int x, int y, t_game *game, double sprite_dist);
 // clean
 int					closex(t_game *mlx);
 // mlx_adds
