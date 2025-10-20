@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/20 14:37:35 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:59:33 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,10 +188,15 @@ void	make_sprites(t_game *game)
 		}
 		y++;
 	}
-	game->ass.collect_amount = amount;
+	game->ass.collect_amount = amount + 1;
+	if(amount > 0 && !game->ass.textures[CL].filename)
+		print_errors(game,1,"Missing collectible texutre");
 	coin_pos(game);
 	if(game->ass.enemy.cords.x != -1)
-		game->ass.sprites[game->ass.collect_amount - 1].enemy = true;
+	{
+		game->ass.sprites[amount].exists = true;
+		game->ass.sprites[amount].enemy = true;
+	}
 }
 
 void	make_enemy(t_game *game)

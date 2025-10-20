@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/16 18:43:04 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:55:27 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	closex(t_game *mlx)
 		mlx_destroy_image(mlx->mlx, mlx->ass.enemy.texture.img);
 	if (mlx->ass.barrel.img)
 		mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
-	while(i < 4)
+	while(i < 5)
 	{
 		if (mlx->ass.textures[i].img)
 			mlx_destroy_image(mlx->mlx, mlx->ass.textures[i].img);
@@ -54,6 +54,7 @@ void	print_info(t_game game)
 	printf("CL = %s\n", game.ass.textures[CL].filename);
 	printf("length = %f\n", game.map.pos.x);
 	printf("height = %f\n", game.map.pos.y);
+	printf("collect amount  = %d\n", game.ass.collect_amount);
 	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
 	// printf("R = %d\n", game.ass.ceiling.red);
 	// printf("G = %d\n", game.ass.ceiling.green);
