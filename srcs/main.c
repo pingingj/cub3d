@@ -73,6 +73,6 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	else
-		return (print_errors(&game, 1, "Not valid amount of arguments", -1), 1);
+		return (print_errors(&game, 1, "Not valid amount of arguments"), 1);
 	return (0);
 }

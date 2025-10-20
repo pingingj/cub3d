@@ -14,12 +14,26 @@
 
 int	closex(t_game *mlx)
 {
+	int	i;
+
+	i = 0;
 	ft_printf("\n\nGAME CLOSING\n");
-	mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
-	mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
+	if (mlx->ass.enemy.texture.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.enemy.texture.img);
+	if (mlx->ass.barrel.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
+	while(i < 4)
+	{
+		if (mlx->ass.textures[i].img)
+			mlx_destroy_image(mlx->mlx, mlx->ass.textures[i].img);
+		i++;
+	}
+	if (mlx->bg_img.img)
+		mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
 	// free_queue(mlx->queue);
 	free(mlx->move);
-	mlx_destroy_window(mlx->mlx, mlx->win);
+	if (mlx->win)
+		mlx_destroy_window(mlx->mlx, mlx->win);
 	mlx_destroy_display(mlx->mlx);
 	free(mlx->mlx);
 	free_game(mlx);
@@ -33,10 +47,11 @@ void	print_info(t_game game)
 
 	j = 0;
 	i = 0;
-	// printf("NO = %s\n", game.ass.walls[NO].filename);
-	// printf("EA = %s\n", game.ass.walls[EA].filename);
-	// printf("SO = %s\n", game.ass.walls[SO].filename);
-	// printf("WE = %s\n", game.ass.walls[WE].filename);
+	printf("NO = %s\n", game.ass.textures[NO].filename);
+	printf("EA = %s\n", game.ass.textures[EA].filename);
+	printf("SO = %s\n", game.ass.textures[SO].filename);
+	printf("WE = %s\n", game.ass.textures[WE].filename);
+	printf("CL = %s\n", game.ass.textures[CL].filename);
 	printf("length = %f\n", game.map.pos.x);
 	printf("height = %f\n", game.map.pos.y);
 	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
@@ -101,10 +116,10 @@ void	free_game(t_game *game)
 		freeany(game->visited);
 	if(game->prev)
 		freeany(game->prev);
-	while (i < 4)
+	while (i < 5)
 	{
-		if (game->ass.walls[i].filename)
-			free(game->ass.walls[i].filename);
+		if (game->ass.textures[i].filename)
+			free(game->ass.textures[i].filename);
 		i++;
 	}
 }
@@ -113,11 +128,10 @@ void	free_game(t_game *game)
 /// @param game struct to free
 /// @param error if error = 1 it will free game struct
 /// @param msg msg to print
-/// @param fd closes open fd send -1 if no fd needs to be closed
-void	print_errors(t_game *game, int error, char *msg, int fd)
+void	print_errors(t_game *game, int error, char *msg)
 {
-	if (fd > 2)
-		close(fd);
+	if (game->fd > 2)
+		close(game->fd);
 	if (msg != NULL)
 		ft_dprintf(2, "Error\n%s\n", msg);
 	if (error == 1)

@@ -26,7 +26,7 @@ char	*get_word(char *line, char c)
 		i++;
 	word = ft_calloc(i + 1, sizeof(char));
 	if (word == NULL)
-		exit(1);
+		return (NULL);
 	ft_strlcpy(word, line, i + 1);
 	return (word);
 }

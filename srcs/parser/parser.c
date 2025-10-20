@@ -12,9 +12,9 @@
 
 #include "../../incs/cub3d.h"
 
-bool check_texture(char *line, char **img, char c)
+bool	check_texture(char *line, char **img, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (c == 'C' || c == 'F')
@@ -25,9 +25,10 @@ bool check_texture(char *line, char **img, char c)
 	while (line[i] != '\0' && (line[i] != ' ' && (line[i] < 9 || line[i] > 13)))
 		i++;
 	if (line[0] == '\0' || ((c != 'C' && c != 'F') && (ft_strstr(line + i - 4,
-																 ".xpm") == NULL)))
+					".xpm") == NULL)))
 		return (false);
-	while (line[i] != '\0' && (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13)))
+	while (line[i] != '\0' && (line[i] == ' ' || (line[i] >= 9
+				&& line[i] <= 13)))
 		i++;
 	if (line[i] && line[i] != '\n')
 		return (false);
@@ -37,30 +38,36 @@ bool check_texture(char *line, char **img, char c)
 	return (true);
 }
 
-bool check_walls(char *line, t_game *game)
+void	check_walls(char *line, t_game *game)
 {
-	char *letters[4];
-	int i;
+	char	*letters[5];
+	int		i;
 
-	i = 0;
+	i = -1;
 	letters[NO] = "NO ";
 	letters[EA] = "EA ";
 	letters[WE] = "WE ";
 	letters[SO] = "SO ";
-	while (i < 4)
+	letters[CL] = "CL ";
+	while (++i < 5)
 	{
-		if (ft_strncmp(line, letters[i], 3) == 0 && !game->ass.walls[i].filename)
+		if (ft_strncmp(line, letters[i], 3) == 0
+			&& !game->ass.textures[i].filename)
 		{
-			if (check_texture(line, &game->ass.walls[i].filename, 'W') == false)
-				return (false);
-			return (true);
+			if (check_texture(line, &game->ass.textures[i].filename,
+					'W') == false)
+			{
+				free(line);
+				print_errors(game, 1 , "Invalid texture input");
+			}
+			return ;
 		}
-		i++;
 	}
-	return (false);
+	free(line);
+	print_errors(game, 1, "Invalid input only 'NO', 'EA', 'WE', 'SO', 'C', 'F' and 'CL' available");
 }
 
-bool check_line(char *line, t_game *game)
+bool	check_line(char *line, t_game *game)
 {
 	skip_wspaces(&line);
 	if (line[0] == '\0' || line[0] == '\n')
@@ -68,63 +75,65 @@ bool check_line(char *line, t_game *game)
 	if (ft_strncmp(line, "C ", 2) == 0)
 	{
 		if (check_texture(line, &game->ass.ceiling.nums, 'C') == false)
-			return (false);
+		{
+			free(line);
+			print_errors(game, 1, "Invalid ceiling input");
+		}
 		return (true);
 	}
 	else if (ft_strncmp(line, "F ", 2) == 0)
 	{
 		if (check_texture(line, &game->ass.floor.nums, 'F') == false)
-			return (false);
+		{
+			free(line);
+			print_errors(game, 1, "Invalid floor input");
+		}
 		return (true);
 	}
-	if (check_walls(line, game) == true)
-		return (true);
-	return (false);
+	check_walls(line, game);
+	return (true);
 }
 
-bool get_textures(t_game *game, int fd)
+bool	get_textures(t_game *game)
 {
-	char *line;
+	char	*line;
 
-	line = get_next_line(fd);
+	line = get_next_line(game->fd);
 	if (line == NULL)
 	{
-		print_errors(game, 0, "Empty File", fd);
+		print_errors(game, 0, "Empty File");
 		return (false);
 	}
 	game->map.breakp++;
 	while (line != NULL)
 	{
-		if (check_line(line, game) == false)
-		{
-			free(line);
-			return (false);
-		}
+		check_line(line, game);
 		free(line);
-		if (game->ass.floor.nums && game->ass.ceiling.nums && game->ass.walls[NO].filename && game->ass.walls[EA].filename && game->ass.walls[WE].filename && game->ass.walls[SO].filename)
-			break;
-		line = get_next_line(fd);
+		if (game->ass.floor.nums && game->ass.ceiling.nums
+			&& game->ass.textures[NO].filename
+			&& game->ass.textures[EA].filename
+			&& game->ass.textures[WE].filename
+			&& game->ass.textures[SO].filename)
+			break ;
+		line = get_next_line(game->fd);
 		game->map.breakp++;
 	}
 	return (true);
 }
 
-void get_error(t_game *game, int fd)
+void	get_error(t_game *game, char *line)
 {
-	if (game->ass.floor.nums == NULL)
-		print_errors(game, 1, "Missing floor color", fd);
-	else if (game->ass.ceiling.nums == NULL)
-		print_errors(game, 1, "Missing ceiling color", fd);
-	else if (game->ass.walls[NO].filename == NULL)
-		print_errors(game, 1, "Missing north texture", fd);
-	else if (game->ass.walls[EA].filename == NULL)
-		print_errors(game, 1, "Missing east texture", fd);
-	else if (game->ass.walls[WE].filename == NULL)
-		print_errors(game, 1, "Missing west texture", fd);
-	else if (game->ass.walls[SO].filename == NULL)
-		print_errors(game, 1, "Missing south texture", fd);
+	(void)line;
+	if (game->ass.textures[NO].filename == NULL)
+		print_errors(game, 1, "Missing north texture");
+	else if (game->ass.textures[EA].filename == NULL)
+		print_errors(game, 1, "Missing east texture");
+	else if (game->ass.textures[WE].filename == NULL)
+		print_errors(game, 1, "Missing west texture");
+	else if (game->ass.textures[SO].filename == NULL)
+		print_errors(game, 1, "Missing south texture");
 	else
-		print_errors(game, 1, "Error validating textures or colors", fd);
+		print_errors(game, 1, "Error validating textures");
 }
 
 void	coin_pos(t_game *game)
@@ -135,9 +144,10 @@ void	coin_pos(t_game *game)
 
 	y = 0;
 	index = 0;
-	game->ass.sprites = ft_calloc(game->ass.collect_amount + 1, sizeof(t_sprite));
+	game->ass.sprites = ft_calloc(game->ass.collect_amount + 1,
+			sizeof(t_sprite));
 	if (game->ass.sprites == NULL)
-		print_errors(game, 1, "Failed malloc in spritess", -1);
+		print_errors(game, 1, "Failed malloc in spritess");
 	while (y < game->map.pos.y)
 	{
 		x = 0;
@@ -159,9 +169,9 @@ void	coin_pos(t_game *game)
 
 void	make_sprites(t_game *game)
 {
-	int			x;
-	int			y;
-	int			amount;
+	int	x;
+	int	y;
+	int	amount;
 
 	amount = 0;
 	y = 0;
@@ -171,7 +181,7 @@ void	make_sprites(t_game *game)
 		while (game->map.grid[y][x])
 		{
 			if (game->map.grid[y][x] == 'C')
-				print_errors(game, 1, "Not reachable sprites found", -1);	
+				print_errors(game, 1, "Not reachable sprites found");
 			if (game->map.grid[y][x] == 'c')
 				amount++;
 			x++;
@@ -180,12 +190,12 @@ void	make_sprites(t_game *game)
 	}
 	game->ass.collect_amount = amount;
 	coin_pos(game);
-	game->ass.sprites[game->ass.collect_amount- 1].enemy = true;
+	game->ass.sprites[game->ass.collect_amount - 1].enemy = true;
 }
 
 void	make_enemy(t_game *game)
 {
-	int y;
+	int	y;
 	int	x;
 	int	amount;
 
@@ -197,7 +207,7 @@ void	make_enemy(t_game *game)
 		while (game->map.grid[y][x])
 		{
 			if (game->map.grid[y][x] == 'J')
-				print_errors(game, 1, "Not enough experience", -1);
+				print_errors(game, 1, "Not enough experience");
 			if (game->map.grid[y][x] == 'j')
 			{
 				game->ass.enemy.cords.x = x;
@@ -209,7 +219,7 @@ void	make_enemy(t_game *game)
 		y++;
 	}
 	if (amount > 1)
-		print_errors(game, 1, "Overworked", -1);
+		print_errors(game, 1, "Overworked");
 	if (amount == 0)
 	{
 		game->ass.enemy.cords.x = -1;
@@ -217,44 +227,48 @@ void	make_enemy(t_game *game)
 	}
 	game->visited = ft_calloc(game->map.pos.y + 1, sizeof(int *));
 	if (game->visited == NULL)
-		print_errors(game, 1, "Malloc fail in make_enemy", -1);
+		print_errors(game, 1, "Malloc fail in make_enemy");
 	game->prev = ft_calloc(game->map.pos.y + 1, sizeof(t_point *));
 	if (game->prev == NULL)
 	{
 		free(game->visited);
-		print_errors(game, 1, "Malloc fail in make_enemy", -1);
+		print_errors(game, 1, "Malloc fail in make_enemy");
 	}
 	y = 0;
 	while (y < game->map.pos.y)
 	{
 		game->visited[y] = ft_calloc(game->map.pos.x, sizeof(int));
-		game->prev[y] = ft_calloc(game->map.pos.x,sizeof(t_point));
+		game->prev[y] = ft_calloc(game->map.pos.x, sizeof(t_point));
 		y++;
 	}
 }
 
-bool parse(t_game *game, char *filename)
+void	init_vars(t_game *game)
 {
-	int fd;
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		print_errors(game, 0, "Invalid file or no file provided", fd);
 	game->mini.tile_size = 60;
 	game->mini.show = true;
 	game->laggy_lanter = true;
 	game->player.posx = -1;
 	game->player.posy = -1;
 	game->player.look = 0;
+}
+bool	parse(t_game *game, char *filename)
+{
+	init_vars(game);
+	game->fd = open(filename, O_RDONLY);
+	if (game->fd == -1)
+		print_errors(game, 0, "Invalid file or no file provided");
 	if (ft_strcmp(filename + ft_strlen(filename) - 4, ".cub") != 0)
-		print_errors(game, 0, "File is not in the correct format", fd);
-	if (get_textures(game, fd) == false)
-		get_error(game, fd);
-	if (!game->ass.ceiling.nums || !game->ass.floor.nums || !game->ass.walls[NO].filename || !game->ass.walls[EA].filename || !game->ass.walls[WE].filename || !game->ass.walls[SO].filename)
-		print_errors(game, 1, "Missing texture or color", fd);
-	parse_colors(game, fd);
-	parse_map(game, fd, filename);
-	close(fd);
+		print_errors(game, 0, "File is not in the correct format");
+	if (get_textures(game) == false)
+		get_error(game, NULL);
+	if (!game->ass.ceiling.nums || !game->ass.floor.nums
+		|| !game->ass.textures[NO].filename || !game->ass.textures[EA].filename
+		|| !game->ass.textures[WE].filename || !game->ass.textures[SO].filename)
+		print_errors(game, 1, "Missing texture or color");
+	parse_colors(game);
+	parse_map(game, filename);
+	close(game->fd);
 	make_enemy(game);
 	make_sprites(game);
 	return (true);

@@ -188,24 +188,24 @@ int	get_color(t_game *game, int sdraw, int y)
 	wallx -= floor(wallx);
 	if (game->meth.orientation == 0 && game->meth.raydirx < 0)
 	{
-		sprite = game->ass.walls[WE];
+		sprite = game->ass.textures[WE];
 		texX = (int)(wallx * (double)sprite.w);
 		texX = sprite.w - texX - 1;
 	}
 	else if (game->meth.orientation == 0 && game->meth.raydirx > 0)
 	{
-		sprite = game->ass.walls[EA];
+		sprite = game->ass.textures[EA];
 		texX = (int)(wallx * (double)sprite.w);
 	}
-	if (game->meth.orientation == 1 && game->meth.raydiry > 0)
+	else if (game->meth.orientation == 1 && game->meth.raydiry > 0)
 	{
-		sprite = game->ass.walls[SO];
+		sprite = game->ass.textures[SO];
 		texX = (int)(wallx * (double)sprite.w);
 		texX = sprite.w - texX - 1;
 	}
-	else if (game->meth.orientation == 1 && game->meth.raydiry < 0)
+	else
 	{
-		sprite = game->ass.walls[NO];
+		sprite = game->ass.textures[NO];
 		texX = (int)(wallx * (double)sprite.w);
 	}
 	step = 1.0 * sprite.h / game->meth.line_height;

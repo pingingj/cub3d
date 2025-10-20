@@ -96,7 +96,7 @@ bool	get_player(t_game *game)
 		y++;
 	}
 	if (game->player.posx == -1 || game->player.posy == -1)
-		print_errors(game, 1, "Missing player in map", -1);
+		print_errors(game, 1, "Missing player in map");
 	return (true);
 }
 
@@ -173,21 +173,20 @@ bool	change_map(t_map *map)
 	return (true);
 }
 
-void	parse_map(t_game *game, int fd, char *filename)
+void	parse_map(t_game *game, char *filename)
 {
 	char	*funny_msg;
 
-	get_map(game, fd, filename);
+	get_map(game, filename);
 	if (check_map(game) == false)
-		print_errors(game, 1, "Invalid char found", fd);
+		print_errors(game, 1, "Invalid char found");
 	if (get_player(game) == false)
-		print_errors(game, 1, "Player not found or multiple players in map",
-			fd);
+		print_errors(game, 1, "Player not found or multiple players in map");
 	if (flood_fill(&game->map) == false)
-		print_errors(game, 1, "Map is invalid", fd);
+		print_errors(game, 1, "Map is invalid");
 	funny_msg = check_doors(game->map, *game);
 	if (funny_msg != NULL)
-		print_errors(game, 1, funny_msg, fd);
+		print_errors(game, 1, funny_msg);
 	if (change_map(&game->map) == false)
-		print_errors(game, 1, "Error while changing map grid", fd);
+		print_errors(game, 1, "Error while changing map grid");
 }

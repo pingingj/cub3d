@@ -67,6 +67,7 @@
 # define EA 1
 # define WE 2
 # define SO 3
+# define CL 4
 
 typedef struct s_img
 {
@@ -144,7 +145,7 @@ typedef struct s_sprite
 
 typedef struct s_assets
 {
-	t_img			walls[4];
+	t_img			textures[5];
 	t_img			barrel;
 	t_color			ceiling;
 	t_color			floor;
@@ -207,6 +208,7 @@ typedef struct s_spath
 
 typedef struct s_game
 {
+	int				fd;
 	t_map			map;
 	t_assets		ass;
 	t_img			bg_img;
@@ -287,15 +289,15 @@ void				draw_floor(t_game *game, int cx, int cy);
 int					draw_minimap(t_game *game);
 // parse
 bool				parse(t_game *game, char *filename);
-void				print_errors(t_game *game, int error, char *msg, int fd);
+void				print_errors(t_game *game, int error, char *msg);
 void				free_game(t_game *game);
-void				parse_colors(t_game *game, int fd);
+void				parse_colors(t_game *game);
 bool				skip_comma(t_color *colors, int *i, bool last_check);
 bool				get_colors(t_color *colors);
 bool				check_colors(t_color colors);
 int					color_hexa(t_color color);
-void				parse_map(t_game *game, int fd, char *filename);
-bool				get_map(t_game *game, int fd, char *filename);
+void				parse_map(t_game *game, char *filename);
+bool				get_map(t_game *game, char *filename);
 bool				flood_map(t_map *map, int x, int y);
 void				print_info(t_game game);
 int					convert_dec(char *hexa);
