@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/20 14:41:05 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:40:01 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ typedef struct s_assets
 	t_color			floor;
 	t_sprite		*sprites;
 	t_sprite		enemy;
+	t_sprite		door;
 	int				collect_amount;
 }					t_assets;
 

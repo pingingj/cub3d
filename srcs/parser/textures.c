@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/20 14:11:46 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:45:24 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	img_init(t_game *game, char *filename, t_img *img)
 
 int	textures(t_game *game)
 {
-	img_init(game, "incs/textures/gob.xpm", &game->ass.enemy.texture);
+	img_init(game, "incs/textures/J_B-Aplication.xpm", &game->ass.enemy.texture);
+	img_init(game, "incs/textures/door.xpm", &game->ass.door.texture);
 	img_init(game, game->ass.textures[NO].filename, &game->ass.textures[NO]);
 	img_init(game, game->ass.textures[EA].filename, &game->ass.textures[EA]);
 	img_init(game, game->ass.textures[WE].filename, &game->ass.textures[WE]);
 	img_init(game, game->ass.textures[SO].filename, &game->ass.textures[SO]);
 	if (game->ass.textures[CL].filename)
 		img_init(game, game->ass.textures[CL].filename, &game->ass.textures[CL]);
-	// game->ass.textures[]
 	return (1);
 }

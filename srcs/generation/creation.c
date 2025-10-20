@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/20 14:25:01 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 19:01:29 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,11 @@ int	get_color(t_game *game, int sdraw, int y)
 		sprite = game->ass.textures[NO];
 		texX = (int)(wallx * (double)sprite.w);
 	}
+	if(game->meth.door == true)
+	{
+		sprite = game->ass.door.texture;
+		texX = (int)(wallx * (double)sprite.w);
+	}
 	step = 1.0 * sprite.h / game->meth.line_height;
 	texPos = (sdraw - screen_center + game->meth.line_height / 2) * step;
 	texPosForY = texPos + (y - sdraw) * step;
@@ -230,10 +235,6 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 	int	y;
 
 	if (game->meth.orientation == 0)
-		color = 0x0000FF;
-	else
-		color = 0x0000FA;
-	if (game->meth.orientation == 0)
 		door = 0x964B00;
 	else
 		door = 0x964B90;
@@ -255,7 +256,10 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 			paint_exe(game, x, y, color);
 		}
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
-			paint_exe(game, x, y, door);
+		{
+			color = get_color(game, sdraw, y);
+			paint_exe(game, x, y, color);
+		}
 		else
 			paint_exe(game, x, y, game->ass.floor.hexa);
 		y++;
