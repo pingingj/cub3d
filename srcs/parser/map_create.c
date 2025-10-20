@@ -64,7 +64,6 @@ static void	find_map(t_game *game, char *line)
 	{
 		while(line[i])
 		{
-
 			if (ft_isprint(line[i]) && (line[i] != ' ' || (line[i] < 9 || line[i] > 13)))
 			{
 				free(line);
@@ -105,11 +104,8 @@ static bool	get_grid(t_game *game, char *filename)
 	return (true);
 }
 
-bool	get_map(t_game *game, char *filename)
+bool	get_map(t_game *game, char *filename, char *line)
 {
-	char	*line;
-
-	line = get_next_line(game->fd);
 	if (line == NULL)
 		print_errors(game, 1, "No map found");
 	while (line != NULL)

@@ -68,6 +68,8 @@
 # define WE 2
 # define SO 3
 # define CL 4
+# define EN 5
+# define DO 6
 
 typedef struct s_img
 {
@@ -145,7 +147,7 @@ typedef struct s_sprite
 
 typedef struct s_assets
 {
-	t_img			textures[5];
+	t_img			textures[7];
 	t_img			barrel;
 	t_color			ceiling;
 	t_color			floor;
@@ -297,8 +299,8 @@ bool				skip_comma(t_color *colors, int *i, bool last_check);
 bool				get_colors(t_color *colors);
 bool				check_colors(t_color colors);
 int					color_hexa(t_color color);
-void				parse_map(t_game *game, char *filename);
-bool				get_map(t_game *game, char *filename);
+void				parse_map(t_game *game, char *filename, char *line);
+bool				get_map(t_game *game, char *filename, char *line);
 bool				flood_map(t_map *map, int x, int y);
 void				print_info(t_game game);
 int					convert_dec(char *hexa);

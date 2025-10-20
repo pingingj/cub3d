@@ -18,11 +18,13 @@ int	closex(t_game *mlx)
 
 	i = 0;
 	ft_printf("\n\nGAME CLOSING\n");
+	if (mlx->ass.door.texture.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.door.texture.img);
 	if (mlx->ass.enemy.texture.img)
 		mlx_destroy_image(mlx->mlx, mlx->ass.enemy.texture.img);
 	if (mlx->ass.barrel.img)
 		mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
-	while(i < 5)
+	while(i < 6)
 	{
 		if (mlx->ass.textures[i].img)
 			mlx_destroy_image(mlx->mlx, mlx->ass.textures[i].img);
@@ -52,6 +54,8 @@ void	print_info(t_game game)
 	printf("SO = %s\n", game.ass.textures[SO].filename);
 	printf("WE = %s\n", game.ass.textures[WE].filename);
 	printf("CL = %s\n", game.ass.textures[CL].filename);
+	printf("EN = %s\n", game.ass.textures[EN].filename);
+	printf("DO = %s\n", game.ass.textures[DO].filename);
 	printf("length = %f\n", game.map.pos.x);
 	printf("height = %f\n", game.map.pos.y);
 	printf("collect amount  = %d\n", game.ass.collect_amount);
@@ -117,7 +121,7 @@ void	free_game(t_game *game)
 		freeany(game->visited);
 	if(game->prev)
 		freeany(game->prev);
-	while (i < 5)
+	while (i < 7)
 	{
 		if (game->ass.textures[i].filename)
 			free(game->ass.textures[i].filename);

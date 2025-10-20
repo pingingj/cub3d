@@ -173,11 +173,11 @@ bool	change_map(t_map *map)
 	return (true);
 }
 
-void	parse_map(t_game *game, char *filename)
+void	parse_map(t_game *game, char *filename, char *line)
 {
 	char	*funny_msg;
 
-	get_map(game, filename);
+	get_map(game, filename, line);
 	if (check_map(game) == false)
 		print_errors(game, 1, "Invalid char found");
 	if (get_player(game) == false)

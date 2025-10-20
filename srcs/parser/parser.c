@@ -40,7 +40,7 @@ bool	check_texture(char *line, char **img, char c)
 
 void	check_walls(char *line, t_game *game)
 {
-	char	*letters[5];
+	char	*letters[7];
 	int		i;
 
 	i = -1;
@@ -49,7 +49,9 @@ void	check_walls(char *line, t_game *game)
 	letters[WE] = "WE ";
 	letters[SO] = "SO ";
 	letters[CL] = "CL ";
-	while (++i < 5)
+	letters[EN] = "EN ";
+	letters[DO] = "DO ";
+	while (++i < 7)
 	{
 		if (ft_strncmp(line, letters[i], 3) == 0
 			&& !game->ass.textures[i].filename)
@@ -64,7 +66,7 @@ void	check_walls(char *line, t_game *game)
 		}
 	}
 	free(line);
-	print_errors(game, 1, "Invalid input only 'NO', 'EA', 'WE', 'SO', 'C', 'F' and 'CL' available");
+	print_errors(game, 1, "Invalid input only 'NO', 'EA', 'WE', 'SO', 'C', 'F', 'EN', 'DO' and 'CL' available");
 }
 
 bool	check_line(char *line, t_game *game)
@@ -94,31 +96,42 @@ bool	check_line(char *line, t_game *game)
 	return (true);
 }
 
-bool	get_textures(t_game *game)
+bool	is_map(char *line)
+{
+	int	i;
+
+	i = 0;
+	while(line[i] && ft_strchr(" \t\v\f\r", line[i]))
+		i++;
+	if (line[i] == '\n')
+		return (false);
+	while(line[i])
+	{
+		if (ft_strchr(" C10JDNEWS\n", line[i]))
+			i++;
+		else
+			return (false);
+	}
+	return (true);
+}
+
+char	*get_textures(t_game *game)
 {
 	char	*line;
 
 	line = get_next_line(game->fd);
 	if (line == NULL)
-	{
 		print_errors(game, 0, "Empty File");
-		return (false);
-	}
-	game->map.breakp++;
 	while (line != NULL)
 	{
+		if (is_map(line) == true)
+			return (line);
+		game->map.breakp++;
 		check_line(line, game);
 		free(line);
-		if (game->ass.floor.nums && game->ass.ceiling.nums
-			&& game->ass.textures[NO].filename
-			&& game->ass.textures[EA].filename
-			&& game->ass.textures[WE].filename
-			&& game->ass.textures[SO].filename)
-			break ;
 		line = get_next_line(game->fd);
-		game->map.breakp++;
 	}
-	return (true);
+	return (NULL);
 }
 
 void	get_error(t_game *game, char *line)
@@ -181,7 +194,7 @@ void	make_sprites(t_game *game)
 		while (game->map.grid[y][x])
 		{
 			if (game->map.grid[y][x] == 'C')
-				print_errors(game, 1, "Not reachable collectible found");
+				print_errors(game, 1, "Unreachable collectible found");
 			if (game->map.grid[y][x] == 'c')
 				amount++;
 			x++;
@@ -260,20 +273,20 @@ void	init_vars(t_game *game)
 }
 bool	parse(t_game *game, char *filename)
 {
+	char	*line;
 	init_vars(game);
 	game->fd = open(filename, O_RDONLY);
 	if (game->fd == -1)
 		print_errors(game, 0, "Invalid file or no file provided");
 	if (ft_strcmp(filename + ft_strlen(filename) - 4, ".cub") != 0)
 		print_errors(game, 0, "File is not in the correct format");
-	if (get_textures(game) == false)
-		get_error(game, NULL);
+	line = get_textures(game);
 	if (!game->ass.ceiling.nums || !game->ass.floor.nums
 		|| !game->ass.textures[NO].filename || !game->ass.textures[EA].filename
 		|| !game->ass.textures[WE].filename || !game->ass.textures[SO].filename)
 		print_errors(game, 1, "Missing texture or color");
 	parse_colors(game);
-	parse_map(game, filename);
+	parse_map(game, filename, line);
 	close(game->fd);
 	make_enemy(game);
 	make_sprites(game);

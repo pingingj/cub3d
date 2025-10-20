@@ -231,13 +231,8 @@ int	get_color(t_game *game, int sdraw, int y)
 void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 {
 	int	color;
-	int	door;
 	int	y;
 
-	if (game->meth.orientation == 0)
-		door = 0x964B00;
-	else
-		door = 0x964B90;
 	y = 0;
 	while (y < HEIGHT)
 	{
