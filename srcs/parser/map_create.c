@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:50:51 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/14 16:57:14 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:09:53 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	find_map(t_game *game, char *line)
 		while(line[i])
 		{
 
-			if (ft_isprint(line[i]) && (line[i] != ' ' || (line[i] < 9 && line[i] > 13)))
+			if (ft_isprint(line[i]) && (line[i] != ' ' || (line[i] < 9 || line[i] > 13)))
 			{
 				free(line);
 				print_errors(game, 1, "Invalid character before map");

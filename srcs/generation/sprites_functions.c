@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:37:27 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 18:39:43 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:08:32 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	start_sprite_handle(t_game *game, int *order)
 	if (game->ass.sprites[order[game->spath.i]].enemy == true)
 		game->spath.spt = game->ass.enemy.texture;
 	else
-		game->spath.spt = game->ass.barrel;
+		game->spath.spt = game->ass.textures[CL];
 	sprite_math(game, order);
 	if (game->spath.sdrawx < 0)
 		game->spath.sdrawx = 0;

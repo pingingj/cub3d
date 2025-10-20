@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 17:38:00 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:25:01 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ int	get_color(t_game *game, int sdraw, int y)
 	step = 1.0 * sprite.h / game->meth.line_height;
 	texPos = (sdraw - screen_center + game->meth.line_height / 2) * step;
 	texPosForY = texPos + (y - sdraw) * step;
-	texY = (int)texPosForY % (sprite.h - 1);
+	texY = (int)texPosForY % (sprite.h);
 	pixel = sprite.addr + (texY * sprite.line_length + texX
 			* (sprite.bits_per_pixel / 8));
 	color = *(int *)pixel;

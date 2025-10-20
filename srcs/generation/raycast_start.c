@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 18:38:24 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:35:35 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	math_with_an_e(t_game *game)
 		artistic_moment(game, i, sdraw, edraw);
 		i++;
 	}
-	hande_sprites(game);
+	if(game->ass.collect_amount > 0)
+		hande_sprites(game);
 }
 
 void	create_frame(t_game *game)

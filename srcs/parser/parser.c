@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/17 17:19:01 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:37:35 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void	make_sprites(t_game *game)
 		while (game->map.grid[y][x])
 		{
 			if (game->map.grid[y][x] == 'C')
-				print_errors(game, 1, "Not reachable sprites found");
+				print_errors(game, 1, "Not reachable collectible found");
 			if (game->map.grid[y][x] == 'c')
 				amount++;
 			x++;
@@ -190,7 +190,8 @@ void	make_sprites(t_game *game)
 	}
 	game->ass.collect_amount = amount;
 	coin_pos(game);
-	game->ass.sprites[game->ass.collect_amount - 1].enemy = true;
+	if(game->ass.enemy.cords.x != -1)
+		game->ass.sprites[game->ass.collect_amount - 1].enemy = true;
 }
 
 void	make_enemy(t_game *game)
