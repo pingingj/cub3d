@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/20 18:55:08 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/21 14:12:59 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,8 @@ void	make_enemy(t_game *game)
 		game->ass.enemy.cords.x = -1;
 		return ;
 	}
+	if (amount == 1 && !game->ass.textures[EN].filename)
+		print_errors(game, 1, "Missing texture for the enemy");
 	game->visited = ft_calloc(game->map.pos.y + 1, sizeof(int *));
 	if (game->visited == NULL)
 		print_errors(game, 1, "Malloc fail in make_enemy");

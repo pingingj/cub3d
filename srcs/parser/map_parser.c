@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/14 18:07:14 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/21 14:05:29 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ char	*around_walls(t_map map, t_game game, int x, int y)
 {
 	if (map.grid[y][x] == 'd')
 	{
+		if (map.grid[y][x] == 'd' && !game.ass.textures[DO].filename)
+			return ("Missing texture for doors");
 		if (y - 1 < 0 || y + 1 > game.map.pos.y || x - 1 < 0 || x + 1 > ft_strlen(map.grid[y]))
 			return ("Out of bounds door");
 		if (map.grid[y - 1][x] == 'd' || map.grid[y + 1][x] == 'd' || map.grid[y][x -1] == 'd' || map.grid[y][x + 1] == 'd')
