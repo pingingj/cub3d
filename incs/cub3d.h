@@ -15,6 +15,8 @@
 
 # include "libft/libft.h"
 # include "math.h"
+# include <sys/time.h>
+# include <stdio.h>
 # include "minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <fcntl.h>
@@ -23,8 +25,8 @@
 # include <stdlib.h>
 
 // pixels
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1440
+# define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define MONSTER_SPEED 0.02
@@ -236,6 +238,7 @@ typedef struct s_game
 	int				monster_target_x;
 	int				monster_target_y;
 	int				monster_has_target;
+	int 			fps_lock;
 }					t_game;
 
 // generation

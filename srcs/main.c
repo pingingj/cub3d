@@ -42,13 +42,79 @@ int	mouse(int x, int y, t_game *game)
 	return (0);
 }
 
-int	main_loop(t_game *game)
+void ft_sleep(double mili_secs)
 {
-	move(game);
-	if (game->ass.enemy.cords.x != -1)
-		monster(game);
-	create_frame(game);
-	return (0);
+    double last_time = 0.0;
+    struct timeval now;
+    double current_time;
+
+    if (mili_secs <= 0.0)
+        return;
+
+    gettimeofday(&now, NULL);
+    current_time = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
+    if (last_time == 0.0)
+        last_time = current_time;
+    while (1)
+    {
+        gettimeofday(&now, NULL);
+        current_time = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
+        if (current_time - last_time >= mili_secs)
+            break;
+    }
+}
+
+double fps_counter(t_game *game)
+{
+    static int frames;
+    struct timeval now;
+    static double last_time;
+    static double next_deadline_ms;
+    double current_time;
+    double fsleep = 0.0;
+
+    if (game->fps_lock > 0)
+    {
+        double target_ms = 1000.0 / (double)game->fps_lock;
+        gettimeofday(&now, NULL);
+        double now_ms = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
+        if (next_deadline_ms == 0.0)
+            next_deadline_ms = now_ms + target_ms;
+        fsleep = next_deadline_ms - now_ms;
+        if (fsleep < 0.0)
+            fsleep = 0.0;
+        next_deadline_ms += target_ms;
+        if (next_deadline_ms < now_ms - target_ms)
+            next_deadline_ms = now_ms + target_ms;
+    }
+    else
+        next_deadline_ms = 0.0;
+    gettimeofday(&now, NULL);
+    current_time = now.tv_sec + now.tv_usec / 1000000.0;
+    if (last_time == 0.0)
+        last_time = current_time;
+    frames++;
+    if (current_time - last_time >= 1.0)
+    {
+        ft_printf("FPS: %d\n", frames);
+        frames = 0;
+        last_time = current_time;
+    }
+    return (fsleep);
+}
+
+int main_loop(t_game *game)
+{
+    double fsleep;
+
+    move(game);
+    if (game->ass.enemy.cords.x != -1)
+        monster(game);
+    create_frame(game);
+    fsleep = fps_counter(game);
+    if (game->fps_lock > 0 && fsleep > 0.0)
+        ft_sleep(fsleep);
+    return (0);
 }
 int	main(int argc, char **argv)
 {
@@ -59,6 +125,7 @@ int	main(int argc, char **argv)
 	{
 		if (parse(&game, argv[1]) == false)
 			return (1);
+		game.fps_lock = 60;
 		game.mlx = mlx_init();
 		print_info(game);
 		textures(&game);
