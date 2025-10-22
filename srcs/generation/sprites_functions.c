@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:37:27 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/20 18:57:56 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:40:44 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	draw_sprite(t_game *game)
 	sprite_text_boundary_check(game);
 	game->spath.color = pixel_get(&game->spath.spt, game->spath.texx,
 			game->spath.texy);
-	if ((unsigned int)game->spath.color != 0x000000)
+	if ((unsigned int)game->spath.color != 0xFF000000)
 	{
 		game->spath.intensity = sprite_flashlight(game->spath.sp_index,
 				game->spath.py, game, game->spath.transformy);
