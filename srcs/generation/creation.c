@@ -263,11 +263,13 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 
 void	map_gen(t_game *game)
 {
+	
 	game->move = ft_calloc(10, sizeof(int));
 	if (!game->move)
 		exit(1);
 	// printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
 	player_init(game);
 	background_gen(game);
+
 	create_frame(game);
 }
