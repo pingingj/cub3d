@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/16 17:05:05 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:43:07 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	else
-		return (print_errors(&game, 1, "Not valid amount of arguments", -1), 1);
+		return (print_errors(&game, 1, "Not valid amount of arguments"), 1);
 	return (0);
 }

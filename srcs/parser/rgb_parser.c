@@ -73,14 +73,14 @@ bool	check_colors(t_color colors)
 	return (true);
 }
 
-void	parse_colors(t_game *game, int fd)
+void	parse_colors(t_game *game)
 {
 	if (get_colors(&game->ass.ceiling) == false
 		|| get_colors(&game->ass.floor) == false)
-		print_errors(game, 1, "Colors aren't valid", fd);
+		print_errors(game, 1, "Colors aren't valid");
 	if (check_colors(game->ass.ceiling) == false
 		|| check_colors(game->ass.floor) == false)
-		print_errors(game, 1, "Colors values aren't valid", fd);
+		print_errors(game, 1, "Colors values aren't valid");
 	game->ass.ceiling.hexa = color_hexa(game->ass.ceiling);
 	game->ass.floor.hexa = color_hexa(game->ass.floor);
 }

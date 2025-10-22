@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:50:51 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/14 16:57:14 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:09:53 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,48 +60,54 @@ static void	find_map(t_game *game, char *line)
 	int	i;
 
 	i = 0;
-	if (in_string(line, "10NEWSDC") == false && game->map.exists == false)
+	if (in_string(line, "10NEWSDCJ") == false && game->map.exists == false)
+	{
+		while(line[i])
+		{
+			if (ft_isprint(line[i]) && (line[i] != ' ' || (line[i] < 9 || line[i] > 13)))
+			{
+				free(line);
+				print_errors(game, 1, "Invalid character before map");
+			}
+			i++;
+		}
 		game->map.breakp++;
+	}
 	else
 		game->map.exists = true;
-	i++;
 }
 
 static bool	get_grid(t_game *game, char *filename)
 {
 	int		i;
-	int		fd;
 	char	*line;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		print_errors(game, 1, "Wasn't able to open file", -1);
+	game->fd = open(filename, O_RDONLY);
+	if (game->fd < 0)
+		print_errors(game, 1, "Wasn't able to open file");
 	i = 0;
 	while (i < game->map.breakp)
 	{
-		line = get_next_line(fd);
+		line = get_next_line(game->fd);
 		free(line);
 		i++;
 	}
 	i = 0;
 	while (1)
 	{
-		game->map.grid[i] = get_next_line(fd);
+		game->map.grid[i] = get_next_line(game->fd);
 		if (game->map.grid[i] == NULL)
-			return (close(fd), true);
+			return (close(game->fd), true);
 		i++;
 	}
-	close(fd);
+	close(game->fd);
 	return (true);
 }
 
-bool	get_map(t_game *game, int fd, char *filename)
+bool	get_map(t_game *game, char *filename, char *line)
 {
-	char	*line;
-
-	line = get_next_line(fd);
 	if (line == NULL)
-		print_errors(game, 1, "No map found", fd);
+		print_errors(game, 1, "No map found");
 	while (line != NULL)
 	{
 		find_map(game, line);
@@ -114,12 +120,12 @@ bool	get_map(t_game *game, int fd, char *filename)
 			game->map.pos.y++;
 		}
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(game->fd);
 	}
 	game->map.grid = ft_calloc(game->map.pos.y + 1, sizeof(char *));
 	if (game->map.grid == NULL)
 		return (false);
-	close(fd);
+	close(game->fd);
 	get_grid(game, filename);
 	return (true);
 }

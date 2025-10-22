@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 15:21:13 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 19:01:29 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	double	dist;
 	double	screen_dist;
 	double	horizon;
-	double 	max_dist_sq;
+	double	max_dist_sq;
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
@@ -167,36 +167,60 @@ void	paint_exe(t_game *game, int x, int y, int color)
 		my_mlx_pixel_put(&game->bg_img, x, y, color);
 }
 
-
-int get_color(t_game *game, int sdraw, int y)
+int	get_color(t_game *game, int sdraw, int y)
 {
-    double wallx;
-    int texX;
-    double step;
-    double texPos;
-    double texPosForY;
-    int texY;
-    char *pixel;
-    int color;
-	int screen_center = HEIGHT/ 2 + game->player.look;
+	double	wallx;
+	int		texX;
+	double	step;
+	double	texPos;
+	double	texPosForY;
+	int		texY;
+	char	*pixel;
+	int		color;
+	int		screen_center;
+	t_img	sprite;
 
-    if (game->meth.orientation == 0)
-        wallx = game->player.posy + game->walldist * game->meth.raydiry;
-    else
-        wallx = game->player.posx + game->walldist * game->meth.raydirx;
-    wallx -= floor(wallx);
-    texX = (int)(wallx * (double)game->ass.barrel.w);
-    if (game->meth.orientation == 0 && game->meth.raydirx < 0)
-        texX = game->ass.barrel.w - texX - 1;
-    if (game->meth.orientation == 1 && game->meth.raydiry > 0)
-        texX = game->ass.barrel.w - texX - 1;
-    step = 1.0 * game->ass.barrel.h / game->meth.line_height;
-    texPos = (sdraw - screen_center  + game->meth.line_height / 2) * step;
-    texPosForY = texPos + (y - sdraw) * step;
-    texY = (int)texPosForY % (game->ass.barrel.h - 1);
-    pixel = game->ass.barrel.addr + (texY * game->ass.barrel.line_length + texX * (game->ass.barrel.bits_per_pixel / 8));
-    color = *(int *)pixel;
-    return color;
+	screen_center = HEIGHT / 2 + game->player.look;
+	if (game->meth.orientation == 0)
+		wallx = game->player.posy + game->walldist * game->meth.raydiry;
+	else
+		wallx = game->player.posx + game->walldist * game->meth.raydirx;
+	wallx -= floor(wallx);
+	if (game->meth.orientation == 0 && game->meth.raydirx < 0)
+	{
+		sprite = game->ass.textures[WE];
+		texX = (int)(wallx * (double)sprite.w);
+		texX = sprite.w - texX - 1;
+	}
+	else if (game->meth.orientation == 0 && game->meth.raydirx > 0)
+	{
+		sprite = game->ass.textures[EA];
+		texX = (int)(wallx * (double)sprite.w);
+	}
+	else if (game->meth.orientation == 1 && game->meth.raydiry > 0)
+	{
+		sprite = game->ass.textures[SO];
+		texX = (int)(wallx * (double)sprite.w);
+		texX = sprite.w - texX - 1;
+	}
+	else
+	{
+		sprite = game->ass.textures[NO];
+		texX = (int)(wallx * (double)sprite.w);
+	}
+	if(game->meth.door == true)
+	{
+		sprite = game->ass.door.texture;
+		texX = (int)(wallx * (double)sprite.w);
+	}
+	step = 1.0 * sprite.h / game->meth.line_height;
+	texPos = (sdraw - screen_center + game->meth.line_height / 2) * step;
+	texPosForY = texPos + (y - sdraw) * step;
+	texY = (int)texPosForY % (sprite.h);
+	pixel = sprite.addr + (texY * sprite.line_length + texX
+			* (sprite.bits_per_pixel / 8));
+	color = *(int *)pixel;
+	return (color);
 }
 
 /*->here now that i have the the heigth of the wall,
@@ -206,18 +230,9 @@ int get_color(t_game *game, int sdraw, int y)
    then i just finish with the floor coolor*/
 void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 {
-	int		color;
-	int		door;
-	int		y;
+	int	color;
+	int	y;
 
-	if (game->meth.orientation == 0)
-		color = 0x0000FF;
-	else
-		color = 0x0000FA;
-	if (game->meth.orientation == 0)
-		door = 0x964B00;
-	else
-		door = 0x964B90;
 	y = 0;
 	while (y < HEIGHT)
 	{
@@ -232,11 +247,14 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 			paint_exe(game, x, y, game->ass.ceiling.hexa);
 		else if (y >= sdraw && y <= edraw && game->meth.door == false)
 		{
-			color = get_color(game,sdraw,y);
+			color = get_color(game, sdraw, y);
 			paint_exe(game, x, y, color);
 		}
 		else if (y >= sdraw && y <= edraw && game->meth.door == true)
-			paint_exe(game, x, y, door);
+		{
+			color = get_color(game, sdraw, y);
+			paint_exe(game, x, y, color);
+		}
 		else
 			paint_exe(game, x, y, game->ass.floor.hexa);
 		y++;
