@@ -1,13 +1,31 @@
 NO ./incs/textures/shelfs.xpm
 SO ./incs/textures/eagle.xpm
-WE ./incs/textures/purplestone.xpm
-EA ./incs/textures/shelfs.xpm
-CL ./incs/textures/barrel.xpm
+CL ./incs/textures/Comic.xpm
 
 C 88,212,255
 F 130,50,220
+DO ./incs/textures/door.xpm
 
-111111111111111111111111111111111111
+
+
+
+EN ./incs/textures/j_b.xpm
+EA ./incs/textures/shelfs.xpm
+WE ./incs/textures/purplestone.xpm
+
+
+
+
+
+
+
+      
+
+
+
+
+
+ 111111111111111111111111111111111111
 10000000000000000000000000000000001
 10111101111101111100000000000000001
 10000100000100000100000010000000001

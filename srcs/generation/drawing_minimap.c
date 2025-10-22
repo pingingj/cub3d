@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_minimap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/15 14:10:24 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:43:41 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	clear_minimap_image(t_game *game, t_pos area)
 	}
 }
 
-void	draw_filled_circle_mlx(t_game *game, int cx, int cy, int color)
+void	draw_circle_mlx(t_game *game, int cx, int cy, int color)
 {
 	int radius;
 	int	x;
@@ -51,11 +51,6 @@ void	draw_filled_circle_mlx(t_game *game, int cx, int cy, int color)
 		}
 		y++;
 	}
-}
-
-void	draw_circle_mlx(t_game *game, t_pos center, int color)
-{
-		draw_filled_circle_mlx(game, (int)center.x, (int)center.y, color);
 }
 
 void	mini_init(t_game *game)
@@ -169,7 +164,77 @@ void	draw_miniframe(t_game *game)
 		}
 		y++;
 	}
+
+	
 }
+
+// static void draw_line_minimap(t_game *game, int x0, int y0, int x1, int y1, int color)
+// {
+// 	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+// 	int dy = -abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+// 	int err = dx + dy, e2;
+
+// 	while (1)
+// 	{
+// 		my_mlx_pixel_put(&game->bg_img, x0, y0, color);
+// 		if (x0 == x1 && y0 == y1) 
+// 			break;
+// 		e2 = 2 * err;
+// 		if (e2 >= dy) 
+// 		{
+// 			err += dy; x0 += sx;
+// 		}
+// 		if (e2 <= dx) 
+// 		{
+// 			err += dx; y0 += sy;
+// 		}
+// 	}
+// }
+
+// void draw_minimap_fov(t_game *game)
+// {
+// 	// How many rays to cast in the mini FOV
+// 	const int samples = 120;
+
+// 	// Half-width of minimap window in tiles (approx radius to stop rays)
+// 	double tiles_half_w = (game->mini.size.x / (double)game->mini.tile_size) * 0.5;
+// 	double tiles_half_h = (game->mini.size.y / (double)game->mini.tile_size) * 0.5;
+// 	double max_tiles = tiles_half_w < tiles_half_h ? tiles_half_w : tiles_half_h;
+// 	if (max_tiles < 1.0) max_tiles = 1.0;
+
+// 	// Player cell start
+// 	game->meth.mapx = (int)game->player.posx;
+// 	game->meth.mapy = (int)game->player.posy;
+
+// 	for (int i = 0; i < samples; ++i)
+// 	{
+// 		// Sweep across FOV using camera plane, same formula as setup_ray()
+// 		double camerax = 2.0 * i / (samples - 1) - 1.0;
+// 		game->meth.raydirx = game->player.dirx + game->player.planex * camerax;
+// 		game->meth.raydiry = game->player.diry + game->player.planey * camerax;
+
+// 		// Prepare DDA and cast
+// 		dda_prep(game);
+// 		(void)hit_wall(game); // updates meth.mapx/mapy and sets door/orientation as needed
+// 		double walldist = calc_wall_dist(game);
+
+// 		// Clamp to minimap radius in tiles so we don't draw outside the frame
+// 		if (walldist > max_tiles) walldist = max_tiles;
+
+// 		// World-space hit point (or clamped end)
+// 		double endx = game->player.posx + game->meth.raydirx * walldist;
+// 		double endy = game->player.posy + game->meth.raydiry * walldist;
+
+// 		// Convert to minimap pixels
+// 		int x0 = (int)game->mini.center.x;
+// 		int y0 = (int)game->mini.center.y;
+// 		int x1 = (int)(game->mini.center.x + (endx - game->player.posx) * game->mini.tile_size);
+// 		int y1 = (int)(game->mini.center.y + (endy - game->player.posy) * game->mini.tile_size);
+
+// 		// Draw the ray on the minimap (semi-transparent-ish color)
+// 		draw_line_minimap(game, x0, y0, x1, y1, 0x66FFFF00);
+// 	}
+// }
 
 void	draw_minimap_loop(t_game *game, double playerx, double playery)
 {
@@ -187,7 +252,8 @@ void	draw_minimap_loop(t_game *game, double playerx, double playery)
 	win_pos.y = game->mini.center.y - game->mini.tile_size * (playery - floor(playery) + scale_tiles.y);
 	minimap_tiles(*game, tile_pos, win_pos);
 	draw_miniframe(game);
-	draw_circle_mlx(game, game->mini.center, 0xFF0000);
+	draw_circle_mlx(game, (int)game->mini.center.x, (int)game->mini.center.y, 0xFF0000);
+	// draw_minimap_fov(game);
 }
 
 int	draw_minimap(t_game *game)
