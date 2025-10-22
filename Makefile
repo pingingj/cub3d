@@ -6,7 +6,7 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/10/15 13:34:34 by dpaes-so         ###   ########.fr        #
+#    Updated: 2025/10/20 14:42:55 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,10 @@ MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 SOURCES = main.c generation/creation.c generation/raycast_math.c generation/raycast_start.c \
 			generation/drawing_minimap.c utils/clean.c utils/events.c utils/mlx_adds.c \
 			utils/events2.c parser/parser.c parser/rgb_parser.c parser/rgb_converter.c \
-			parser/map_parser.c parser/map_create.c parser/textures.c 
-      
+			parser/map_parser.c parser/map_create.c parser/textures.c sprites/monster.c \
+			sprites/monster_aux.c sprites/monster_pathfinding.c generation/sprites_functions.c \
+			generation/sprite_functions_aux.c
+       
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SOURCES))
 
@@ -51,6 +53,7 @@ $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)/generation
 	@mkdir -p $(OBJS_DIR)/parser
 	@mkdir -p $(OBJS_DIR)/utils
+	@mkdir -p $(OBJS_DIR)/sprites
 
 clean:
 	@make clean -C ./incs/libft -s

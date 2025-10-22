@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 17:51:57 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:55:27 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,28 @@
 
 int	closex(t_game *mlx)
 {
+	int	i;
+
+	i = 0;
 	ft_printf("\n\nGAME CLOSING\n");
-	mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
-	mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
+	if (mlx->ass.door.texture.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.door.texture.img);
+	if (mlx->ass.enemy.texture.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.enemy.texture.img);
+	if (mlx->ass.barrel.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
+	while(i < 6)
+	{
+		if (mlx->ass.textures[i].img)
+			mlx_destroy_image(mlx->mlx, mlx->ass.textures[i].img);
+		i++;
+	}
+	if (mlx->bg_img.img)
+		mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
 	// free_queue(mlx->queue);
 	free(mlx->move);
-	mlx_destroy_window(mlx->mlx, mlx->win);
+	if (mlx->win)
+		mlx_destroy_window(mlx->mlx, mlx->win);
 	mlx_destroy_display(mlx->mlx);
 	free(mlx->mlx);
 	free_game(mlx);
@@ -33,12 +49,16 @@ void	print_info(t_game game)
 
 	j = 0;
 	i = 0;
-	// printf("NO = %s\n", game.ass.walls[NO].filename);
-	// printf("EA = %s\n", game.ass.walls[EA].filename);
-	// printf("SO = %s\n", game.ass.walls[SO].filename);
-	// printf("WE = %s\n", game.ass.walls[WE].filename);
+	printf("NO = %s\n", game.ass.textures[NO].filename);
+	printf("EA = %s\n", game.ass.textures[EA].filename);
+	printf("SO = %s\n", game.ass.textures[SO].filename);
+	printf("WE = %s\n", game.ass.textures[WE].filename);
+	printf("CL = %s\n", game.ass.textures[CL].filename);
+	printf("EN = %s\n", game.ass.textures[EN].filename);
+	printf("DO = %s\n", game.ass.textures[DO].filename);
 	printf("length = %f\n", game.map.pos.x);
 	printf("height = %f\n", game.map.pos.y);
+	printf("collect amount  = %d\n", game.ass.collect_amount);
 	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
 	// printf("R = %d\n", game.ass.ceiling.red);
 	// printf("G = %d\n", game.ass.ceiling.green);
@@ -65,6 +85,8 @@ void	print_info(t_game game)
 				ft_printf("d");
 			else if (game.map.grid[i][j] == 'c')
 				ft_printf("c");
+			else if (game.map.grid[i][j] == 'j')
+				ft_printf("j");
 			else if (game.map.grid[i][j] == '\0')
 				ft_printf("\n");
 			j++;
@@ -99,10 +121,10 @@ void	free_game(t_game *game)
 		freeany(game->visited);
 	if(game->prev)
 		freeany(game->prev);
-	while (i < 4)
+	while (i < 7)
 	{
-		if (game->ass.walls[i].filename)
-			free(game->ass.walls[i].filename);
+		if (game->ass.textures[i].filename)
+			free(game->ass.textures[i].filename);
 		i++;
 	}
 }
@@ -111,11 +133,10 @@ void	free_game(t_game *game)
 /// @param game struct to free
 /// @param error if error = 1 it will free game struct
 /// @param msg msg to print
-/// @param fd closes open fd send -1 if no fd needs to be closed
-void	print_errors(t_game *game, int error, char *msg, int fd)
+void	print_errors(t_game *game, int error, char *msg)
 {
-	if (fd > 2)
-		close(fd);
+	if (game->fd > 2)
+		close(game->fd);
 	if (msg != NULL)
 		ft_dprintf(2, "Error\n%s\n", msg);
 	if (error == 1)

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/16 12:23:54 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:40:01 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
-# define MONSTER_SPEED 0.06
+# define MONSTER_SPEED 0.02
 # define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
@@ -48,7 +48,7 @@
 # define ARROW_RIGHT 65363
 # define ARROW_DOWN 65364
 # define ANGLE_NUMBERS 8
-# define ROT_SPEED 0.0003
+# define ROT_SPEED 0.0008
 # define ARROW_ROT_SPEED 0.06
 # define F 102
 # define M 109
@@ -67,6 +67,9 @@
 # define EA 1
 # define WE 2
 # define SO 3
+# define CL 4
+# define EN 5
+# define DO 6
 
 typedef struct s_img
 {
@@ -120,6 +123,7 @@ typedef struct s_math
 	int				orientation;
 	bool			door;
 	bool			looking_door;
+	int				line_height;
 }					t_math;
 
 typedef struct s_color
@@ -134,7 +138,7 @@ typedef struct s_color
 typedef struct s_sprite
 {
 	bool			enemy;
-	bool 			exists;
+	bool			exists;
 	t_img			texture;
 	t_pos			cords;
 	int				width;
@@ -143,12 +147,13 @@ typedef struct s_sprite
 
 typedef struct s_assets
 {
-	t_img			walls[4];
+	t_img			textures[7];
+	t_img			barrel;
 	t_color			ceiling;
 	t_color			floor;
-	t_img			barrel;
 	t_sprite		*sprites;
 	t_sprite		enemy;
+	t_sprite		door;
 	int				collect_amount;
 }					t_assets;
 
@@ -178,8 +183,35 @@ typedef struct s_queue
 	struct s_queue	*next;
 }					t_queue;
 
+typedef struct s_spath
+{
+	int		i;
+	double	mathx;
+	double	mathy;
+	double	transformx;
+	double	transformy;
+	double	inverse;
+	double	spritexlocation;
+	double	sprite_height;
+	double	sprite_width;
+	int		sdrawx;
+	int		sdrawy;
+	int		edrawx;
+	int		edrawy;
+	int		sp_index;
+	int		texx;
+	int		screen_center;
+	int		py;
+	int		d;
+	int		texy;
+	int		color;
+	double	intensity;
+	t_img spt;
+}					t_spath;
+
 typedef struct s_game
 {
+	int				fd;
 	t_map			map;
 	t_assets		ass;
 	t_img			bg_img;
@@ -189,6 +221,7 @@ typedef struct s_game
 	t_pos			mouse;
 	t_queue			*queue;
 	t_point			**prev;
+	t_spath			spath;
 	bool			look_flag_right;
 	bool			look_flag_left;
 	bool			laggy_lanter;
@@ -219,6 +252,23 @@ void				create_frame(t_game *game);
 void				artistic_moment(t_game *game, int x, int sdraw, int edraw);
 int					add_light(int color, double intensity);
 double				flashlight(int x, int y, t_game *game, bool is_wall);
+// monster
+int					monster(t_game *game);
+t_queue				*monster_bfs_set_up(t_game *game);
+void				while_do(t_game *game, t_queue *q, t_point *curr, int i);
+void				check_space(t_game *game, t_queue *q);
+t_queue				*ft_queuenew(void *content);
+void				ft_queueadd_back(t_queue **lst, t_queue *new);
+void				free_queue(t_queue *queue);
+//sprites
+void	draw_sprite(t_game *game);
+void	draw_sprite_prep(t_game *game);
+void	sprite_math(t_game *game, int *order);
+void	start_sprite_handle(t_game *game, int *order);
+void	hande_sprites(t_game *game);
+void	sort_dist(int *order, double *sprit_distance, t_game *game);
+void	sprite_text_boundary_check(t_game *game);
+double	sprite_flashlight(int x, int y, t_game *game, double sprite_dist);
 // clean
 int					closex(t_game *mlx);
 // mlx_adds
@@ -242,15 +292,15 @@ void				draw_floor(t_game *game, int cx, int cy);
 int					draw_minimap(t_game *game);
 // parse
 bool				parse(t_game *game, char *filename);
-void				print_errors(t_game *game, int error, char *msg, int fd);
+void				print_errors(t_game *game, int error, char *msg);
 void				free_game(t_game *game);
-void				parse_colors(t_game *game, int fd);
+void				parse_colors(t_game *game);
 bool				skip_comma(t_color *colors, int *i, bool last_check);
 bool				get_colors(t_color *colors);
 bool				check_colors(t_color colors);
 int					color_hexa(t_color color);
-void				parse_map(t_game *game, int fd, char *filename);
-bool				get_map(t_game *game, int fd, char *filename);
+void				parse_map(t_game *game, char *filename, char *line);
+bool				get_map(t_game *game, char *filename, char *line);
 bool				flood_map(t_map *map, int x, int y);
 void				print_info(t_game game);
 int					convert_dec(char *hexa);
