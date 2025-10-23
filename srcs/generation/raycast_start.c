@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/20 14:35:35 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:16:42 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ void	create_frame(t_game *game)
 	math_with_an_e(game);
 	mlx_clear_window(game->mlx, game->win);
 	if (game->mini.show == true)
-		draw_minimap(game);
+		draw_minimap(game, game->player.posx, game->player.posy);
 	mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
 }
