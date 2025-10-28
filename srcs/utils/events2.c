@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/20 18:49:42 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:59:15 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	look_left(t_game *game)
 
 	x= -1;
 	angle = ARROW_ROT_SPEED;
-	if(game->look_flag_left == false)
+	if(game->g_flags.look_flag_left == false)
 	{
 		x = game->mouse.x;
 		angle = ROT_SPEED;
@@ -103,17 +103,17 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == D)
 		game->move[3] = 1;
 	if (keycode == L)
-		game->laggy_lanter = !game->laggy_lanter;
+		game->g_flags.laggy_lantern = !game->g_flags.laggy_lantern;
 	if (keycode == H)
 		mlx_mouse_hide(game->mlx, game->win);
 	if (keycode == ARROW_RIGHT)
 	{
-		game->look_flag_right = true;
+		game->g_flags.look_flag_right = true;
 		game->move[4] = 1;
 	}
 	if (keycode == ARROW_LEFT)
 	{
-		game->look_flag_left = true;
+		game->g_flags.look_flag_left = true;
 		game->move[5] = 1;
 	}
 	if (keycode == ARROW_UP)
@@ -144,12 +144,12 @@ int	key_release(int keycode, t_game *game)
 		game->move[3] = 0;
 	if (keycode == ARROW_RIGHT)
 	{
-		game->look_flag_right = false;
+		game->g_flags.look_flag_right = false;
 		game->move[4] = 0;
 	}
 	if (keycode == ARROW_LEFT)
 	{
-		game->look_flag_left = false;
+		game->g_flags.look_flag_left = false;
 		game->move[5] = 0;
 	}
 	if (keycode == ARROW_UP)

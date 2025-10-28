@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 13:09:15 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:59:41 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,25 @@
 static void	background_gen(t_game *game)
 {
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "NEETs");
+	if(!game->win)
+	{
+		ft_printf("New window failed [!]\n");
+		free(game->move);
+		exit(1);
+	}
 	game->bg_img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if(!game->bg_img.img)
 	{
+		ft_printf("background creation failed [!]\n");
 		free(game->move);
 		exit(1);
 	}
 	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
 		&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
 		&game->bg_img.endian);
-		printf("dasdasdadsadasdsadas\n");
 	if(!game->bg_img.addr)
 	{
+		ft_printf("background adress failed [!]\n");
 		free(game->move);
 		exit(1);
 	}
@@ -162,14 +169,14 @@ void	paint_exe(t_game *game, int x, int y, int color)
 		flag = true;
 	if (color == game->ass.ceiling.hexa)
 	{
-		if (game->laggy_lanter)
+		if (game->g_flags.laggy_lantern)
 			my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, AMBIENT
 					+ 0.07));
 		else
 			my_mlx_pixel_put(&game->bg_img, x, y, color);
 		return ;
 	}
-	if (game->laggy_lanter)
+	if (game->g_flags.laggy_lantern)
 	{
 		intensity = flashlight(x, y, game, flag);
 		my_mlx_pixel_put(&game->bg_img, x, y, add_light(color, intensity));
@@ -281,6 +288,6 @@ void	map_gen(t_game *game)
 	// printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
 	player_init(game);
 	background_gen(game);
-
 	create_frame(game);
+	game->g_flags.game_state = running;
 }

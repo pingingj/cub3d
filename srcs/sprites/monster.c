@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:50:26 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 17:18:21 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:26:44 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ t_point	pathfinding_alg(t_game *game)
 	free_queue(game->queue);
 	return (path_cell);
 }
+
 int	monster(t_game *game)
 {
 	double	target_cx;
@@ -153,6 +154,6 @@ int	monster(t_game *game)
 		}
 	}
 	else
-		closex(game);
+		game->g_flags.game_state = death_screen;
 	return (0);
 }

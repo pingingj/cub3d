@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/28 12:55:33 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:29:11 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,24 +96,41 @@ double fps_counter(t_game *game)
     frames++;
     if (current_time - last_time >= 1.0)
     {
-        // ft_printf("FPS: %d\n", frames);
+        ft_printf("FPS: %d\n", frames);
         frames = 0;
         last_time = current_time;
     }
     return (fsleep);
 }
 
+void make_death_screen(t_game *game)
+{
+    static int i;
+
+    if(i == 0)
+    {
+        mlx_clear_window(game->mlx,game->win);
+        mlx_put_image_to_window(game->mlx,game->win,game->ass.death_screen.img,WIDTH/2 - 150,HEIGHT/2 - 84);
+        i = 1;
+    }
+}
+
 int main_loop(t_game *game)
 {
     double fsleep;
 
-    move(game);
-    if (game->ass.enemy.cords.x != -1)
-        monster(game);
-    create_frame(game);
-    fsleep = fps_counter(game);
-    if (game->fps_lock > 0 && fsleep > 0.0)
-        ft_sleep(fsleep);
+    if(game->g_flags.game_state == running)
+    {
+        move(game);
+        if (game->ass.enemy.cords.x != -1)
+            monster(game);
+        create_frame(game);
+        fsleep = fps_counter(game);
+        if (game->fps_lock > 0 && fsleep > 0.0)
+            ft_sleep(fsleep);
+    }
+    else
+        make_death_screen(game);
     return (0);
 }
 int	main(int argc, char **argv)
