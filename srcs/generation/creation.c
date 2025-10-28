@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/20 19:01:29 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:09:15 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,20 @@ static void	background_gen(t_game *game)
 {
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "NEETs");
 	game->bg_img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	if(!game->bg_img.img)
+	{
+		free(game->move);
+		exit(1);
+	}
 	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
-			&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
-			&game->bg_img.endian);
+		&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
+		&game->bg_img.endian);
+		printf("dasdasdadsadasdsadas\n");
+	if(!game->bg_img.addr)
+	{
+		free(game->move);
+		exit(1);
+	}
 }
 
 // camera plane is the fov
