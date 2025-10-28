@@ -1,5 +1,5 @@
 NO ./incs/textures/shelfs.xpm
-SO ./incs/textures/eagle.xpm
+SO ./incs/textures/Bookcase.xpm
 CL ./incs/textures/Comic.xpm
 
 C 88,212,255
@@ -10,16 +10,8 @@ DO ./incs/textures/door.xpm
 
 
 EN ./incs/textures/j_b.xpm
-EA ./incs/textures/shelfs.xpm
+EA ./incs/textures/Comoda.xpm
 WE ./incs/textures/purplestone.xpm
-
-
-
-
-
-
-
-      
 
 
 
