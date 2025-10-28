@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/28 14:44:33 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:03:24 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int	mouse(int x, int y, t_game *game)
 {
 	game->mouse.x = x - WIDTH / 2;
-	if (x > WIDTH / 2)
-		game->move[4] = 1;
+    if(game->g_flags.game_state != running)
+        return(1);
+    if (x > WIDTH / 2)
+	    game->move[4] = 1;
 	if (x < WIDTH / 2)
 		game->move[5] = 1;
 	if (x == WIDTH / 2)
@@ -164,7 +166,6 @@ int	main(int argc, char **argv)
 		print_info(game);
 		textures(&game);
 		map_gen(&game);
-        // printf("dasdasdadsadasdsadas    1\n");
 		mlx_hook(game.win, 17, 0, closex, &game);
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 		mlx_hook(game.win, 3, 1L << 1, key_release, &game);

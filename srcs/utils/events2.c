@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 14:39:30 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:40:31 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool	open_door(t_game *game, double x, double y)
 			&& game->meth.looking_door == true)
 		{
 			game->map.grid[(int)new_y][(int)new_x] = 'd';
-			if (hit_box(game, x, y) == false || hit_box(game,game->ass.enemy.cords.x,game->ass.enemy.cords.y) == false)
+ 			if (hit_box(game, x, y) == false || (game->ass.enemy.cords.x != -1 && hit_box(game,game->ass.enemy.cords.x,game->ass.enemy.cords.y) == false))
 			{
 				game->map.grid[(int)new_y][(int)new_x] = 'D';
 				return (false);
@@ -97,7 +97,10 @@ void change_flag(int key,t_game *game)
 		if(game->g_flags.game_state == running)
 			game->g_flags.game_state = Pause;
 		else if(game->g_flags.game_state == Pause)
+		{
+			mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
 			game->g_flags.game_state = running;
+		}
 	}
 }	
 int	key_press(int keycode, t_game *game)
