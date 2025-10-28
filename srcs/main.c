@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/28 15:03:24 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:13:25 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void make_death_screen(t_game *game)
 
     if(i == 0)
     {
+        mlx_mouse_show(game->mlx,game->win);
         mlx_clear_window(game->mlx,game->win);
         mlx_put_image_to_window(game->mlx,game->win,game->ass.death_screen.img,WIDTH/2 - 150,HEIGHT/2 - 84);
         i = 1;
@@ -130,6 +131,8 @@ void make_pause_screen(t_game *game)
         mlx_put_image_to_window(game->mlx,game->win,game->ass.pause_screen.img,WIDTH/2 - 150,HEIGHT/2 - 84);
         i = 1;
     }
+    printf("player x = %f   player y = %f\n",game->player.posx,game->player.posy);
+
 }
 
 int main_loop(t_game *game)
@@ -150,6 +153,7 @@ int main_loop(t_game *game)
         make_death_screen(game);
     else if (game->g_flags.game_state == Pause)
         make_pause_screen(game);
+    printf("monster x = %f    monster  y = %f\n",game->ass.enemy.cords.x,game->ass.enemy.cords.y);
     return (0);
 }
 int	main(int argc, char **argv)
