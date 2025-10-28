@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/28 14:13:19 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:41:34 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define M 109
 # define L 108
 # define H 104
+# define P 112
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
@@ -157,6 +158,7 @@ typedef struct s_assets
 	t_sprite		enemy;
 	t_sprite		door;
 	t_img			death_screen;
+	t_img			pause_screen;
 	int				collect_amount;
 }					t_assets;
 

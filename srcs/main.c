@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/28 14:29:11 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:44:33 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ int	mouse(int x, int y, t_game *game)
 		if (game->player.look > 1000)
 			game->player.look -= -game->mouse.y / 10;
 	}
-	if (x != WIDTH / 2 || y != HEIGHT / 2)
-		mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
+    if(game->g_flags.game_state == running)
+    {
+        if (x != WIDTH / 2 || y != HEIGHT / 2)
+            mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
+    }
 	return (0);
 }
 
@@ -115,6 +118,18 @@ void make_death_screen(t_game *game)
     }
 }
 
+void make_pause_screen(t_game *game)
+{
+    static int i;
+
+    if(game->g_flags.game_state == Pause)
+    {
+        mlx_clear_window(game->mlx,game->win);
+        mlx_put_image_to_window(game->mlx,game->win,game->ass.pause_screen.img,WIDTH/2 - 150,HEIGHT/2 - 84);
+        i = 1;
+    }
+}
+
 int main_loop(t_game *game)
 {
     double fsleep;
@@ -129,8 +144,10 @@ int main_loop(t_game *game)
         if (game->fps_lock > 0 && fsleep > 0.0)
             ft_sleep(fsleep);
     }
-    else
+    else if (game->g_flags.game_state == death_screen)
         make_death_screen(game);
+    else if (game->g_flags.game_state == Pause)
+        make_pause_screen(game);
     return (0);
 }
 int	main(int argc, char **argv)

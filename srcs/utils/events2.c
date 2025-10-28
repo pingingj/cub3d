@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 13:59:15 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:39:30 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,35 @@ void	look_left(t_game *game)
 		* cos(x * angle);
 }
 
+void change_flag(int key,t_game *game)
+{
+	static bool mouse;
+	
+	if(key == H)
+	{
+		if(mouse == false)
+		{
+			mlx_mouse_hide(game->mlx, game->win);
+			mouse = true;
+		}
+		else
+		{
+			mlx_mouse_show(game->mlx, game->win);
+			mouse = false;
+		}
+	}
+	if(key == P)
+	{
+		if(game->g_flags.game_state == running)
+			game->g_flags.game_state = Pause;
+		else if(game->g_flags.game_state == Pause)
+			game->g_flags.game_state = running;
+	}
+}	
 int	key_press(int keycode, t_game *game)
 {
 	// if (keycode)
-		// printf("key code = %d\n", keycode);
+	// 	printf("key code = %d\n", keycode);
 	if (keycode == 65307)
 		closex(game);
 	if (keycode == M)
@@ -105,7 +130,9 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == L)
 		game->g_flags.laggy_lantern = !game->g_flags.laggy_lantern;
 	if (keycode == H)
-		mlx_mouse_hide(game->mlx, game->win);
+		change_flag(H,game);
+	if (keycode == P)
+		change_flag(P,game);
 	if (keycode == ARROW_RIGHT)
 	{
 		game->g_flags.look_flag_right = true;
