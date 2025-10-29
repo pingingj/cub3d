@@ -127,7 +127,7 @@ int	new_blank_img(t_game *game, t_img *img, int w, int h)
 	return (1);
 }
 
-void	draw_scaled_img(t_game *game, t_img *src)
+void	draw_scaled_img(t_game *game, t_img *src,bool apply,double intensity)
 {
 	t_img			dst;
 	int				s_bpp;
@@ -138,6 +138,11 @@ void	draw_scaled_img(t_game *game, t_img *src)
 	int				sy;
 	unsigned char	*dst_row;
 	unsigned char	*src_row;
+	unsigned char b;
+	unsigned char g;
+	unsigned char r;
+	unsigned char a;
+	int color;
 
 	if (!game || !src || !src->img || !src->addr || src->w <= 0 || src->h <= 0)
 		return ;
@@ -163,24 +168,39 @@ void	draw_scaled_img(t_game *game, t_img *src)
 			sx = (int)((long long)x * src->w / dst.w);
 			if (sx >= src->w)
 				sx = src->w - 1;
-			dst_row[x * d_bpp + 0] = src_row[sx * s_bpp + 0];//copy 4 bits
-			dst_row[x * d_bpp + 1] = src_row[sx * s_bpp + 1];
-			dst_row[x * d_bpp + 2] = src_row[sx * s_bpp + 2];
-			dst_row[x * d_bpp + 3] = src_row[sx * s_bpp + 3];
+			b = src_row[sx * s_bpp + 0];
+			g = src_row[sx * s_bpp + 1];
+			r = src_row[sx * s_bpp + 2];
+			a = src_row[sx * s_bpp + 3];
+			color = (r << 16) | (g << 8) | b;
+			if (apply)
+				color = add_light(color, intensity);
+			dst_row[x * d_bpp + 0] = color & 0xFF;         // b
+			dst_row[x * d_bpp + 1] = (color >> 8) & 0xFF;  // g
+			dst_row[x * d_bpp + 2] = (color >> 16) & 0xFF; // r
+			dst_row[x * d_bpp + 3] = a;                    // preserve alpha
 			x++;
 		}
 		y++;
 	}
+	mlx_clear_window(game->mlx, game->win);
+	// mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, dst.img, 0, 0);
 	mlx_destroy_image(game->mlx, dst.img);
 }
 
 
-void	make_death_screen(t_game *game)
+void	make_fade_screen(t_game *game,t_img *img)
 {
+	static double i;
+
 	mlx_mouse_show(game->mlx, game->win);
-	mlx_clear_window(game->mlx, game->win);
-	draw_scaled_img(game, &game->ass.death_screen);
+	if(i > 1.5)
+	{
+		game->g_flags.game_state = Finished;
+	}
+	draw_scaled_img(game,img,true,i);
+	i+= 0.003;
 }
 
 void make_pause_screen(t_game *game)
@@ -201,6 +221,8 @@ int main_loop(t_game *game)
 {
     double fsleep;
 
+	if(game->collected_comics == game->ass.collect_amount && game->g_flags.game_state != Finished)
+		game->g_flags.game_state = Win_screen;
     if(game->g_flags.game_state == running)
     {
         move(game);
@@ -212,9 +234,11 @@ int main_loop(t_game *game)
             ft_sleep(fsleep);
     }
     else if (game->g_flags.game_state == death_screen)
-        make_death_screen(game);
+        make_fade_screen(game,&game->ass.death_screen);
     else if (game->g_flags.game_state == Pause)
         make_pause_screen(game);
+	else if (game->g_flags.game_state == Win_screen)
+		make_fade_screen(game,&game->ass.win_screen);
     return (0);
 }
 int	main(int argc, char **argv)

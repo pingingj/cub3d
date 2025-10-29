@@ -159,6 +159,7 @@ typedef struct s_assets
 	t_sprite		door;
 	t_img			death_screen;
 	t_img			pause_screen;
+	t_img			win_screen;
 	int				collect_amount;
 }					t_assets;
 
@@ -219,7 +220,9 @@ enum				game_state
 	main_menu,
 	running,
 	Pause,
-	death_screen
+	death_screen,
+	Win_screen,
+	Finished
 };
 
 typedef struct s_game_flags
@@ -243,6 +246,7 @@ typedef struct s_game
 	t_point			**prev;
 	t_spath			spath;
 	t_game_flags	g_flags;
+	int				collected_comics;
 	void			*mlx;
 	void			*win;
 	double			light;

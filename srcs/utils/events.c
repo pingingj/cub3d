@@ -52,7 +52,10 @@ void	move_foward(t_game *game, double speed)
 		while(i < game->ass.collect_amount)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			{
+				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
+			}
 			i++;
 		}
 	}
