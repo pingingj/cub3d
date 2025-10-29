@@ -108,30 +108,92 @@ double fps_counter(t_game *game)
     return (fsleep);
 }
 
-void make_death_screen(t_game *game)
+int	new_blank_img(t_game *game, t_img *img, int w, int h)
 {
-    static int i;
+	img->img = mlx_new_image(game->mlx, w, h);
+	if (!img->img)
+		return (0);
+	img->addr = mlx_get_data_addr(img->img,
+			&img->bits_per_pixel, &img->line_length, &img->endian);
+	if (!img->addr)
+	{
+		mlx_destroy_image(game->mlx, img->img);
+		img->img = NULL;
+		return (0);
+	}
+	img->w = w;
+	img->h = h;
+	img->filename = NULL;
+	return (1);
+}
 
-    if(i == 0)
-    {
-        mlx_mouse_show(game->mlx,game->win);
-        mlx_clear_window(game->mlx,game->win);
-        mlx_put_image_to_window(game->mlx,game->win,game->ass.death_screen.img,WIDTH/2 - 150,HEIGHT/2 - 84);
-        i = 1;
-    }
+void	draw_scaled_img(t_game *game, t_img *src)
+{
+	t_img			dst;
+	int				s_bpp;
+	int				d_bpp;
+	int				x;
+	int				y;
+	int				sx;
+	int				sy;
+	unsigned char	*dst_row;
+	unsigned char	*src_row;
+
+	if (!game || !src || !src->img || !src->addr || src->w <= 0 || src->h <= 0)
+		return ;
+	if (!new_blank_img(game, &dst, WIDTH, HEIGHT))
+	{
+		mlx_put_image_to_window(game->mlx, game->win, src->img,
+			(WIDTH - src->w) / 2, (HEIGHT - src->h) / 2);
+		return ;
+	}
+	s_bpp = src->bits_per_pixel / 8;
+	d_bpp = dst.bits_per_pixel / 8;
+	y = 0;
+	while (y < dst.h)
+	{
+		sy = (int)((long long)y * src->h / dst.h);
+		if (sy >= src->h)
+			sy = src->h - 1;
+		dst_row = (unsigned char *)dst.addr + y * dst.line_length;
+		src_row = (unsigned char *)src->addr + sy * src->line_length;
+		x = 0;
+		while (x < dst.w)
+		{
+			sx = (int)((long long)x * src->w / dst.w);
+			if (sx >= src->w)
+				sx = src->w - 1;
+			dst_row[x * d_bpp + 0] = src_row[sx * s_bpp + 0];//copy 4 bits
+			dst_row[x * d_bpp + 1] = src_row[sx * s_bpp + 1];
+			dst_row[x * d_bpp + 2] = src_row[sx * s_bpp + 2];
+			dst_row[x * d_bpp + 3] = src_row[sx * s_bpp + 3];
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(game->mlx, game->win, dst.img, 0, 0);
+	mlx_destroy_image(game->mlx, dst.img);
+}
+
+
+void	make_death_screen(t_game *game)
+{
+	mlx_mouse_show(game->mlx, game->win);
+	mlx_clear_window(game->mlx, game->win);
+	draw_scaled_img(game, &game->ass.death_screen);
 }
 
 void make_pause_screen(t_game *game)
 {
-    static int i;
+    // static int i;
 
     if(game->g_flags.game_state == Pause)
     {
         mlx_clear_window(game->mlx,game->win);
         mlx_put_image_to_window(game->mlx,game->win,game->ass.pause_screen.img,WIDTH/2 - 150,HEIGHT/2 - 84);
-        i = 1;
+        // i = 1;
     }
-    printf("player x = %f   player y = %f\n",game->player.posx,game->player.posy);
+    // printf("player x = %f   player y = %f\n",game->player.posx,game->player.posy);
 
 }
 
@@ -153,7 +215,6 @@ int main_loop(t_game *game)
         make_death_screen(game);
     else if (game->g_flags.game_state == Pause)
         make_pause_screen(game);
-    printf("monster x = %f    monster  y = %f\n",game->ass.enemy.cords.x,game->ass.enemy.cords.y);
     return (0);
 }
 int	main(int argc, char **argv)

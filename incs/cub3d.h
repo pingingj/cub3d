@@ -329,6 +329,7 @@ void				free_queue(t_queue *queue);
 
 // textures
 int					textures(t_game *game);
+void	img_init(t_game *game, char *filename, t_img *img);
 //
 void ft_sleep(double mili_secs);
 #endif
