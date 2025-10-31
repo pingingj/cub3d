@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/16 15:56:29 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:59:15 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void	move_foward(t_game *game, double speed)
 		while(i < game->ass.collect_amount)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			{
+				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
+			}
 			i++;
 		}
 	}
@@ -143,7 +146,7 @@ void	look_right(t_game *game)
 
 	x= 1;
 	angle = ARROW_ROT_SPEED;
-	if(game->look_flag_right == false)
+	if(game->g_flags.look_flag_right == false)
 	{
 		x = game->mouse.x;
 		angle = ROT_SPEED;

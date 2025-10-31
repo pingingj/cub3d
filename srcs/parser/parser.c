@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/21 14:12:59 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:47:56 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ void	init_vars(t_game *game)
 {
 	game->mini.tile_size = 60;
 	game->mini.show = true;
-	game->laggy_lanter = true;
+	game->g_flags.laggy_lantern = true;
 	game->player.posx = -1;
 	game->player.posy = -1;
 	game->player.look = 0;

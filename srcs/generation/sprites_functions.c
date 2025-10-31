@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:37:27 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/22 14:40:44 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:58:41 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	draw_sprite(t_game *game)
 	{
 		game->spath.intensity = sprite_flashlight(game->spath.sp_index,
 				game->spath.py, game, game->spath.transformy);
-		if (game->laggy_lanter)
+		if (game->g_flags.laggy_lantern)
 			my_mlx_pixel_put(&game->bg_img, game->spath.sp_index,
 				game->spath.py, add_light(game->spath.color,
 					game->spath.intensity));
