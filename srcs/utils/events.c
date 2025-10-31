@@ -41,7 +41,6 @@ void	move_foward(t_game *game, double speed)
 
 	new_x = game->player.posx + game->player.dirx * speed;
 	new_y = game->player.posy + game->player.diry * speed;
-
 	if(hit_box(game,new_x,game->player.posy) == true)
 		game->player.posx = new_x;
 	if(hit_box(game,game->player.posx,new_y) == true)
@@ -59,7 +58,6 @@ void	move_foward(t_game *game, double speed)
 			i++;
 		}
 	}
-	// printf("pos x  =%f      pos y   =  %f\n",game->player.posx,game->player.posy);
 }
 
 void	move_back(t_game *game, double speed)
@@ -80,7 +78,10 @@ void	move_back(t_game *game, double speed)
 		while(i < game->ass.collect_amount)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			{
+				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
+			}
 			i++;
 		}
 	}
@@ -104,7 +105,10 @@ void	move_left(t_game *game, double speed)
 		while(i < game->ass.collect_amount)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			{
+				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
+			}
 			i++;
 		}
 	}
@@ -128,7 +132,10 @@ void	move_right(t_game *game, double speed)
 		while(i < game->ass.collect_amount)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			{
+				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
+			}
 			i++;
 		}
 	}
