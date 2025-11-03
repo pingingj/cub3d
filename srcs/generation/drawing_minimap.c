@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/03 19:05:33 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:13:03 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,11 @@ void	draw_arrow(t_game *game, int cx, int cy, int color)
 	double px = -fy, py = fx;
 
 	/* Scale knobs (in pixels) */
-	double T          = game->mini.tile_size;
-	double tip_len    = 0.55 * T;  /* tip distance forward */
-	double base_len   = 0.38 * T;  /* where left/right sit behind center */
-	double apex_len   = 0.55 * T;  /* bottom apex; bigger -> lower (further back) */
-	double arm_half   = 0.46 * T;  /* half width at the “base” spread */
+	double T          = game->mini.tile_size * 0.8;
+	double tip_len    = 0.45 * T;  /* tip distance forward */
+	double base_len   = 0.50 * T;  /* where left/right sit behind center */
+	double apex_len   = 0.20 * T;  /* bottom apex; bigger -> lower (further back) */
+	double arm_half   = 0.45 * T;  /* half width at the “base” spread */
 
 	/* Points (float) */
 	double tipx = cx + fx * tip_len;
