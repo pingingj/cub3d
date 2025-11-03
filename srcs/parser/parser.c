@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/21 14:12:59 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:10:39 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +229,8 @@ void	make_enemy(t_game *game)
 				print_errors(game, 1, "Not enough experience");
 			if (game->map.grid[y][x] == 'j')
 			{
-				game->ass.enemy.cords.x = x;
-				game->ass.enemy.cords.y = y;
+				game->ass.enemy.cords.x = x + .5;
+				game->ass.enemy.cords.y = y + .5;
 				amount++;
 			}
 			x++;
