@@ -229,8 +229,8 @@ void	make_enemy(t_game *game)
 				print_errors(game, 1, "Not enough experience");
 			if (game->map.grid[y][x] == 'j')
 			{
-				game->ass.enemy.cords.x = x;
-				game->ass.enemy.cords.y = y;
+				game->ass.enemy.cords.x = x + 0.5;
+				game->ass.enemy.cords.y = y + 0.5;
 				amount++;
 			}
 			x++;

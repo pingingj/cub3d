@@ -21,13 +21,14 @@
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdlib.h>
+# include <sys/time.h>
 
 // pixels
 # define WIDTH 1920
 # define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
-# define MONSTER_SPEED 0.02
+# define MONSTER_SPEED 0.1
 # define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
@@ -222,6 +223,7 @@ typedef struct s_game
 	t_queue			*queue;
 	t_point			**prev;
 	t_spath			spath;
+	t_img			title[194];
 	bool			look_flag_right;
 	bool			look_flag_left;
 	bool			laggy_lanter;

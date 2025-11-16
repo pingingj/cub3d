@@ -53,41 +53,41 @@ void	draw_circle_mlx(t_game *game, int cx, int cy, int color)
 	}
 }
 
-void	draw_arrow(t_game *game, int cx, int cy, int color)
-{
-	t_pos	tip;
-	t_pos	left;
-	t_pos	right;
-	t_pos	center;
-	double	nx;
-	double	ny;
-	double	tip_len;
-	double	half_bs_w;
-	double	base_len;
-	double	minXd;
-	double	maxXd;
-	double	minYd;
-	double	maxYd;
-	int		minX;
-	int		maxX;
-	int		minY;
-	int		maxY;
+// void	draw_arrow(t_game *game, int cx, int cy, int color)
+// {
+// 	t_pos	tip;
+// 	t_pos	left;
+// 	t_pos	right;
+// 	t_pos	center;
+// 	double	nx;
+// 	double	ny;
+// 	double	tip_len;
+// 	double	half_bs_w;
+// 	double	base_len;
+// 	double	minXd;
+// 	double	maxXd;
+// 	double	minYd;
+// 	double	maxYd;
+// 	int		minX;
+// 	int		maxX;
+// 	int		minY;
+// 	int		maxY;
 
-	nx = -game->player.posy;
-	ny = game->player.posx;
-	tip_len = game->mini.tile_size * 0.35;	
-	base_len = game->mini.tile_size * 0.20;
-	half_bs_w =game->mini.tile_size * 0.18;
-	center.x = cx - game->player.dirx * base_len;
-	center.y = cy - game->player.diry * base_len;
-	tip.x = cx + game->player.dirx * tip_len;
-	tip.y = cy + game->player.diry * tip_len;
-	left.x = center.x + nx * half_bs_w;
-	left.y = center.y + ny * half_bs_w;
-	right.x = center.x - nx * half_bs_w;
-	right.y = center.y - ny * half_bs_w;
+// 	nx = -game->player.posy;
+// 	ny = game->player.posx;
+// 	tip_len = game->mini.tile_size * 0.35;	
+// 	base_len = game->mini.tile_size * 0.20;
+// 	half_bs_w =game->mini.tile_size * 0.18;
+// 	center.x = cx - game->player.dirx * base_len;
+// 	center.y = cy - game->player.diry * base_len;
+// 	tip.x = cx + game->player.dirx * tip_len;
+// 	tip.y = cy + game->player.diry * tip_len;
+// 	left.x = center.x + nx * half_bs_w;
+// 	left.y = center.y + ny * half_bs_w;
+// 	right.x = center.x - nx * half_bs_w;
+// 	right.y = center.y - ny * half_bs_w;
 
-}
+// }
 
 void	mini_init(t_game *game)
 {
@@ -217,6 +217,6 @@ void	draw_minimap(t_game *game, double playerx, double playery)
 	win_pos.y = game->mini.center.y - game->mini.tile_size * (playery - floor(playery) + scale_tiles.y);
 	minimap_tiles(*game, tile_pos, win_pos);
 	draw_miniframe(game);
-	draw_arrow(game, game->mini.center.x, game->mini.center.y, 0xFF0000);
-	// draw_circle_mlx(game, (int)game->mini.center.x, (int)game->mini.center.y, 0xFF0000);
+	// draw_arrow(game, game->mini.center.x, game->mini.center.y, 0xFF0000);
+	draw_circle_mlx(game, (int)game->mini.center.x, (int)game->mini.center.y, 0xFF0000);
 }

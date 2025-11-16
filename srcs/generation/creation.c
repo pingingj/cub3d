@@ -269,5 +269,5 @@ void	map_gen(t_game *game)
 	// printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
 	player_init(game);
 	background_gen(game);
-	create_frame(game);
+	// create_frame(game);
 }
