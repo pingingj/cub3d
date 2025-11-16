@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_minimap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/23 18:08:29 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:13:03 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,41 +53,118 @@ void	draw_circle_mlx(t_game *game, int cx, int cy, int color)
 	}
 }
 
-// void	draw_arrow(t_game *game, int cx, int cy, int color)
-// {
-// 	t_pos	tip;
-// 	t_pos	left;
-// 	t_pos	right;
-// 	t_pos	center;
-// 	double	nx;
-// 	double	ny;
-// 	double	tip_len;
-// 	double	half_bs_w;
-// 	double	base_len;
-// 	double	minXd;
-// 	double	maxXd;
-// 	double	minYd;
-// 	double	maxYd;
-// 	int		minX;
-// 	int		maxX;
-// 	int		minY;
-// 	int		maxY;
+/* Minimap clipping helpers */
+/* Signed area (edge function) you already have */
+static inline int edge_fn(int ax, int ay, int bx, int by, int px, int py)
+{
+	return (px - ax) * (by - ay) - (py - ay) * (bx - ax);
+}
 
-// 	nx = -game->player.posy;
-// 	ny = game->player.posx;
-// 	tip_len = game->mini.tile_size * 0.35;	
-// 	base_len = game->mini.tile_size * 0.20;
-// 	half_bs_w =game->mini.tile_size * 0.18;
-// 	center.x = cx - game->player.dirx * base_len;
-// 	center.y = cy - game->player.diry * base_len;
-// 	tip.x = cx + game->player.dirx * tip_len;
-// 	tip.y = cy + game->player.diry * tip_len;
-// 	left.x = center.x + nx * half_bs_w;
-// 	left.y = center.y + ny * half_bs_w;
-// 	right.x = center.x - nx * half_bs_w;
-// 	right.y = center.y - ny * half_bs_w;
+/* Orientation-agnostic point-in-triangle */
 
-// }
+
+/* Normalize 2D vector (you already have normalize2; keep one) */
+static inline void normalize2(double *x, double *y)
+{
+	double len = sqrt((*x) * (*x) + (*y) * (*y));
+	if (len > 1e-9) { *x /= len; *y /= len; }
+}
+
+void fill_triangle_minimap(t_game *g,
+                           int ax, int ay,
+                           int bx, int by,
+                           int cx, int cy,
+                           int color)
+{
+	/* Degenerate? (area == 0) */
+	int area2 = edge_fn(ax, ay, bx, by, cx, cy);
+	if (area2 == 0)
+		return;
+
+	/* Bounding box (then clip to minimap rect) */
+	int minX = ax; if (bx < minX) minX = bx; if (cx < minX) minX = cx;
+	int maxX = ax; if (bx > maxX) maxX = bx; if (cx > maxX) maxX = cx;
+	int minY = ay; if (by < minY) minY = by; if (cy < minY) minY = cy;
+	int maxY = ay; if (by > maxY) maxY = by; if (cy > maxY) maxY = cy;
+
+	int left   = g->mini.offset;
+	int top    = g->mini.offset;
+	int right  = g->mini.offset + g->mini.size.x - 1;
+	int bottom = g->mini.offset + g->mini.size.y - 1;
+
+	if (minX < left)   minX = left;
+	if (maxX > right)  maxX = right;
+	if (minY < top)    minY = top;
+	if (maxY > bottom) maxY = bottom;
+
+	/* Accept rule based on winding */
+	int ccw = (area2 > 0);
+
+	for (int y = minY; y <= maxY; ++y)
+	{
+		for (int x = minX; x <= maxX; ++x)
+		{
+			int w0 = edge_fn(ax, ay, bx, by, x, y);
+			int w1 = edge_fn(bx, by, cx, cy, x, y);
+			int w2 = edge_fn(cx, cy, ax, ay, x, y);
+
+			if (ccw)
+			{
+				if (w0 >= 0 && w1 >= 0 && w2 >= 0)
+					my_mlx_pixel_put(&g->bg_img, x, y, color);
+			}
+			else
+			{
+				if (w0 <= 0 && w1 <= 0 && w2 <= 0)
+					my_mlx_pixel_put(&g->bg_img	, x, y, color);
+			}
+		}
+	}
+}
+
+/*
+Chevron arrow:
+- Outer triangle (tip forward) minus inner notch triangle (base-side cut)
+- Everything drawn in a single color (solid red).
+*/
+void	draw_arrow(t_game *game, int cx, int cy, int color)
+{
+	/* Forward and perpendicular */
+	double fx = game->player.dirx;
+	double fy = game->player.diry;
+	normalize2(&fx, &fy);
+	double px = -fy, py = fx;
+
+	/* Scale knobs (in pixels) */
+	double T          = game->mini.tile_size * 0.8;
+	double tip_len    = 0.45 * T;  /* tip distance forward */
+	double base_len   = 0.50 * T;  /* where left/right sit behind center */
+	double apex_len   = 0.20 * T;  /* bottom apex; bigger -> lower (further back) */
+	double arm_half   = 0.45 * T;  /* half width at the “base” spread */
+
+	/* Points (float) */
+	double tipx = cx + fx * tip_len;
+	double tipy = cy + fy * tip_len;
+
+	double lx   = cx - fx * base_len + px * arm_half;
+	double ly   = cy - fy * base_len + py * arm_half;
+
+	double rx   = cx - fx * base_len - px * arm_half;
+	double ry   = cy - fy * base_len - py * arm_half;
+
+	double ax   = cx - fx * apex_len; /* lower bottom apex */
+	double ay   = cy - fy * apex_len;
+
+	/* Convert to ints (use same rounding for both triangles so edges align) */
+	int T_x = (int)lround(tipx), T_y = (int)lround(tipy);
+	int L_x = (int)lround(lx),   L_y = (int)lround(ly);
+	int R_x = (int)lround(rx),   R_y = (int)lround(ry);
+	int A_x = (int)lround(ax),   A_y = (int)lround(ay);
+
+	/* Fill two arms; no horizontal base is drawn */
+	fill_triangle_minimap(game, T_x, T_y, L_x, L_y, A_x, A_y, color);
+	fill_triangle_minimap(game, T_x, T_y, A_x, A_y, R_x, R_y, color);
+}
 
 void	mini_init(t_game *game)
 {
