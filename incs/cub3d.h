@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/28 14:41:34 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:47:04 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
-# define MONSTER_SPEED 0.02
+# define MONSTER_SPEED 0.1
 # define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
@@ -247,6 +247,10 @@ typedef struct s_game
 	t_spath			spath;
 	t_game_flags	g_flags;
 	int				collected_comics;
+	t_img			title[194];
+	bool			look_flag_right;
+	bool			look_flag_left;
+	bool			laggy_lanter;
 	void			*mlx;
 	void			*win;
 	double			light;
@@ -264,7 +268,6 @@ typedef struct s_game
 // generation
 void				map_gen(t_game *game);
 void				math_with_an_e(t_game *game);
-int					draw_minimap(t_game *game);
 void				setup_ray(t_game *game, int x);
 void				dda_prep(t_game *game);
 int					hit_wall(t_game *game);
@@ -313,7 +316,7 @@ bool				hit_box(t_game *game, double x, double y);
 // drawing map
 void				draw_wall(t_game *game, int cx, int cy);
 void				draw_floor(t_game *game, int cx, int cy);
-int					draw_minimap(t_game *game);
+void	draw_minimap(t_game *game, double playerx, double playery);
 // parse
 bool				parse(t_game *game, char *filename);
 void				print_errors(t_game *game, int error, char *msg);

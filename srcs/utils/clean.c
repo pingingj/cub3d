@@ -30,6 +30,13 @@ int	closex(t_game *mlx)
 			mlx_destroy_image(mlx->mlx, mlx->ass.textures[i].img);
 		i++;
 	}
+	i = 0;
+	while(i < 194)
+	{
+		if (mlx->title[i].img)
+			mlx_destroy_image(mlx->mlx, mlx->title[i].img);
+		i++;
+	}
 	if (mlx->bg_img.img)
 		mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
 	// free_queue(mlx->queue);
