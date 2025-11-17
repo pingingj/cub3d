@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/17 17:36:56 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:53:49 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int	key_press(int keycode, t_game *game)
 		game->move[8] = 1;
 	if (keycode == 46)
 		game->move[9] = 1;
-	if (keycode == ENTER)
+	if (keycode == ENTER && game->g_flags.button_ready == true)
 		game->g_flags.game_state = running;
 	return (0);
 }

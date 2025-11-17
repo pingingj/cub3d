@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/17 18:29:11 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:52:58 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ void	make_fade_screen(t_game *game,t_img *img)
 		game->g_flags.game_state = Finished;
 	}
 	draw_scaled_img(game,img,true,i);
-	i+= 0.003;
+	i+= 0.01;
 }
 
 void make_pause_screen(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/17 16:01:42 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:42:07 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = 300.0 + game->player.look / 10.0;
+	softness = WIDTH * 0.15625 + game->player.look / 10.0;
 	if (softness < 80.0)
 		softness = 80.0;
 	dist = dx * dx + dy * dy;
