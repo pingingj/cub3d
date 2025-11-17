@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/03 18:47:04 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:27:56 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1440
-# define HEIGHT 900
+# define WIDTH 1920
+# define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define MONSTER_SPEED 0.1
@@ -56,7 +56,8 @@
 # define M 109
 # define L 108
 # define H 104
-# define P 112
+# define P 112 
+# define ENTER 65293
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
@@ -228,6 +229,7 @@ enum				game_state
 typedef struct s_game_flags
 {
 	int				game_state;
+	bool			button_ready;
 	bool			look_flag_right;
 	bool			look_flag_left;
 	bool			laggy_lantern;

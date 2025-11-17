@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/28 16:13:25 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:29:11 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	mouse(int x, int y, t_game *game)
 {
 	game->mouse.x = x - WIDTH / 2;
+	// ft_printf("mouse x -> %d     mouse y -> %d\n",x,y);
     if(game->g_flags.game_state != running)
         return(1);
     if (x > WIDTH / 2)
@@ -141,7 +142,7 @@ void	draw_scaled_img(t_game *game, t_img *src,bool apply,double intensity)
 	unsigned char b;
 	unsigned char g;
 	unsigned char r;
-	unsigned char a;
+	// unsigned char a;
 	int color;
 
 	if (!game || !src || !src->img || !src->addr || src->w <= 0 || src->h <= 0)
@@ -171,14 +172,14 @@ void	draw_scaled_img(t_game *game, t_img *src,bool apply,double intensity)
 			b = src_row[sx * s_bpp + 0];
 			g = src_row[sx * s_bpp + 1];
 			r = src_row[sx * s_bpp + 2];
-			a = src_row[sx * s_bpp + 3];
+			// a = src_row[sx * s_bpp + 3];
 			color = (r << 16) | (g << 8) | b;
 			if (apply)
 				color = add_light(color, intensity);
 			dst_row[x * d_bpp + 0] = color & 0xFF;         // b
 			dst_row[x * d_bpp + 1] = (color >> 8) & 0xFF;  // g
 			dst_row[x * d_bpp + 2] = (color >> 16) & 0xFF; // r
-			dst_row[x * d_bpp + 3] = a;                    // preserve alpha
+			// dst_row[x * d_bpp + 3] = a;                    // preserve alpha
 			x++;
 		}
 		y++;
@@ -217,30 +218,6 @@ void make_pause_screen(t_game *game)
 
 }
 
-int main_loop(t_game *game)
-{
-    double fsleep;
-
-	if(game->collected_comics == game->ass.collect_amount && game->g_flags.game_state != Finished)
-		game->g_flags.game_state = Win_screen;
-    if(game->g_flags.game_state == running)
-    {
-        move(game);
-        if (game->ass.enemy.cords.x != -1)
-            monster(game);
-        create_frame(game);
-        fsleep = fps_counter(game);
-        if (game->fps_lock > 0 && fsleep > 0.0)
-            ft_sleep(fsleep);
-    }
-    else if (game->g_flags.game_state == death_screen)
-        make_fade_screen(game,&game->ass.death_screen);
-    else if (game->g_flags.game_state == Pause)
-        make_pause_screen(game);
-	else if (game->g_flags.game_state == Win_screen)
-		make_fade_screen(game,&game->ass.win_screen);
-    return (0);
-}
 
 void	draw_title(t_game *game, int i)
 {
@@ -276,12 +253,13 @@ int	menu(t_game *game)
 		last_ms = now_ms;
 	frame_ms = 0;
 	if (frame >= 93)
+	{
 		frame_ms = 30;
+		game->g_flags.button_ready = true;
+	}
 	if (now_ms - last_ms >= frame_ms)
 	{
-		mlx_clear_window(game->mlx, game->win);
-		draw_title(game, frame);
-		mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
+		draw_scaled_img(game,&game->title[frame],false,1);
 		frame++;
 		last_ms = now_ms;
 	}
@@ -290,17 +268,48 @@ int	menu(t_game *game)
 	return (1);
 }
 
-
-int	main_loop(t_game *game)
+int main_loop(t_game *game)
 {
-	menu(game);
-	// move(game);
-	// if (game->ass.enemy.cords.x != -1)
-	// 	monster(game);
-	// create_frame(game);
-	return (0);
+    double fsleep;
+
+	if(game->g_flags.game_state == main_menu)
+		menu(game);
+	else
+	{
+		if(game->collected_comics == game->ass.collect_amount && game->g_flags.game_state != Finished)
+			game->g_flags.game_state = Win_screen;
+		if(game->g_flags.game_state == running)
+		{
+			move(game);
+			if (game->ass.enemy.cords.x != -1)
+				monster(game);
+			create_frame(game);
+			fsleep = fps_counter(game);
+			if (game->fps_lock > 0 && fsleep > 0.0)
+				ft_sleep(fsleep);
+		}
+		else if (game->g_flags.game_state == death_screen)
+			make_fade_screen(game,&game->ass.death_screen);
+		else if (game->g_flags.game_state == Pause)
+			make_pause_screen(game);
+		else if (game->g_flags.game_state == Win_screen)
+			make_fade_screen(game,&game->ass.win_screen);
+	}
+    return (0);
 }
 
+int mouse_press(int keycode,int x,int y,t_game *game)
+{
+	if(keycode == 1 && game->g_flags.button_ready == true)
+	{
+		// ft_printf("clicked key = %d on x = %d     and y = %d\n",keycode,x,y);
+		if(x >=640 && x <= 1260 && y>=515 && y<= 680)
+			game->g_flags.game_state = running;
+		if(x >=640 && x <= 1260 && y>=760 && y<= 930)
+			closex(game);
+	}
+	return(1);
+}
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -311,6 +320,7 @@ int	main(int argc, char **argv)
 		if (parse(&game, argv[1]) == false)
 			return (1);
 		game.fps_lock = 60;
+		game.g_flags.game_state = main_menu;
 		game.mlx = mlx_init();
 		print_info(game);
 		textures(&game);
@@ -319,6 +329,7 @@ int	main(int argc, char **argv)
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 		mlx_hook(game.win, 3, 1L << 1, key_release, &game);
 		mlx_hook(game.win, 6, 1L << 6, mouse, &game);
+		mlx_hook(game.win, 04, 1L<<2, mouse_press, &game);
 		mlx_loop_hook(game.mlx, main_loop, &game);
 		mlx_loop(game.mlx);
 		free_game(&game);

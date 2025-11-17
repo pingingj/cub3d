@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/03 19:13:03 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/17 17:32:59 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,6 @@ void	draw_minimap(t_game *game, double playerx, double playery)
 	win_pos.y = game->mini.center.y - game->mini.tile_size * (playery - floor(playery) + scale_tiles.y);
 	minimap_tiles(*game, tile_pos, win_pos);
 	draw_miniframe(game);
-	// draw_arrow(game, game->mini.center.x, game->mini.center.y, 0xFF0000);
-	draw_circle_mlx(game, (int)game->mini.center.x, (int)game->mini.center.y, 0xFF0000);
+	draw_arrow(game, game->mini.center.x, game->mini.center.y, 0xFF0000);
+	// draw_circle_mlx(game, (int)game->mini.center.x, (int)game->mini.center.y, 0xFF0000);
 }

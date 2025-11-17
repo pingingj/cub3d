@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 13:59:41 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:01:42 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,5 +290,4 @@ void	map_gen(t_game *game)
 	player_init(game);
 	background_gen(game);
 	create_frame(game);
-	game->g_flags.game_state = running;
 }
