@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/20 18:49:42 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:40:31 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool	open_door(t_game *game, double x, double y)
 			&& game->meth.looking_door == true)
 		{
 			game->map.grid[(int)new_y][(int)new_x] = 'd';
-			if (hit_box(game, x, y) == false || hit_box(game,game->ass.enemy.cords.x,game->ass.enemy.cords.y) == false)
+ 			if (hit_box(game, x, y) == false || (game->ass.enemy.cords.x != -1 && hit_box(game,game->ass.enemy.cords.x,game->ass.enemy.cords.y) == false))
 			{
 				game->map.grid[(int)new_y][(int)new_x] = 'D';
 				return (false);
@@ -58,7 +58,7 @@ void	look_left(t_game *game)
 
 	x= -1;
 	angle = ARROW_ROT_SPEED;
-	if(game->look_flag_left == false)
+	if(game->g_flags.look_flag_left == false)
 	{
 		x = game->mouse.x;
 		angle = ROT_SPEED;
@@ -75,10 +75,38 @@ void	look_left(t_game *game)
 		* cos(x * angle);
 }
 
+void change_flag(int key,t_game *game)
+{
+	static bool mouse;
+	
+	if(key == H)
+	{
+		if(mouse == false)
+		{
+			mlx_mouse_hide(game->mlx, game->win);
+			mouse = true;
+		}
+		else
+		{
+			mlx_mouse_show(game->mlx, game->win);
+			mouse = false;
+		}
+	}
+	if(key == P)
+	{
+		if(game->g_flags.game_state == running)
+			game->g_flags.game_state = Pause;
+		else if(game->g_flags.game_state == Pause)
+		{
+			mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
+			game->g_flags.game_state = running;
+		}
+	}
+}	
 int	key_press(int keycode, t_game *game)
 {
 	// if (keycode)
-		// printf("key code = %d\n", keycode);
+	// 	printf("key code = %d\n", keycode);
 	if (keycode == 65307)
 		closex(game);
 	if (keycode == M)
@@ -103,17 +131,19 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == D)
 		game->move[3] = 1;
 	if (keycode == L)
-		game->laggy_lanter = !game->laggy_lanter;
+		game->g_flags.laggy_lantern = !game->g_flags.laggy_lantern;
 	if (keycode == H)
-		mlx_mouse_hide(game->mlx, game->win);
+		change_flag(H,game);
+	if (keycode == P)
+		change_flag(P,game);
 	if (keycode == ARROW_RIGHT)
 	{
-		game->look_flag_right = true;
+		game->g_flags.look_flag_right = true;
 		game->move[4] = 1;
 	}
 	if (keycode == ARROW_LEFT)
 	{
-		game->look_flag_left = true;
+		game->g_flags.look_flag_left = true;
 		game->move[5] = 1;
 	}
 	if (keycode == ARROW_UP)
@@ -144,12 +174,12 @@ int	key_release(int keycode, t_game *game)
 		game->move[3] = 0;
 	if (keycode == ARROW_RIGHT)
 	{
-		game->look_flag_right = false;
+		game->g_flags.look_flag_right = false;
 		game->move[4] = 0;
 	}
 	if (keycode == ARROW_LEFT)
 	{
-		game->look_flag_left = false;
+		game->g_flags.look_flag_left = false;
 		game->move[5] = 0;
 	}
 	if (keycode == ARROW_UP)

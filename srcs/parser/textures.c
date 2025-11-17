@@ -58,6 +58,9 @@ int	textures(t_game *game)
 	img_init(game, game->ass.textures[EA].filename, &game->ass.textures[EA]);
 	img_init(game, game->ass.textures[WE].filename, &game->ass.textures[WE]);
 	img_init(game, game->ass.textures[SO].filename, &game->ass.textures[SO]);
+	img_init(game,"./incs/textures/death_screen.xpm",&game->ass.death_screen);
+	img_init(game,"./incs/textures/Win_screen.xpm",&game->ass.win_screen);
+	img_init(game,"./incs/textures/pause.xpm",&game->ass.pause_screen);
 	if (game->ass.textures[CL].filename)
 		img_init(game, game->ass.textures[CL].filename, &game->ass.textures[CL]);
 	if (game->ass.textures[EN].filename)

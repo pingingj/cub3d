@@ -20,12 +20,13 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <stddef.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1440
+# define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define MONSTER_SPEED 0.1
@@ -55,6 +56,7 @@
 # define M 109
 # define L 108
 # define H 104
+# define P 112
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
@@ -155,6 +157,9 @@ typedef struct s_assets
 	t_sprite		*sprites;
 	t_sprite		enemy;
 	t_sprite		door;
+	t_img			death_screen;
+	t_img			pause_screen;
+	t_img			win_screen;
 	int				collect_amount;
 }					t_assets;
 
@@ -186,30 +191,47 @@ typedef struct s_queue
 
 typedef struct s_spath
 {
-	int		i;
-	double	mathx;
-	double	mathy;
-	double	transformx;
-	double	transformy;
-	double	inverse;
-	double	spritexlocation;
-	double	sprite_height;
-	double	sprite_width;
-	int		sdrawx;
-	int		sdrawy;
-	int		edrawx;
-	int		edrawy;
-	int		sp_index;
-	int		texx;
-	int		screen_center;
-	int		py;
-	int		d;
-	int		texy;
-	int		color;
-	double	intensity;
-	t_img spt;
+	int				i;
+	double			mathx;
+	double			mathy;
+	double			transformx;
+	double			transformy;
+	double			inverse;
+	double			spritexlocation;
+	double			sprite_height;
+	double			sprite_width;
+	int				sdrawx;
+	int				sdrawy;
+	int				edrawx;
+	int				edrawy;
+	int				sp_index;
+	int				texx;
+	int				screen_center;
+	int				py;
+	int				d;
+	int				texy;
+	int				color;
+	double			intensity;
+	t_img			spt;
 }					t_spath;
 
+enum				game_state
+{
+	main_menu,
+	running,
+	Pause,
+	death_screen,
+	Win_screen,
+	Finished
+};
+
+typedef struct s_game_flags
+{
+	int				game_state;
+	bool			look_flag_right;
+	bool			look_flag_left;
+	bool			laggy_lantern;
+}					t_game_flags;
 typedef struct s_game
 {
 	int				fd;
@@ -223,6 +245,8 @@ typedef struct s_game
 	t_queue			*queue;
 	t_point			**prev;
 	t_spath			spath;
+	t_game_flags	g_flags;
+	int				collected_comics;
 	t_img			title[194];
 	bool			look_flag_right;
 	bool			look_flag_left;
@@ -238,6 +262,7 @@ typedef struct s_game
 	int				monster_target_x;
 	int				monster_target_y;
 	int				monster_has_target;
+	int				fps_lock;
 }					t_game;
 
 // generation
@@ -261,15 +286,16 @@ void				check_space(t_game *game, t_queue *q);
 t_queue				*ft_queuenew(void *content);
 void				ft_queueadd_back(t_queue **lst, t_queue *new);
 void				free_queue(t_queue *queue);
-//sprites
-void	draw_sprite(t_game *game);
-void	draw_sprite_prep(t_game *game);
-void	sprite_math(t_game *game, int *order);
-void	start_sprite_handle(t_game *game, int *order);
-void	hande_sprites(t_game *game);
-void	sort_dist(int *order, double *sprit_distance, t_game *game);
-void	sprite_text_boundary_check(t_game *game);
-double	sprite_flashlight(int x, int y, t_game *game, double sprite_dist);
+// sprites
+void				draw_sprite(t_game *game);
+void				draw_sprite_prep(t_game *game);
+void				sprite_math(t_game *game, int *order);
+void				start_sprite_handle(t_game *game, int *order);
+void				hande_sprites(t_game *game);
+void				sort_dist(int *order, double *sprit_distance, t_game *game);
+void				sprite_text_boundary_check(t_game *game);
+double				sprite_flashlight(int x, int y, t_game *game,
+						double sprite_dist);
 // clean
 int					closex(t_game *mlx);
 // mlx_adds
@@ -310,4 +336,7 @@ void				free_queue(t_queue *queue);
 
 // textures
 int					textures(t_game *game);
+void	img_init(t_game *game, char *filename, t_img *img);
+//
+void ft_sleep(double mili_secs);
 #endif
