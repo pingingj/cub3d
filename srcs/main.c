@@ -206,13 +206,13 @@ void	make_fade_screen(t_game *game,t_img *img)
 
 void make_pause_screen(t_game *game)
 {
-    // static int i;
+    static int i;
 
-    if(game->g_flags.game_state == Pause)
+    if(game->g_flags.game_state == Pause && i != 1)
     {
-        mlx_clear_window(game->mlx,game->win);
-        mlx_put_image_to_window(game->mlx,game->win,game->ass.pause_screen.img,WIDTH/2 - 150,HEIGHT/2 - 84);
-        // i = 1;
+        // mlx_clear_window(game->mlx,game->win);
+        // mlx_put_image_to_window(game->mlx,game->win,game->ass.pause_screen.img,0,0);
+		draw_scaled_img(game,&game->ass.pause_screen,false,1);
     }
     // printf("player x = %f   player y = %f\n",game->player.posx,game->player.posy);
 
