@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 16:43:03 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:26:58 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = WIDTH * 0.15625 + game->player.look / 10.0;
+	softness = WIDTH * 0.15625 + game->player.look + game->bob / 10.0;
 	if (softness < 80.0)
 		softness = 80.0;
 	dist = dx * dx + dy * dy;
@@ -131,7 +131,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	{
 		if (game->player.look < 0)
 		{
-			horizon = (double)HEIGHT / 2.0 + game->player.look;
+			horizon = (double)HEIGHT / 2.0 + game->player.look + game->bob;
 			if (horizon < -HEIGHT)
 				horizon = -HEIGHT;
 			if (horizon > HEIGHT * 2)
@@ -147,7 +147,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 		else
 		{
 			screen_dist = abs(y - HEIGHT / 2);
-			max_dist = 35.0 + game->player.look;
+			max_dist = 35.0 + game->player.look + game->bob;
 			dist_intensity = -(1.0 - (screen_dist / max_dist));
 		}
 	}
@@ -199,7 +199,7 @@ int	get_color(t_game *game, int sdraw, int y)
 	int		screen_center;
 	t_img	sprite;
 
-	screen_center = HEIGHT / 2 + game->player.look;
+	screen_center = HEIGHT / 2 + game->player.look + game->bob;
 	if (game->meth.orientation == 0)
 		wallx = game->player.posy + game->walldist * game->meth.raydiry;
 	else

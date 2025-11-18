@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:38:06 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 16:43:59 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:27:13 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ double	sprite_flashlight(int x, int y, t_game *game, double sprite_dist)
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = WIDTH * 0.15625 + game->player.look / 10.0;
+	softness = WIDTH * 0.15625 + game->player.look + game->bob / 10.0;
 	if (softness < 80.0)
 		softness = 80.0;
 	dist = dx * dx + dy * dy;

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/18 16:20:38 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:45:55 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@
 # define WIDTH 1400
 # define HEIGHT 900
 # define AMBIENT 0.03
-# define MOVE_SPEED 0.09
+# define MOVE_SPEED 0.08
 # define MONSTER_SPEED 0.1
-# define RUN_SPEED 0.12
-# define CTRL 65507
-# define SPACE 32
+# define RUN_SPEED 0.11
+
 // # define TILE_SIZE 40
 // # define MINIMAP_RADIUS 2
 // # define MINIMAP_TILES 5
@@ -56,7 +55,7 @@
 # define M 109
 # define L 108
 # define H 104
-# define P 112 
+# define P 112
 # define ENTER 65293
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
@@ -261,7 +260,7 @@ typedef struct s_game
 	double			walldist;
 	int				wall_dist_sp[WIDTH];
 	int				*move;
-	int				bob;
+	double			bob;
 	int				**visited;
 	int				monster_target_x;
 	int				monster_target_y;
