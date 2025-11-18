@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/18 17:45:55 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 18:07:09 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,16 @@ typedef struct s_assets
 	t_img			win_screen;
 	int				collect_amount;
 }					t_assets;
+
+typedef struct s_map_ele
+{
+	bool door;
+	bool wall;
+	bool empty;
+	bool collectible;
+	char element;
+	bool is_open;
+}					t_map_ele;
 
 typedef struct s_map
 {
