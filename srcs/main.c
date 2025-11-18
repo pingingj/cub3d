@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/17 18:52:58 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:26:07 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,9 +197,7 @@ void	make_fade_screen(t_game *game,t_img *img)
 
 	mlx_mouse_show(game->mlx, game->win);
 	if(i > 1.5)
-	{
 		game->g_flags.game_state = Finished;
-	}
 	draw_scaled_img(game,img,true,i);
 	i+= 0.01;
 }
@@ -212,6 +210,7 @@ void make_pause_screen(t_game *game)
     {
         // mlx_clear_window(game->mlx,game->win);
         // mlx_put_image_to_window(game->mlx,game->win,game->ass.pause_screen.img,0,0);
+		print_info(*game);
 		draw_scaled_img(game,&game->ass.pause_screen,false,1);
     }
     // printf("player x = %f   player y = %f\n",game->player.posx,game->player.posy);
@@ -276,7 +275,7 @@ int main_loop(t_game *game)
 		menu(game);
 	else
 	{
-		if(game->collected_comics == game->ass.collect_amount && game->g_flags.game_state != Finished)
+		if(game->collected_comics == game->ass.collect_amount - 1 && game->g_flags.game_state != Finished && game->g_flags.collectibles_exist == true)
 			game->g_flags.game_state = Win_screen;
 		if(game->g_flags.game_state == running)
 		{
@@ -303,9 +302,9 @@ int mouse_press(int keycode,int x,int y,t_game *game)
 	if(keycode == 1 && game->g_flags.button_ready == true)
 	{
 		// ft_printf("clicked key = %d on x = %d     and y = %d\n",keycode,x,y);
-		if(x >=640 && x <= 1260 && y>=515 && y<= 680)
+		if(x >= WIDTH / 3 && x <= WIDTH / 1.523809524 && y>=HEIGHT /2.097087379  && y<= HEIGHT / 1.588235294)
 			game->g_flags.game_state = running;
-		if(x >=640 && x <= 1260 && y>=760 && y<= 930)
+		if(x >= WIDTH / 3 && x <= WIDTH / 1.523809524 && y>=HEIGHT / 1.421052632 && y<= HEIGHT / 1.161290323)
 			closex(game);
 	}
 	return(1);

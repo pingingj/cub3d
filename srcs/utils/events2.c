@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/17 18:53:49 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:17:20 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int	key_press(int keycode, t_game *game)
 		game->move[8] = 1;
 	if (keycode == 46)
 		game->move[9] = 1;
-	if (keycode == ENTER && game->g_flags.button_ready == true)
+	if (keycode == ENTER && game->g_flags.button_ready == true && game->g_flags.game_state == main_menu)
 		game->g_flags.game_state = running;
 	return (0);
 }

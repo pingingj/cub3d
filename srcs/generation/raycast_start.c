@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/23 16:16:42 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:47:58 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,22 @@ void	math_with_an_e(t_game *game)
 
 void	create_frame(t_game *game)
 {
-	// static int bob_flag;
-	// if (bob_flag == 0)
-	// {
-	// 	game->bob += 2;
-	// 	if(game->bob > 6)
-	// 		bob_flag = 1;
-	// }
-	// else
-	// {
-	// 	game->bob -= 2;
-	// 	if(game->bob < -6)
-	// 		bob_flag = 0;
-	// }
+	static int bob_flag;
+	if(game->move[0] || game->move[1] || game->move[2] || game->move[3])
+	{
+		if (bob_flag == 0)
+		{
+			game->bob += 2;
+			if(game->bob > 6)
+				bob_flag = 1;
+		}
+		else
+		{
+			game->bob -= 2;
+			if(game->bob < -6)
+				bob_flag = 0;
+		}
+	}
 	math_with_an_e(game);
 	mlx_clear_window(game->mlx, game->win);
 	if (game->mini.show == true)

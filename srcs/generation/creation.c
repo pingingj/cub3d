@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/17 18:42:07 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:43:03 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	{
 		if (game->player.look < 0)
 		{
-			horizon = (double)HEIGHT / 2.0 + game->player.look - game->bob;
+			horizon = (double)HEIGHT / 2.0 + game->player.look;
 			if (horizon < -HEIGHT)
 				horizon = -HEIGHT;
 			if (horizon > HEIGHT * 2)

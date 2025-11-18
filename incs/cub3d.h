@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/17 18:50:47 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:20:38 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1400
+# define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.09
 # define MONSTER_SPEED 0.1
 # define RUN_SPEED 0.12
 # define CTRL 65507
 # define SPACE 32
-# define TILE_SIZE 40
-# define MINIMAP_RADIUS 2
-# define MINIMAP_TILES 5
+// # define TILE_SIZE 40
+// # define MINIMAP_RADIUS 2
+// # define MINIMAP_TILES 5
 
 // keys
 # define W 119
@@ -216,7 +216,7 @@ typedef struct s_spath
 	t_img			spt;
 }					t_spath;
 
-enum				game_state
+enum				e_game_state
 {
 	main_menu,
 	running,
@@ -229,11 +229,13 @@ enum				game_state
 typedef struct s_game_flags
 {
 	int				game_state;
+	bool			collectibles_exist;
 	bool			button_ready;
 	bool			look_flag_right;
 	bool			look_flag_left;
 	bool			laggy_lantern;
 }					t_game_flags;
+
 typedef struct s_game
 {
 	int				fd;
@@ -318,7 +320,7 @@ bool				hit_box(t_game *game, double x, double y);
 // drawing map
 void				draw_wall(t_game *game, int cx, int cy);
 void				draw_floor(t_game *game, int cx, int cy);
-void	draw_minimap(t_game *game, double playerx, double playery);
+void				draw_minimap(t_game *game, double playerx, double playery);
 // parse
 bool				parse(t_game *game, char *filename);
 void				print_errors(t_game *game, int error, char *msg);
@@ -338,7 +340,6 @@ void				free_queue(t_queue *queue);
 
 // textures
 int					textures(t_game *game);
-void	img_init(t_game *game, char *filename, t_img *img);
-//
-void ft_sleep(double mili_secs);
+void				img_init(t_game *game, char *filename, t_img *img);
+void				ft_sleep(double mili_secs);
 #endif

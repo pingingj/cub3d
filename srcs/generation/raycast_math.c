@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_math.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/22 15:31:08 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:57:31 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 	int	add;
 
 	add = 0;
-	add += game->player.look + game->bob;
+	add += game->player.look;
 	(void)game;
 	if (walldist <= 0.000001)
 		walldist = 0.000001;

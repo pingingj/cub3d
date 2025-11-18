@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/17 19:04:07 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:56:50 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ int	closex(t_game *mlx)
 		mlx_destroy_image(mlx->mlx, mlx->ass.enemy.texture.img);
 	if (mlx->ass.barrel.img)
 		mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
+	if (mlx->ass.death_screen.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.death_screen.img);
+	if (mlx->ass.win_screen.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.win_screen.img);
+	if (mlx->ass.pause_screen.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.pause_screen.img);	
 	while(i < 6)
 	{
 		if (mlx->ass.textures[i].img)
@@ -77,6 +83,7 @@ void	print_info(t_game game)
 	// printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
 	// printf("hexa floor = %d\n", game.ass.floor.hexa);
 	printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
+	printf("collected amount = %d\n",game.collected_comics);
 	while (i < game.map.pos.y)
 	{
 		j = 0;
