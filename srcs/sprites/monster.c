@@ -6,56 +6,54 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:50:26 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 16:36:45 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:03:55 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
-int	has_line_of_sight(t_game *game, double ex, double ey, double px, double py)
+int	has_line_of_sight(double ex, double ey, double px, double py)
 {
-	int	x;
-	int	y;
-	int	end_x;
-	int	end_y;
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
+	t_point	xy;
+	t_point	endxy;
+	t_point	d;
+	t_point	s;
+	int		err;
+	int		e2;
+	t_game	*game;
 
-	x = (int)ex;
-	y = (int)ey;
-	end_x = (int)px;
-	end_y = (int)py;
-	dx = abs(end_x - x);
-	dy = abs(end_y - y);
-	err = dx - dy;
-	if (x < end_x)
-		sx = 1;
+	game = mem_save(NULL);
+	xy.x = (int)ex;
+	xy.y = (int)ey;
+	endxy.x = (int)px;
+	endxy.y = (int)py;
+	d.x = abs(endxy.x - xy.x);
+	d.y = abs(endxy.y - xy.y);
+	if (xy.x < endxy.x)
+		s.x = 1;
 	else
-		sx = -1;
-	if (y < end_y)
-		sy = 1;
+		s.x = -1;
+	if (xy.y < endxy.y)
+		s.y = 1;
 	else
-		sy = -1;
-	while (x != end_x || y != end_y)
+		s.y = -1;
+	err = d.x - d.y;
+	while (xy.x != endxy.x || xy.y != endxy.y)
 	{
-		if (y >= 0 && y < game->map.pos.y && x >= 0
-			&& x < (int)ft_strlen(game->map.grid[y])
-			&& game->map.grid[y][x] == '1')
+		if (xy.y >= 0 && xy.y < game->map.pos.y && xy.x >= 0
+			&& xy.x < (int)ft_strlen(game->map.grid[xy.y])
+			&& game->map.grid[xy.y][xy.x] == '1')
 			return (0);
 		e2 = 2 * err;
-		if (e2 > -dy)
+		if (e2 > -d.y)
 		{
-			err -= dy;
-			x += sx;
+			err -= d.y;
+			xy.x += s.x;
 		}
-		if (e2 < dx)
+		if (e2 < d.x)
 		{
-			err += dx;
-			y += sy;
+			err += d.x;
+			xy.y += s.y;
 		}
 	}
 	return (1);
@@ -103,8 +101,8 @@ t_point	pathfinding_alg(t_game *game)
 		path_cell.x = next_cell.x;
 		path_cell.y = next_cell.y;
 		next_cell = game->prev[path_cell.y][path_cell.x];
-		if(path_cell.x == next_cell.x && path_cell.y == next_cell.y)
-			break;
+		if (path_cell.x == next_cell.x && path_cell.y == next_cell.y)
+			break ;
 	}
 	free_queue(game->queue);
 	return (path_cell);
@@ -117,7 +115,7 @@ int	monster(t_game *game)
 	double	dx;
 	double	dy;
 	double	dist;
-	double speed;
+	double	speed;
 	int		can_direct_chase;
 	t_point	path_cell;
 	double	move_x;
@@ -125,9 +123,9 @@ int	monster(t_game *game)
 
 	path_cell = pathfinding_alg(game);
 	can_direct_chase = !is_near_wall(game, game->ass.enemy.cords.x,
-			game->ass.enemy.cords.y) && has_line_of_sight(game,
-			game->ass.enemy.cords.x, game->ass.enemy.cords.y, game->player.posx,
-			game->player.posy);
+			game->ass.enemy.cords.y)
+		&& has_line_of_sight(game->ass.enemy.cords.x, game->ass.enemy.cords.y,
+			game->player.posx, game->player.posy);
 	if (can_direct_chase)
 	{
 		dx = game->player.posx - game->ass.enemy.cords.x;
@@ -141,8 +139,10 @@ int	monster(t_game *game)
 		dy = target_cy - game->ass.enemy.cords.y;
 	}
 	dist = sqrt(dx * dx + dy * dy);
-	if(game->g_flags.collectibles_exist && game->ass.collect_amount - 1 != game->collected_comics)
-		speed = (MONSTER_SPEED / ((game->ass.collect_amount - 1) - game->collected_comics));
+	if (game->g_flags.collectibles_exist && game->ass.collect_amount
+		- 1 != game->collected_comics)
+		speed = (MONSTER_SPEED / ((game->ass.collect_amount - 1)
+					- game->collected_comics));
 	else
 		speed = 0.09;
 	if (dist > 0.5)
@@ -154,8 +154,10 @@ int	monster(t_game *game)
 		{
 			game->ass.enemy.cords.x = move_x;
 			game->ass.enemy.cords.y = move_y;
-			game->ass.sprites[game->ass.collect_amount- 1].cords.x = game->ass.enemy.cords.x;
-			game->ass.sprites[game->ass.collect_amount- 1].cords.y = game->ass.enemy.cords.y;
+			game->ass.sprites[game->ass.collect_amount
+				- 1].cords.x = game->ass.enemy.cords.x;
+			game->ass.sprites[game->ass.collect_amount
+				- 1].cords.y = game->ass.enemy.cords.y;
 		}
 	}
 	else

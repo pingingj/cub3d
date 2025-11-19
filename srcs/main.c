@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/19 13:51:25 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:05:51 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	mouse(int x, int y, t_game *game)
 {
 	game->mouse.x = x - WIDTH / 2;
 	// ft_printf("mouse x -> %d     mouse y -> %d\n",x,y);
-    if(game->g_flags.game_state != running)
-        return(1);
-    if (x > WIDTH / 2)
-	    game->move[4] = 1;
+	if (game->g_flags.game_state != running)
+		return (1);
+	if (x > WIDTH / 2)
+		game->move[4] = 1;
 	if (x < WIDTH / 2)
 		game->move[5] = 1;
 	if (x == WIDTH / 2)
@@ -40,73 +40,76 @@ int	mouse(int x, int y, t_game *game)
 		if (game->player.look > 1000)
 			game->player.look -= -game->mouse.y / 10;
 	}
-    if(game->g_flags.game_state == running)
-    {
-        if (x != WIDTH / 2 || y != HEIGHT / 2)
-            mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
-    }
+	if (game->g_flags.game_state == running)
+	{
+		if (x != WIDTH / 2 || y != HEIGHT / 2)
+			mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
+	}
 	return (0);
 }
 
-void ft_sleep(double mili_secs)
+void	ft_sleep(double mili_secs)
 {
-    double last_time = 0.0;
-    struct timeval now;
-    double current_time;
+	double			last_time;
+	struct timeval	now;
+	double			current_time;
 
-    if (mili_secs <= 0.0)
-        return;
-
-    gettimeofday(&now, NULL);
-    current_time = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
-    if (last_time == 0.0)
-        last_time = current_time;
-    while (1)
-    {
-        gettimeofday(&now, NULL);
-        current_time = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
-        if (current_time - last_time >= mili_secs)
-            break;
-    }
+	last_time = 0.0;
+	if (mili_secs <= 0.0)
+		return ;
+	gettimeofday(&now, NULL);
+	current_time = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
+	if (last_time == 0.0)
+		last_time = current_time;
+	while (1)
+	{
+		gettimeofday(&now, NULL);
+		current_time = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
+		if (current_time - last_time >= mili_secs)
+			break ;
+	}
 }
 
-double fps_counter(t_game *game)
+double	fps_counter(t_game *game)
 {
-    static int frames;
-    struct timeval now;
-    static double last_time;
-    static double next_deadline_ms;
-    double current_time;
-    double fsleep = 0.0;
+	static int		frames;
+	struct timeval	now;
+	static double	last_time;
+	static double	next_deadline_ms;
+	double			current_time;
+	double			fsleep;
+	double			target_ms;
+	double			now_ms;
 
-    if (game->fps_lock > 0)
-    {
-        double target_ms = 1000.0 / (double)game->fps_lock;
-        gettimeofday(&now, NULL);
-        double now_ms = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
-        if (next_deadline_ms == 0.0)
-            next_deadline_ms = now_ms + target_ms;
-        fsleep = next_deadline_ms - now_ms;
-        if (fsleep < 0.0)
-            fsleep = 0.0;
-        next_deadline_ms += target_ms;
-        if (next_deadline_ms < now_ms - target_ms)
-            next_deadline_ms = now_ms + target_ms;
-    }
-    else
-        next_deadline_ms = 0.0;
-    gettimeofday(&now, NULL);
-    current_time = now.tv_sec + now.tv_usec / 1000000.0;
-    if (last_time == 0.0)
-        last_time = current_time;
-    frames++;
-    if (current_time - last_time >= 1.0)
-    {
-        ft_printf("FPS: %d\n", frames);
-        frames = 0;
-        last_time = current_time;
-    }
-    return (fsleep);
+	fsleep = 0.0;
+	if (game->fps_lock > 0)
+	{
+		target_ms = 1000.0 / (double)game->fps_lock;
+		gettimeofday(&now, NULL);
+		now_ms = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
+		if (next_deadline_ms == 0.0)
+			next_deadline_ms = now_ms + target_ms;
+		fsleep = next_deadline_ms - now_ms;
+		if (fsleep < 0.0)
+			fsleep = 0.0;
+		next_deadline_ms += target_ms;
+		if (next_deadline_ms < now_ms - target_ms)
+			next_deadline_ms = now_ms + target_ms;
+	}
+	else
+		next_deadline_ms = 0.0;
+	gettimeofday(&now, NULL);
+	current_time = now.tv_sec + now.tv_usec / 1000000.0;
+	if (last_time == 0.0)
+		last_time = current_time;
+	frames++;
+	if (current_time - last_time >= 1.0)
+	{
+		ft_printf("FPS: %d\n", frames);
+		frames = 0;
+		last_time = current_time;
+	}
+	return (fsleep);
 }
 
 int	new_blank_img(t_game *game, t_img *img, int w, int h)
@@ -114,8 +117,8 @@ int	new_blank_img(t_game *game, t_img *img, int w, int h)
 	img->img = mlx_new_image(game->mlx, w, h);
 	if (!img->img)
 		return (0);
-	img->addr = mlx_get_data_addr(img->img,
-			&img->bits_per_pixel, &img->line_length, &img->endian);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
 	if (!img->addr)
 	{
 		mlx_destroy_image(game->mlx, img->img);
@@ -128,7 +131,7 @@ int	new_blank_img(t_game *game, t_img *img, int w, int h)
 	return (1);
 }
 
-void	draw_scaled_img(t_game *game, t_img *src,bool apply,double intensity)
+void	draw_scaled_img(t_game *game, t_img *src, bool apply, double intensity)
 {
 	t_img			dst;
 	int				s_bpp;
@@ -139,18 +142,18 @@ void	draw_scaled_img(t_game *game, t_img *src,bool apply,double intensity)
 	int				sy;
 	unsigned char	*dst_row;
 	unsigned char	*src_row;
-	unsigned char b;
-	unsigned char g;
-	unsigned char r;
-	unsigned char a;
-	int color;
+	unsigned char	b;
+	unsigned char	g;
+	unsigned char	r;
+	unsigned char	a;
+	int				color;
 
 	if (!game || !src || !src->img || !src->addr || src->w <= 0 || src->h <= 0)
 		return ;
 	if (!new_blank_img(game, &dst, WIDTH, HEIGHT))
 	{
-		mlx_put_image_to_window(game->mlx, game->win, src->img,
-			(WIDTH - src->w) / 2, (HEIGHT - src->h) / 2);
+		mlx_put_image_to_window(game->mlx, game->win, src->img, (WIDTH - src->w)
+			/ 2, (HEIGHT - src->h) / 2);
 		return ;
 	}
 	s_bpp = src->bits_per_pixel / 8;
@@ -189,24 +192,22 @@ void	draw_scaled_img(t_game *game, t_img *src,bool apply,double intensity)
 	mlx_destroy_image(game->mlx, dst.img);
 }
 
-
-void	make_fade_screen(t_game *game,t_img *img)
+void	make_fade_screen(t_game *game, t_img *img)
 {
-	static double i;
+	static double	i;
 
 	mlx_mouse_show(game->mlx, game->win);
-	if(i > 1.5)
+	if (i > 1.5)
 		game->g_flags.game_state = Finished;
-	draw_scaled_img(game,img,true,i);
-	i+= 0.01;
+	draw_scaled_img(game, img, true, i);
+	i += 0.01;
 }
 
-void make_pause_screen(t_game *game)
+void	make_pause_screen(t_game *game)
 {
-    if(game->g_flags.game_state == Pause)
-		draw_scaled_img(game,&game->ass.pause_screen,false,1);
+	if (game->g_flags.game_state == Pause)
+		draw_scaled_img(game, &game->ass.pause_screen, false, 1);
 }
-
 
 void	draw_title(t_game *game, int i)
 {
@@ -215,10 +216,10 @@ void	draw_title(t_game *game, int i)
 	int	color;
 
 	x = 0;
-	while(x < WIDTH)
+	while (x < WIDTH)
 	{
 		y = 0;
-		while(y < HEIGHT)
+		while (y < HEIGHT)
 		{
 			color = pixel_get(&game->title[i], x, y);
 			my_mlx_pixel_put(&game->bg_img, x, y, color);
@@ -234,7 +235,7 @@ int	menu(t_game *game)
 	static double	last_ms;
 	struct timeval	now;
 	double			now_ms;
-	double	frame_ms;
+	double			frame_ms;
 
 	gettimeofday(&now, NULL);
 	now_ms = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
@@ -248,7 +249,7 @@ int	menu(t_game *game)
 	}
 	if (now_ms - last_ms >= frame_ms)
 	{
-		draw_scaled_img(game,&game->title[frame],false,1);
+		draw_scaled_img(game, &game->title[frame], false, 1);
 		frame++;
 		last_ms = now_ms;
 	}
@@ -257,17 +258,19 @@ int	menu(t_game *game)
 	return (1);
 }
 
-int main_loop(t_game *game)
+int	main_loop(t_game *game)
 {
-    double fsleep;
+	double	fsleep;
 
-	if(game->g_flags.game_state == main_menu)
+	if (game->g_flags.game_state == main_menu)
 		menu(game);
 	else
 	{
-		if(game->collected_comics == game->ass.collect_amount - 1 && game->g_flags.game_state != Finished && game->g_flags.collectibles_exist == true)
+		if (game->collected_comics == game->ass.collect_amount - 1
+			&& game->g_flags.game_state != Finished
+			&& game->g_flags.collectibles_exist == true)
 			game->g_flags.game_state = Win_screen;
-		if(game->g_flags.game_state == running)
+		if (game->g_flags.game_state == running)
 		{
 			move(game);
 			if (game->ass.enemy.cords.x != -1)
@@ -278,27 +281,39 @@ int main_loop(t_game *game)
 				ft_sleep(fsleep);
 		}
 		else if (game->g_flags.game_state == death_screen)
-			make_fade_screen(game,&game->ass.death_screen);
+			make_fade_screen(game, &game->ass.death_screen);
 		else if (game->g_flags.game_state == Pause)
 			make_pause_screen(game);
 		else if (game->g_flags.game_state == Win_screen)
-			make_fade_screen(game,&game->ass.win_screen);
+			make_fade_screen(game, &game->ass.win_screen);
 	}
-    return (0);
+	return (0);
 }
 
-int mouse_press(int keycode,int x,int y,t_game *game)
+int	mouse_press(int keycode, int x, int y, t_game *game)
 {
-	if(keycode == 1 && game->g_flags.button_ready == true && game->g_flags.game_state == main_menu)
+	if (keycode == 1 && game->g_flags.button_ready == true
+		&& game->g_flags.game_state == main_menu)
 	{
-		// ft_printf("clicked key = %d on x = %d     and y = %d\n",keycode,x,y);
-		if(x >= WIDTH / 3 && x <= WIDTH / 1.523809524 && y>=HEIGHT /2.097087379  && y<= HEIGHT / 1.588235294)
+		if (x >= WIDTH / 3 && x <= WIDTH / 1.523809524 && y >= HEIGHT
+			/ 2.097087379 && y <= HEIGHT / 1.588235294)
 			game->g_flags.game_state = running;
-		if(x >= WIDTH / 3 && x <= WIDTH / 1.523809524 && y>=HEIGHT / 1.421052632 && y<= HEIGHT / 1.161290323)
+		if (x >= WIDTH / 3 && x <= WIDTH / 1.523809524 && y >= HEIGHT
+			/ 1.421052632 && y <= HEIGHT / 1.161290323)
 			closex(game);
 	}
-	return(1);
+	return (1);
 }
+
+t_game	*mem_save(t_game *to_save)
+{
+	static t_game	*save;
+
+	if (to_save)
+		save = to_save;
+	return (save);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -311,6 +326,7 @@ int	main(int argc, char **argv)
 		game.fps_lock = 60;
 		game.g_flags.game_state = main_menu;
 		game.mlx = mlx_init();
+		mem_save(&game);
 		print_info(game);
 		textures(&game);
 		map_gen(&game);
@@ -318,7 +334,7 @@ int	main(int argc, char **argv)
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 		mlx_hook(game.win, 3, 1L << 1, key_release, &game);
 		mlx_hook(game.win, 6, 1L << 6, mouse, &game);
-		mlx_hook(game.win, 04, 1L<<2, mouse_press, &game);
+		mlx_hook(game.win, 04, 1L << 2, mouse_press, &game);
 		mlx_loop_hook(game.mlx, main_loop, &game);
 		mlx_loop(game.mlx);
 		free_game(&game);

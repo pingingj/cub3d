@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/19 13:52:10 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:53:22 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1440
+# define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.08
 # define MONSTER_SPEED 0.1
@@ -163,15 +163,15 @@ typedef struct s_assets
 	int				collect_amount;
 }					t_assets;
 
-typedef struct s_map_ele
-{
-	bool door;
-	bool wall;
-	bool empty;
-	bool collectible;
-	char element;
-	bool is_open;
-}					t_map_ele;
+// typedef struct s_map_ele
+// {
+// 	bool door;
+// 	bool wall;
+// 	bool empty;
+// 	bool collectible;
+// 	char element;
+// 	bool is_open;
+// }					t_map_ele;
 
 typedef struct s_map
 {
@@ -278,6 +278,8 @@ typedef struct s_game
 	int				fps_lock;
 }					t_game;
 
+//extras
+t_game	*mem_save(t_game *to_save);
 // generation
 void				map_gen(t_game *game);
 void				math_with_an_e(t_game *game);
