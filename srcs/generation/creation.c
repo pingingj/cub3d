@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 17:26:58 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:00:44 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ static void	background_gen(t_game *game)
 	Narrow base (small plane): covers less map,
 		so objects look bigger and the edge is farther.
 */
-static void	player_init(t_game *game)
-{
-	game->player.speed = MOVE_SPEED;
-}
 
 int	add_light(int color, double intensity)
 {
@@ -286,8 +282,7 @@ void	map_gen(t_game *game)
 	game->move = ft_calloc(10, sizeof(int));
 	if (!game->move)
 		exit(1);
-	// printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
-	player_init(game);
+	game->player.speed = MOVE_SPEED;
 	background_gen(game);
 	create_frame(game);
 }
