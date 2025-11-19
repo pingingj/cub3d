@@ -6,38 +6,20 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:50:26 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/19 15:03:55 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:32:49 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
-int	has_line_of_sight(double ex, double ey, double px, double py)
+static int	line_of_sight_loop(t_point xy, t_point d, t_point endxy, t_point s)
 {
-	t_point	xy;
-	t_point	endxy;
-	t_point	d;
-	t_point	s;
 	int		err;
 	int		e2;
 	t_game	*game;
 
-	game = mem_save(NULL);
-	xy.x = (int)ex;
-	xy.y = (int)ey;
-	endxy.x = (int)px;
-	endxy.y = (int)py;
-	d.x = abs(endxy.x - xy.x);
-	d.y = abs(endxy.y - xy.y);
-	if (xy.x < endxy.x)
-		s.x = 1;
-	else
-		s.x = -1;
-	if (xy.y < endxy.y)
-		s.y = 1;
-	else
-		s.y = -1;
 	err = d.x - d.y;
+	game = mem_save(NULL);
 	while (xy.x != endxy.x || xy.y != endxy.y)
 	{
 		if (xy.y >= 0 && xy.y < game->map.pos.y && xy.x >= 0
@@ -57,6 +39,31 @@ int	has_line_of_sight(double ex, double ey, double px, double py)
 		}
 	}
 	return (1);
+}
+int	has_line_of_sight(double ex, double ey, double px, double py)
+{
+	t_point	xy;
+	t_point	endxy;
+	t_point	d;
+	t_point	s;
+	t_game	*game;
+
+	game = mem_save(NULL);
+	xy.x = (int)ex;
+	xy.y = (int)ey;
+	endxy.x = (int)px;
+	endxy.y = (int)py;
+	d.x = abs(endxy.x - xy.x);
+	d.y = abs(endxy.y - xy.y);
+	if (xy.x < endxy.x)
+		s.x = 1;
+	else
+		s.x = -1;
+	if (xy.y < endxy.y)
+		s.y = 1;
+	else
+		s.y = -1;
+	return (line_of_sight_loop(xy, d, endxy, s));
 }
 
 int	is_near_wall(t_game *game, double x, double y)

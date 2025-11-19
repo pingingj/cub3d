@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:52:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 15:56:44 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:44:05 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,27 @@ t_queue	*monster_bfs_set_up(t_game *game)
 	return (queue);
 }
 
+void	init_dirs(int *dx, int *dy)
+{
+	dx[0] = 0;
+	dx[1] = 0;
+	dx[2] = -1;
+	dx[3] = 1;
+	dy[0] = -1;
+	dy[1] = 1;
+	dy[2] = 0;
+	dy[3] = 0;
+}
+
 void	while_do(t_game *game, t_queue *q, t_point *curr, int i)
 {
 	int		new_x;
 	int		new_y;
 	t_point	*next;
-	int		dx[4] = {0, 0, -1, 1};
-	int		dy[4] = {-1, 1, 0, 0};
+	int		dx[4];
+	int		dy[4];
 
+	init_dirs(dx, dy);
 	new_x = curr->x + dx[i];
 	new_y = curr->y + dy[i];
 	if (new_y >= 0 && new_y < game->map.pos.y && new_x >= 0
