@@ -295,12 +295,17 @@ int					add_light(int color, double intensity);
 double				flashlight(int x, int y, t_game *game, bool is_wall);
 // monster
 int					monster(t_game *game);
-t_queue				*monster_bfs_set_up(t_game *game);
-void				while_do(t_game *game, t_queue *q, t_point *curr, int i);
-void				check_space(t_game *game, t_queue *q);
+// t_queue				*monster_bfs_set_up(t_game *game);
+// void				while_do(t_game *game, t_queue *q, t_point *curr, int i);
+// void				check_space(t_game *game, t_queue *q);
 t_queue				*ft_queuenew(void *content);
 void				ft_queueadd_back(t_queue **lst, t_queue *new);
 void				free_queue(t_queue *queue);
+void				init_dirs(int *dx, int *dy);
+void 				choose_pathfinding_alg(t_game *game,t_pos target,t_pos *d);
+int	has_line_of_sight(double ex, double ey, double px, double py);
+int	is_near_wall(t_game *game, double x, double y);
+// t_point				pathfinding_alg(t_game *game);
 // sprites
 void				draw_sprite(t_game *game);
 void				draw_sprite_prep(t_game *game);

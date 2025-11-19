@@ -12,7 +12,7 @@
 
 #include "../../incs/cub3d.h"
 
-t_queue	*monster_bfs_set_up(t_game *game)
+static t_queue	*monster_bfs_set_up(t_game *game)
 {
 	int		y;
 	t_point	*monster_pt;
@@ -41,19 +41,7 @@ t_queue	*monster_bfs_set_up(t_game *game)
 	return (queue);
 }
 
-void	init_dirs(int *dx, int *dy)
-{
-	dx[0] = 0;
-	dx[1] = 0;
-	dx[2] = -1;
-	dx[3] = 1;
-	dy[0] = -1;
-	dy[1] = 1;
-	dy[2] = 0;
-	dy[3] = 0;
-}
-
-void	while_do(t_game *game, t_queue *q, t_point *curr, int i)
+static void	while_do(t_game *game, t_queue *q, t_point *curr, int i)
 {
 	int		new_x;
 	int		new_y;
@@ -79,7 +67,7 @@ void	while_do(t_game *game, t_queue *q, t_point *curr, int i)
 	}
 }
 
-void	check_space(t_game *game, t_queue *q)
+static void	check_space(t_game *game, t_queue *q)
 {
 	t_point	*curr;
 	int		i;
@@ -93,5 +81,52 @@ void	check_space(t_game *game, t_queue *q)
 			while_do(game, q, curr, i);
 		}
 		q = q->next;
+	}
+}
+
+static t_point	pathfinding_alg(t_game *game)
+{
+	t_point	path_cell;
+	t_point	next_cell;
+
+	game->queue = monster_bfs_set_up(game);
+	check_space(game, game->queue);
+	path_cell.x = (int)game->player.posx;
+	path_cell.y = (int)game->player.posy;
+	next_cell = game->prev[path_cell.y][path_cell.x];
+	while (!(next_cell.x == (int)game->ass.enemy.cords.x
+			&& next_cell.y == (int)game->ass.enemy.cords.y))
+	{
+		path_cell.x = next_cell.x;
+		path_cell.y = next_cell.y;
+		next_cell = game->prev[path_cell.y][path_cell.x];
+		if (path_cell.x == next_cell.x && path_cell.y == next_cell.y)
+			break ;
+	}
+	free_queue(game->queue);
+	return (path_cell);
+}
+
+void choose_pathfinding_alg(t_game *game,t_pos target,t_pos *d)
+{
+	t_point	path_cell;
+	int		can_direct_chase;
+
+	can_direct_chase = !is_near_wall(game, game->ass.enemy.cords.x,
+			game->ass.enemy.cords.y)
+		&& has_line_of_sight(game->ass.enemy.cords.x, game->ass.enemy.cords.y,
+			game->player.posx, game->player.posy);
+	if (can_direct_chase)
+	{
+		d->x = game->player.posx - game->ass.enemy.cords.x;
+		d->y = game->player.posy - game->ass.enemy.cords.y;
+	}
+	else
+	{
+		path_cell = pathfinding_alg(game);
+		target.x = path_cell.x + 0.5;
+		target.y = path_cell.y + 0.5;
+		d->x = target.x - game->ass.enemy.cords.x;
+		d->y = target.y - game->ass.enemy.cords.y;
 	}
 }
