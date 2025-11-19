@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:37:27 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 13:58:41 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:27:23 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	sprite_math(t_game *game, int *order)
 	game->spath.spritexlocation = (WIDTH / 2) * (1 + game->spath.transformx
 			/ game->spath.transformy);
 	game->spath.sprite_height = fabs(HEIGHT / game->spath.transformy);
-	game->spath.screen_center = HEIGHT / 2 + game->player.look;
+	game->spath.screen_center = HEIGHT / 2 + game->player.look + game->bob;
 	game->spath.sdrawy = game->spath.screen_center - game->spath.sprite_height
 		/ 2;
 	game->spath.edrawy = game->spath.screen_center + game->spath.sprite_height

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/03 18:47:04 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:53:22 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@
 # define WIDTH 1440
 # define HEIGHT 900
 # define AMBIENT 0.03
-# define MOVE_SPEED 0.09
+# define MOVE_SPEED 0.08
 # define MONSTER_SPEED 0.1
-# define RUN_SPEED 0.12
-# define CTRL 65507
-# define SPACE 32
-# define TILE_SIZE 40
-# define MINIMAP_RADIUS 2
-# define MINIMAP_TILES 5
+# define RUN_SPEED 0.11
+
+// # define TILE_SIZE 40
+// # define MINIMAP_RADIUS 2
+// # define MINIMAP_TILES 5
 
 // keys
 # define W 119
@@ -57,6 +56,7 @@
 # define L 108
 # define H 104
 # define P 112
+# define ENTER 65293
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
@@ -163,6 +163,16 @@ typedef struct s_assets
 	int				collect_amount;
 }					t_assets;
 
+// typedef struct s_map_ele
+// {
+// 	bool door;
+// 	bool wall;
+// 	bool empty;
+// 	bool collectible;
+// 	char element;
+// 	bool is_open;
+// }					t_map_ele;
+
 typedef struct s_map
 {
 	char			**grid;
@@ -215,7 +225,7 @@ typedef struct s_spath
 	t_img			spt;
 }					t_spath;
 
-enum				game_state
+enum				e_game_state
 {
 	main_menu,
 	running,
@@ -228,10 +238,13 @@ enum				game_state
 typedef struct s_game_flags
 {
 	int				game_state;
+	bool			collectibles_exist;
+	bool			button_ready;
 	bool			look_flag_right;
 	bool			look_flag_left;
 	bool			laggy_lantern;
 }					t_game_flags;
+
 typedef struct s_game
 {
 	int				fd;
@@ -257,7 +270,7 @@ typedef struct s_game
 	double			walldist;
 	int				wall_dist_sp[WIDTH];
 	int				*move;
-	int				bob;
+	double			bob;
 	int				**visited;
 	int				monster_target_x;
 	int				monster_target_y;
@@ -265,6 +278,8 @@ typedef struct s_game
 	int				fps_lock;
 }					t_game;
 
+//extras
+t_game	*mem_save(t_game *to_save);
 // generation
 void				map_gen(t_game *game);
 void				math_with_an_e(t_game *game);
@@ -316,7 +331,7 @@ bool				hit_box(t_game *game, double x, double y);
 // drawing map
 void				draw_wall(t_game *game, int cx, int cy);
 void				draw_floor(t_game *game, int cx, int cy);
-void	draw_minimap(t_game *game, double playerx, double playery);
+void				draw_minimap(t_game *game, double playerx, double playery);
 // parse
 bool				parse(t_game *game, char *filename);
 void				print_errors(t_game *game, int error, char *msg);
@@ -336,7 +351,6 @@ void				free_queue(t_queue *queue);
 
 // textures
 int					textures(t_game *game);
-void	img_init(t_game *game, char *filename, t_img *img);
-//
-void ft_sleep(double mili_secs);
+void				img_init(t_game *game, char *filename, t_img *img);
+void				ft_sleep(double mili_secs);
 #endif

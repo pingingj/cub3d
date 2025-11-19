@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 13:59:41 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:00:44 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ static void	background_gen(t_game *game)
 	Narrow base (small plane): covers less map,
 		so objects look bigger and the edge is farther.
 */
-static void	player_init(t_game *game)
-{
-	game->player.speed = MOVE_SPEED;
-}
 
 int	add_light(int color, double intensity)
 {
@@ -109,7 +105,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = 300.0 + game->player.look / 10.0;
+	softness = WIDTH * 0.15625 + game->player.look + game->bob / 10.0;
 	if (softness < 80.0)
 		softness = 80.0;
 	dist = dx * dx + dy * dy;
@@ -131,7 +127,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 	{
 		if (game->player.look < 0)
 		{
-			horizon = (double)HEIGHT / 2.0 + game->player.look - game->bob;
+			horizon = (double)HEIGHT / 2.0 + game->player.look + game->bob;
 			if (horizon < -HEIGHT)
 				horizon = -HEIGHT;
 			if (horizon > HEIGHT * 2)
@@ -147,7 +143,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 		else
 		{
 			screen_dist = abs(y - HEIGHT / 2);
-			max_dist = 35.0 + game->player.look;
+			max_dist = 35.0 + game->player.look + game->bob;
 			dist_intensity = -(1.0 - (screen_dist / max_dist));
 		}
 	}
@@ -199,7 +195,7 @@ int	get_color(t_game *game, int sdraw, int y)
 	int		screen_center;
 	t_img	sprite;
 
-	screen_center = HEIGHT / 2 + game->player.look;
+	screen_center = HEIGHT / 2 + game->player.look + game->bob;
 	if (game->meth.orientation == 0)
 		wallx = game->player.posy + game->walldist * game->meth.raydiry;
 	else
@@ -286,9 +282,7 @@ void	map_gen(t_game *game)
 	game->move = ft_calloc(10, sizeof(int));
 	if (!game->move)
 		exit(1);
-	// printf("x = %f   y = %f\n", game->player.posx, game->player.posy);
-	player_init(game);
+	game->player.speed = MOVE_SPEED;
 	background_gen(game);
 	create_frame(game);
-	game->g_flags.game_state = running;
 }

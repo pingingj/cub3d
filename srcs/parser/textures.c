@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/03 18:45:05 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:08:32 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	img_init(t_game *game, char *filename, t_img *img)
 		printf("Failed to use xpm file\n");
 		closex(game);
 	}		
-}
+} 
 
 int	textures(t_game *game)
 {

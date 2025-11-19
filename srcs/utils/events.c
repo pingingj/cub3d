@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 13:59:15 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:54:43 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	move_foward(t_game *game, double speed)
 
 	new_x = game->player.posx + game->player.dirx * speed;
 	new_y = game->player.posy + game->player.diry * speed;
-
 	if(hit_box(game,new_x,game->player.posy) == true)
 		game->player.posx = new_x;
 	if(hit_box(game,game->player.posx,new_y) == true)
@@ -51,7 +50,7 @@ void	move_foward(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true)
 			{
 				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
@@ -59,7 +58,6 @@ void	move_foward(t_game *game, double speed)
 			i++;
 		}
 	}
-	// printf("pos x  =%f      pos y   =  %f\n",game->player.posx,game->player.posy);
 }
 
 void	move_back(t_game *game, double speed)
@@ -79,8 +77,11 @@ void	move_back(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true)
+			{
+				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
+			}
 			i++;
 		}
 	}
@@ -103,8 +104,11 @@ void	move_left(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true)
+			{
+				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
+			}
 			i++;
 		}
 	}
@@ -127,8 +131,11 @@ void	move_right(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true) 
+			{
+				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
+			}
 			i++;
 		}
 	}
