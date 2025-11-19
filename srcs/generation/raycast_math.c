@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 14:34:00 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 13:33:40 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,14 +132,13 @@ void	wall_size(t_game *game, double walldist, int *sdraw, int *edraw)
 
 	add = 0;
 	add += game->player.look + game->bob;
-	(void)game;
 	if (walldist <= 0.000001)
 		walldist = 0.000001;
 	game->meth.line_height = (int)(HEIGHT / walldist);
-	(*sdraw) = HEIGHT / 2 - game->meth.line_height / 2 + add;
+	(*sdraw) = HEIGHT / 2 - game->meth.line_height / 2 + add ;
 	if ((*sdraw) < 0)
 		(*sdraw) = 0;
-	(*edraw) = HEIGHT / 2 + game->meth.line_height / 2 + add;
+	(*edraw) = HEIGHT / 2 + game->meth.line_height / 2 + add ;
 	if ((*edraw) < 0)
 		(*edraw) = 0;
 }

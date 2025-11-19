@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/28 16:13:25 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 13:51:25 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	mouse(int x, int y, t_game *game)
 {
 	game->mouse.x = x - WIDTH / 2;
+	// ft_printf("mouse x -> %d     mouse y -> %d\n",x,y);
     if(game->g_flags.game_state != running)
         return(1);
     if (x > WIDTH / 2)
@@ -178,13 +179,12 @@ void	draw_scaled_img(t_game *game, t_img *src,bool apply,double intensity)
 			dst_row[x * d_bpp + 0] = color & 0xFF;         // b
 			dst_row[x * d_bpp + 1] = (color >> 8) & 0xFF;  // g
 			dst_row[x * d_bpp + 2] = (color >> 16) & 0xFF; // r
-			dst_row[x * d_bpp + 3] = a;                    // preserve alpha
+			dst_row[x * d_bpp + 3] = a;
 			x++;
 		}
 		y++;
 	}
 	mlx_clear_window(game->mlx, game->win);
-	// mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, dst.img, 0, 0);
 	mlx_destroy_image(game->mlx, dst.img);
 }
@@ -196,50 +196,108 @@ void	make_fade_screen(t_game *game,t_img *img)
 
 	mlx_mouse_show(game->mlx, game->win);
 	if(i > 1.5)
-	{
 		game->g_flags.game_state = Finished;
-	}
 	draw_scaled_img(game,img,true,i);
-	i+= 0.003;
+	i+= 0.01;
 }
 
 void make_pause_screen(t_game *game)
 {
-    static int i;
-
-    if(game->g_flags.game_state == Pause && i != 1)
-    {
-        // mlx_clear_window(game->mlx,game->win);
-        // mlx_put_image_to_window(game->mlx,game->win,game->ass.pause_screen.img,0,0);
+    if(game->g_flags.game_state == Pause)
 		draw_scaled_img(game,&game->ass.pause_screen,false,1);
-    }
-    // printf("player x = %f   player y = %f\n",game->player.posx,game->player.posy);
+}
 
+
+void	draw_title(t_game *game, int i)
+{
+	int	x;
+	int	y;
+	int	color;
+
+	x = 0;
+	while(x < WIDTH)
+	{
+		y = 0;
+		while(y < HEIGHT)
+		{
+			color = pixel_get(&game->title[i], x, y);
+			my_mlx_pixel_put(&game->bg_img, x, y, color);
+			y++;
+		}
+		x++;
+	}
+}
+
+int	menu(t_game *game)
+{
+	static int		frame = 0;
+	static double	last_ms;
+	struct timeval	now;
+	double			now_ms;
+	double	frame_ms;
+
+	gettimeofday(&now, NULL);
+	now_ms = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
+	if (last_ms == 0.0)
+		last_ms = now_ms;
+	frame_ms = 0;
+	if (frame >= 93)
+	{
+		frame_ms = 30;
+		game->g_flags.button_ready = true;
+	}
+	if (now_ms - last_ms >= frame_ms)
+	{
+		draw_scaled_img(game,&game->title[frame],false,1);
+		frame++;
+		last_ms = now_ms;
+	}
+	if (frame > 193)
+		frame = 152;
+	return (1);
 }
 
 int main_loop(t_game *game)
 {
     double fsleep;
 
-	if(game->collected_comics == game->ass.collect_amount && game->g_flags.game_state != Finished)
-		game->g_flags.game_state = Win_screen;
-    if(game->g_flags.game_state == running)
-    {
-        move(game);
-        if (game->ass.enemy.cords.x != -1)
-            monster(game);
-        create_frame(game);
-        fsleep = fps_counter(game);
-        if (game->fps_lock > 0 && fsleep > 0.0)
-            ft_sleep(fsleep);
-    }
-    else if (game->g_flags.game_state == death_screen)
-        make_fade_screen(game,&game->ass.death_screen);
-    else if (game->g_flags.game_state == Pause)
-        make_pause_screen(game);
-	else if (game->g_flags.game_state == Win_screen)
-		make_fade_screen(game,&game->ass.win_screen);
+	if(game->g_flags.game_state == main_menu)
+		menu(game);
+	else
+	{
+		if(game->collected_comics == game->ass.collect_amount - 1 && game->g_flags.game_state != Finished && game->g_flags.collectibles_exist == true)
+			game->g_flags.game_state = Win_screen;
+		if(game->g_flags.game_state == running)
+		{
+			move(game);
+			if (game->ass.enemy.cords.x != -1)
+				monster(game);
+			create_frame(game);
+			fsleep = fps_counter(game);
+			if (game->fps_lock > 0 && fsleep > 0.0)
+				ft_sleep(fsleep);
+		}
+		else if (game->g_flags.game_state == death_screen)
+			make_fade_screen(game,&game->ass.death_screen);
+		else if (game->g_flags.game_state == Pause)
+			make_pause_screen(game);
+		else if (game->g_flags.game_state == Win_screen)
+			make_fade_screen(game,&game->ass.win_screen);
+	}
     return (0);
+}
+
+int mouse_press(int keycode,int x,int y,t_game *game)
+{
+	if(keycode == 1 && game->g_flags.button_ready == true && game->g_flags.game_state == main_menu)
+	{
+		// ft_printf("clicked key = %d on x = %d     and y = %d\n",keycode,x,y);
+		if(x >= WIDTH / 3 && x <= WIDTH / 1.523809524 && y>=HEIGHT /2.097087379  && y<= HEIGHT / 1.588235294)
+			game->g_flags.game_state = running;
+		if(x >= WIDTH / 3 && x <= WIDTH / 1.523809524 && y>=HEIGHT / 1.421052632 && y<= HEIGHT / 1.161290323)
+			closex(game);
+	}
+	return(1);
 }
 int	main(int argc, char **argv)
 {
@@ -251,6 +309,7 @@ int	main(int argc, char **argv)
 		if (parse(&game, argv[1]) == false)
 			return (1);
 		game.fps_lock = 60;
+		game.g_flags.game_state = main_menu;
 		game.mlx = mlx_init();
 		print_info(game);
 		textures(&game);
@@ -259,6 +318,7 @@ int	main(int argc, char **argv)
 		mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 		mlx_hook(game.win, 3, 1L << 1, key_release, &game);
 		mlx_hook(game.win, 6, 1L << 6, mouse, &game);
+		mlx_hook(game.win, 04, 1L<<2, mouse_press, &game);
 		mlx_loop_hook(game.mlx, main_loop, &game);
 		mlx_loop(game.mlx);
 		free_game(&game);

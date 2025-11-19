@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 13:59:15 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:54:43 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	move_foward(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true)
 			{
 				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
@@ -77,7 +77,7 @@ void	move_back(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true)
 			{
 				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
@@ -104,7 +104,7 @@ void	move_left(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true)
 			{
 				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
@@ -131,7 +131,7 @@ void	move_right(t_game *game, double speed)
 		i = 0;
 		while(i < game->ass.collect_amount)
 		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y)
+			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true) 
 			{
 				game->collected_comics++;
 				game->ass.sprites[i].exists = false;

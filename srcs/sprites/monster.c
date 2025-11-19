@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:50:26 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 15:56:59 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:36:45 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int	monster(t_game *game)
 	double	dx;
 	double	dy;
 	double	dist;
+	double speed;
 	int		can_direct_chase;
 	t_point	path_cell;
 	double	move_x;
@@ -140,10 +141,14 @@ int	monster(t_game *game)
 		dy = target_cy - game->ass.enemy.cords.y;
 	}
 	dist = sqrt(dx * dx + dy * dy);
+	if(game->g_flags.collectibles_exist && game->ass.collect_amount - 1 != game->collected_comics)
+		speed = (MONSTER_SPEED / ((game->ass.collect_amount - 1) - game->collected_comics));
+	else
+		speed = 0.09;
 	if (dist > 0.5)
 	{
-		move_x = game->ass.enemy.cords.x + MONSTER_SPEED * (dx / dist);
-		move_y = game->ass.enemy.cords.y + MONSTER_SPEED * (dy / dist);
+		move_x = game->ass.enemy.cords.x + speed * (dx / dist);
+		move_y = game->ass.enemy.cords.y + speed * (dy / dist);
 		if (game->map.grid[(int)move_y][(int)move_x] != '1'
 			&& game->map.grid[(int)move_y][(int)move_x] != 'd')
 		{

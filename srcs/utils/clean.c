@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/20 15:55:27 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:56:50 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,23 @@ int	closex(t_game *mlx)
 		mlx_destroy_image(mlx->mlx, mlx->ass.enemy.texture.img);
 	if (mlx->ass.barrel.img)
 		mlx_destroy_image(mlx->mlx, mlx->ass.barrel.img);
+	if (mlx->ass.death_screen.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.death_screen.img);
+	if (mlx->ass.win_screen.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.win_screen.img);
+	if (mlx->ass.pause_screen.img)
+		mlx_destroy_image(mlx->mlx, mlx->ass.pause_screen.img);	
 	while(i < 6)
 	{
 		if (mlx->ass.textures[i].img)
 			mlx_destroy_image(mlx->mlx, mlx->ass.textures[i].img);
+		i++;
+	}
+	i = 0;
+	while(i < 194)
+	{
+		if (mlx->title[i].img)
+			mlx_destroy_image(mlx->mlx, mlx->title[i].img);
 		i++;
 	}
 	if (mlx->bg_img.img)
@@ -58,7 +71,7 @@ void	print_info(t_game game)
 	printf("DO = %s\n", game.ass.textures[DO].filename);
 	printf("length = %f\n", game.map.pos.x);
 	printf("height = %f\n", game.map.pos.y);
-	printf("collect amount  = %d\n", game.ass.collect_amount);
+	printf("collect amount  = %d\n", game.ass.collect_amount - 1);
 	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
 	// printf("R = %d\n", game.ass.ceiling.red);
 	// printf("G = %d\n", game.ass.ceiling.green);
@@ -70,6 +83,7 @@ void	print_info(t_game game)
 	// printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
 	// printf("hexa floor = %d\n", game.ass.floor.hexa);
 	printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
+	printf("collected amount = %d\n",game.collected_comics);
 	while (i < game.map.pos.y)
 	{
 		j = 0;

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:38:06 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/17 18:49:20 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:27:13 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static double	ligth_lvl_sprite(t_game *game, double sprite_dist,
 	double	max_dist;
 	double	intensity;
 	double	dist_intensity;
-
-	max_dist = 15.0 - game->bob / 10.0;
+	(void)game;
+	max_dist = 0.0038462 * WIDTH + 5.4615 / 10.0;
 	dist_intensity = 1.0 - (sprite_dist / max_dist);
 	if (dist_intensity < 0.0)
 		dist_intensity = 0.0;
@@ -83,7 +83,7 @@ double	sprite_flashlight(int x, int y, t_game *game, double sprite_dist)
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = 300.0 + game->player.look / 10.0;
+	softness = WIDTH * 0.15625 + game->player.look + game->bob / 10.0;
 	if (softness < 80.0)
 		softness = 80.0;
 	dist = dx * dx + dy * dy;

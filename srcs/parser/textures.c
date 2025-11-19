@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/28 14:41:54 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:08:32 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,29 @@ void	img_init(t_game *game, char *filename, t_img *img)
 		printf("Failed to use xpm file\n");
 		closex(game);
 	}		
-}
+} 
 
 int	textures(t_game *game)
 {
+	int		i;
+	char	*filename;
+	char	*path;
+	char	*num;
+
+	i = 0;
+	while(i < 194)
+	{
+		path = "./incs/textures/titlescreen/";
+		// printf("i = %d\n", i);
+		num = ft_itoa(i);
+		filename = ft_strjoin(path, num);
+		free(num);
+		filename = ft_strjoin2(filename, ".xpm");
+		// printf("filename = %s\n", filename);
+		img_init(game, filename, &game->title[i]);
+		free(filename);
+		i++;
+	}
 	img_init(game, game->ass.textures[NO].filename, &game->ass.textures[NO]);
 	img_init(game, game->ass.textures[EA].filename, &game->ass.textures[EA]);
 	img_init(game, game->ass.textures[WE].filename, &game->ass.textures[WE]);
