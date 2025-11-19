@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/18 16:26:07 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 13:51:25 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	draw_scaled_img(t_game *game, t_img *src,bool apply,double intensity)
 	unsigned char b;
 	unsigned char g;
 	unsigned char r;
-	// unsigned char a;
+	unsigned char a;
 	int color;
 
 	if (!game || !src || !src->img || !src->addr || src->w <= 0 || src->h <= 0)
@@ -172,20 +172,19 @@ void	draw_scaled_img(t_game *game, t_img *src,bool apply,double intensity)
 			b = src_row[sx * s_bpp + 0];
 			g = src_row[sx * s_bpp + 1];
 			r = src_row[sx * s_bpp + 2];
-			// a = src_row[sx * s_bpp + 3];
+			a = src_row[sx * s_bpp + 3];
 			color = (r << 16) | (g << 8) | b;
 			if (apply)
 				color = add_light(color, intensity);
 			dst_row[x * d_bpp + 0] = color & 0xFF;         // b
 			dst_row[x * d_bpp + 1] = (color >> 8) & 0xFF;  // g
 			dst_row[x * d_bpp + 2] = (color >> 16) & 0xFF; // r
-			// dst_row[x * d_bpp + 3] = a;                    // preserve alpha
+			dst_row[x * d_bpp + 3] = a;
 			x++;
 		}
 		y++;
 	}
 	mlx_clear_window(game->mlx, game->win);
-	// mlx_put_image_to_window(game->mlx, game->win, game->bg_img.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, dst.img, 0, 0);
 	mlx_destroy_image(game->mlx, dst.img);
 }
@@ -204,17 +203,8 @@ void	make_fade_screen(t_game *game,t_img *img)
 
 void make_pause_screen(t_game *game)
 {
-    static int i;
-
-    if(game->g_flags.game_state == Pause && i != 1)
-    {
-        // mlx_clear_window(game->mlx,game->win);
-        // mlx_put_image_to_window(game->mlx,game->win,game->ass.pause_screen.img,0,0);
-		print_info(*game);
+    if(game->g_flags.game_state == Pause)
 		draw_scaled_img(game,&game->ass.pause_screen,false,1);
-    }
-    // printf("player x = %f   player y = %f\n",game->player.posx,game->player.posy);
-
 }
 
 
@@ -299,7 +289,7 @@ int main_loop(t_game *game)
 
 int mouse_press(int keycode,int x,int y,t_game *game)
 {
-	if(keycode == 1 && game->g_flags.button_ready == true)
+	if(keycode == 1 && game->g_flags.button_ready == true && game->g_flags.game_state == main_menu)
 	{
 		// ft_printf("clicked key = %d on x = %d     and y = %d\n",keycode,x,y);
 		if(x >= WIDTH / 3 && x <= WIDTH / 1.523809524 && y>=HEIGHT /2.097087379  && y<= HEIGHT / 1.588235294)

@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 15:17:20 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 13:49:53 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ static bool	open_door(t_game *game, double x, double y)
 			&& game->meth.looking_door == true)
 		{
 			game->map.grid[(int)new_y][(int)new_x] = 'd';
- 			if (hit_box(game, x, y) == false || (game->ass.enemy.cords.x != -1 && hit_box(game,game->ass.enemy.cords.x,game->ass.enemy.cords.y) == false))
+			if (hit_box(game, x, y) == false || (game->ass.enemy.cords.x != -1
+					&& hit_box(game, game->ass.enemy.cords.x,
+						game->ass.enemy.cords.y) == false))
 			{
 				game->map.grid[(int)new_y][(int)new_x] = 'D';
 				return (false);
@@ -53,12 +55,12 @@ void	look_left(t_game *game)
 {
 	double	old_dirx;
 	double	old_planex;
-	double angle;
-	int x;
+	double	angle;
+	int		x;
 
-	x= -1;
+	x = -1;
 	angle = ARROW_ROT_SPEED;
-	if(game->g_flags.look_flag_left == false)
+	if (game->g_flags.look_flag_left == false)
 	{
 		x = game->mouse.x;
 		angle = ROT_SPEED;
@@ -66,8 +68,8 @@ void	look_left(t_game *game)
 	old_dirx = game->player.dirx;
 	game->player.dirx = game->player.dirx * cos(x * angle) - game->player.diry
 		* sin(x * angle);
-	game->player.diry = old_dirx * sin(x * angle) + game->player.diry
-		* cos(x * angle);
+	game->player.diry = old_dirx * sin(x * angle) + game->player.diry * cos(x
+			* angle);
 	old_planex = game->player.planex;
 	game->player.planex = game->player.planex * cos(x * angle)
 		- game->player.planey * sin(x * angle);
@@ -75,13 +77,13 @@ void	look_left(t_game *game)
 		* cos(x * angle);
 }
 
-void change_flag(int key,t_game *game)
+void	change_flag(int key, t_game *game)
 {
-	static bool mouse;
-	
-	if(key == H)
+	static bool	mouse;
+
+	if (key == H)
 	{
-		if(mouse == false)
+		if (mouse == false)
 		{
 			mlx_mouse_hide(game->mlx, game->win);
 			mouse = true;
@@ -92,21 +94,24 @@ void change_flag(int key,t_game *game)
 			mouse = false;
 		}
 	}
-	if(key == P)
+	if (key == P)
 	{
-		if(game->g_flags.game_state == running)
+		if (game->g_flags.game_state == running)
+		{
 			game->g_flags.game_state = Pause;
-		else if(game->g_flags.game_state == Pause)
+			mlx_mouse_show(game->mlx, game->win);
+		}
+		else if (game->g_flags.game_state == Pause)
 		{
 			mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
+			if (mouse == true)
+				mlx_mouse_hide(game->mlx, game->win);
 			game->g_flags.game_state = running;
 		}
 	}
-}	
+}
 int	key_press(int keycode, t_game *game)
 {
-	// if (keycode)
-	// 	printf("key code = %d\n", keycode);
 	if (keycode == 65307)
 		closex(game);
 	if (keycode == M)
@@ -133,9 +138,9 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == L)
 		game->g_flags.laggy_lantern = !game->g_flags.laggy_lantern;
 	if (keycode == H)
-		change_flag(H,game);
+		change_flag(H, game);
 	if (keycode == P)
-		change_flag(P,game);
+		change_flag(P, game);
 	if (keycode == ARROW_RIGHT)
 	{
 		game->g_flags.look_flag_right = true;
@@ -159,7 +164,8 @@ int	key_press(int keycode, t_game *game)
 		game->move[8] = 1;
 	if (keycode == 46)
 		game->move[9] = 1;
-	if (keycode == ENTER && game->g_flags.button_ready == true && game->g_flags.game_state == main_menu)
+	if (keycode == ENTER && game->g_flags.button_ready == true
+		&& game->g_flags.game_state == main_menu)
 		game->g_flags.game_state = running;
 	return (0);
 }
@@ -214,14 +220,14 @@ int	move(t_game *game)
 	if (game->move[6] == 1)
 	{
 		game->player.look += 10;
-		if(game->player.look > 1000)
-		game->player.look -=10;
+		if (game->player.look > 1000)
+			game->player.look -= 10;
 	}
 	if (game->move[7] == 1)
 	{
 		game->player.look -= 10;
-		if(game->player.look < -1000)
-		game->player.look +=10;
+		if (game->player.look < -1000)
+			game->player.look += 10;
 	}
 	if (game->move[8] == 1)
 	{
