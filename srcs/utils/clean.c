@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/20 14:31:08 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/20 19:07:01 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	closex2(t_game *mlx)
 	if (mlx->bg_img.img)
 		mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
 	free(mlx->move);
+	while(mlx->doors_opened != NULL)
+		delete_1stnode(&mlx->doors_opened);
 	if (mlx->win)
 		mlx_destroy_window(mlx->mlx, mlx->win);
 	mlx_destroy_display(mlx->mlx);

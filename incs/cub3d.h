@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/20 15:58:24 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/20 18:30:39 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,6 @@
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
-
-// circle bullshit
-# define RADIUS_MINI 5
-# define ANGLE_NUMBERS_MINI 50
 
 // parser
 # define NO 0
@@ -163,15 +159,14 @@ typedef struct s_assets
 	int				collect_amount;
 }					t_assets;
 
-// typedef struct s_map_ele
-// {
-// 	bool door;
-// 	bool wall;
-// 	bool empty;
-// 	bool collectible;
-// 	char element;
-// 	bool is_open;
-// }					t_map_ele;
+typedef struct s_door
+{
+	t_point			cords;
+	struct timeval	open_time;
+	double			open_s;
+	struct s_door	*next;
+	// struct s_door prev;
+}					t_door;
 
 typedef struct s_map
 {
@@ -259,8 +254,9 @@ typedef struct s_game
 	t_point			**prev;
 	t_spath			spath;
 	t_game_flags	g_flags;
-	int				collected_comics;
 	t_img			title[194];
+	t_door			*doors_opened;
+	int				collected_comics;
 	bool			look_flag_right;
 	bool			look_flag_left;
 	bool			laggy_lanter;
@@ -366,4 +362,10 @@ void				free_queue(t_queue *queue);
 int					textures(t_game *game);
 void				img_init(t_game *game, char *filename, t_img *img);
 void				ft_sleep(double mili_secs);
+
+// doors
+t_door				*ft_newdoor(int x, int y);
+void				add_backdoor(t_door **lst, t_door *new);
+void				door_timer(t_door *doors, t_game *game);
+void				delete_1stnode(t_door **doors);
 #endif
