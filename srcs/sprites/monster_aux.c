@@ -51,3 +51,15 @@ t_queue	*ft_queuenew(void *content)
 	new_node->next = NULL;
 	return (new_node);
 }
+
+void	init_dirs(int *dx, int *dy)
+{
+	dx[0] = 0;
+	dx[1] = 0;
+	dx[2] = -1;
+	dx[3] = 1;
+	dy[0] = -1;
+	dy[1] = 1;
+	dy[2] = 0;
+	dy[3] = 0;
+}

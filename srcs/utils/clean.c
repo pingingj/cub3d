@@ -6,11 +6,32 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 15:56:50 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:31:08 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
+
+void	closex2(t_game *mlx)
+{
+	int	i;
+
+	i = 0;
+	while (i < 194)
+	{
+		if (mlx->title[i].img)
+			mlx_destroy_image(mlx->mlx, mlx->title[i].img);
+		i++;
+	}
+	if (mlx->bg_img.img)
+		mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
+	free(mlx->move);
+	if (mlx->win)
+		mlx_destroy_window(mlx->mlx, mlx->win);
+	mlx_destroy_display(mlx->mlx);
+	free(mlx->mlx);
+	free_game(mlx);
+}
 
 int	closex(t_game *mlx)
 {
@@ -29,29 +50,14 @@ int	closex(t_game *mlx)
 	if (mlx->ass.win_screen.img)
 		mlx_destroy_image(mlx->mlx, mlx->ass.win_screen.img);
 	if (mlx->ass.pause_screen.img)
-		mlx_destroy_image(mlx->mlx, mlx->ass.pause_screen.img);	
-	while(i < 6)
+		mlx_destroy_image(mlx->mlx, mlx->ass.pause_screen.img);
+	while (i < 6)
 	{
 		if (mlx->ass.textures[i].img)
 			mlx_destroy_image(mlx->mlx, mlx->ass.textures[i].img);
 		i++;
 	}
-	i = 0;
-	while(i < 194)
-	{
-		if (mlx->title[i].img)
-			mlx_destroy_image(mlx->mlx, mlx->title[i].img);
-		i++;
-	}
-	if (mlx->bg_img.img)
-		mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
-	// free_queue(mlx->queue);
-	free(mlx->move);
-	if (mlx->win)
-		mlx_destroy_window(mlx->mlx, mlx->win);
-	mlx_destroy_display(mlx->mlx);
-	free(mlx->mlx);
-	free_game(mlx);
+	closex2(mlx);
 	exit(0);
 }
 
@@ -83,11 +89,11 @@ void	print_info(t_game game)
 	// printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
 	// printf("hexa floor = %d\n", game.ass.floor.hexa);
 	printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
-	printf("collected amount = %d\n",game.collected_comics);
+	printf("collected amount = %d\n", game.collected_comics);
 	while (i < game.map.pos.y)
 	{
 		j = 0;
-		while(j <= game.map.pos.x)
+		while (j <= game.map.pos.x)
 		{
 			if (game.map.grid[i][j] == ' ')
 				ft_printf("v");
@@ -110,12 +116,13 @@ void	print_info(t_game game)
 	i = 0;
 	// while(i < game.ass.collect_amount)
 	// {
-	// 	printf("sprites cords x = %f y = %f\n", game.ass.sprites[i].cords.x, game.ass.sprites->cords.y);
-	// 	i++;
-	// }
-	// ft_printf("COLLETIBLE AMOUNT = %d\n", game.c_amount);
-	// ft_printf("EXIT position: X = %d, Y = %d\n",
-	// 	map.exit.pos.x, map.exit.pos.y);
+	// 	printf("sprites cords x = %f y = %f\n", game.ass.sprites[i].cords.x,
+			// game.ass.sprites->cords.y);
+			// 	i++;
+			// }
+			// ft_printf("COLLETIBLE AMOUNT = %d\n", game.c_amount);
+			// ft_printf("EXIT position: X = %d, Y = %d\n",
+			// 	map.exit.pos.x, map.exit.pos.y);
 }
 
 void	free_game(t_game *game)
@@ -131,9 +138,9 @@ void	free_game(t_game *game)
 		free(game->ass.floor.nums);
 	if (game->map.grid)
 		freetrix(game->map.grid);
-	if(game->visited)
+	if (game->visited)
 		freeany(game->visited);
-	if(game->prev)
+	if (game->prev)
 		freeany(game->prev);
 	while (i < 7)
 	{

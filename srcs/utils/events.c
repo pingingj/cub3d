@@ -5,169 +5,90 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 15:54:43 by dpaes-so         ###   ########.fr       */
+/*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
+/*   Updated: 2025/11/20 14:30:04 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
-
-bool	hit_box(t_game *game,double x,double y)
+void	extra_action(t_game *game)
 {
-	int i;
-	double new_x;
-	double new_y;
-	double angle;
-
-	i = 0;
-	while(i < ANGLE_NUMBERS)
+	if (game->move[6] == 1)
 	{
-		angle = (2 * PI/ANGLE_NUMBERS) * i;
-		new_x = x + cos(angle) * RADIUS;
-		new_y = y + sin(angle) * RADIUS;
-		if(game->map.grid[(int)new_y][(int)new_x] == '1' || game->map.grid[(int)new_y][(int)new_x] == 'd')
-			return (false);
-		i++;
+		game->player.look += 10;
+		if (game->player.look > 1000)
+			game->player.look -= 10;
 	}
-	return(true);
+	if (game->move[7] == 1)
+	{
+		game->player.look -= 10;
+		if (game->player.look < -1000)
+			game->player.look += 10;
+	}
+	if (game->move[8] == 1)
+	{
+		if (game->mini.tile_size < 80)
+			game->mini.tile_size++;
+	}
+	if (game->move[9] == 1)
+	{
+		if (game->mini.tile_size > 10)
+			game->mini.tile_size--;
+	}
 }
 
-void	move_foward(t_game *game, double speed)
+int	action(t_game *game)
 {
-	double	new_x;
-	double	new_y;
-	int i;
+	if (game->move[0] == 1)
+		move_foward(game, game->player.speed);
+	else if (game->move[1] == 1)
+		move_back(game, game->player.speed);
+	if (game->move[2] == 1)
+		move_left(game, game->player.speed);
+	if (game->move[3] == 1)
+		move_right(game, game->player.speed);
+	if (game->move[4] == 1)
+		look_right(game);
+	if (game->move[5] == 1)
+		look_left(game);
+	extra_action(game);
+	return (0);
+}
 
-	new_x = game->player.posx + game->player.dirx * speed;
-	new_y = game->player.posy + game->player.diry * speed;
-	if(hit_box(game,new_x,game->player.posy) == true)
-		game->player.posx = new_x;
-	if(hit_box(game,game->player.posx,new_y) == true)
-		game->player.posy = new_y;
-	if(game->map.grid[(int)new_y][(int)new_x] == 'c')
+static void	pause_handle(t_game *game, bool mouse)
+{
+	if (game->g_flags.game_state == running)
 	{
-		i = 0;
-		while(i < game->ass.collect_amount)
+		game->g_flags.game_state = Pause;
+		mlx_mouse_show(game->mlx, game->win);
+	}
+	else if (game->g_flags.game_state == Pause)
+	{
+		mlx_mouse_move(game->mlx, game->win, WIDTH / 2, HEIGHT / 2);
+		if (mouse == true)
+			mlx_mouse_hide(game->mlx, game->win);
+		game->g_flags.game_state = running;
+	}
+}
+
+void	change_flag(int key, t_game *game)
+{
+	static bool	mouse;
+
+	if (key == H)
+	{
+		if (mouse == false)
 		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true)
-			{
-				game->collected_comics++;
-				game->ass.sprites[i].exists = false;
-			}
-			i++;
+			mlx_mouse_hide(game->mlx, game->win);
+			mouse = true;
+		}
+		else
+		{
+			mlx_mouse_show(game->mlx, game->win);
+			mouse = false;
 		}
 	}
+	if (key == P)
+		pause_handle(game, mouse);
 }
-
-void	move_back(t_game *game, double speed)
-{
-	double	new_x;
-	double	new_y;
-	int i;
-
-	new_x = game->player.posx - game->player.dirx * speed;
-	new_y = game->player.posy - game->player.diry * speed;
-	if(hit_box(game,new_x,game->player.posy) == true)
-		game->player.posx = new_x;
-	if(hit_box(game,game->player.posx,new_y) == true)
-		game->player.posy = new_y;
-	if(game->map.grid[(int)new_y][(int)new_x] == 'c')
-	{
-		i = 0;
-		while(i < game->ass.collect_amount)
-		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true)
-			{
-				game->collected_comics++;
-				game->ass.sprites[i].exists = false;
-			}
-			i++;
-		}
-	}
-}
-
-void	move_left(t_game *game, double speed)
-{
-	double	new_x;
-	double	new_y;
-	int i;
-
-	new_x = game->player.posx - game->player.planex * speed; 
-	new_y = game->player.posy - game->player.planey * speed;
-	if(hit_box(game,new_x,game->player.posy) == true)
-		game->player.posx = new_x;
-	if(hit_box(game,game->player.posx,new_y) == true)
-		game->player.posy = new_y;
-	if(game->map.grid[(int)new_y][(int)new_x] == 'c')
-	{
-		i = 0;
-		while(i < game->ass.collect_amount)
-		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true)
-			{
-				game->collected_comics++;
-				game->ass.sprites[i].exists = false;
-			}
-			i++;
-		}
-	}
-}
-
-void	move_right(t_game *game, double speed)
-{
-	double	new_x;
-	double	new_y;
-	int i;
-
-	new_x = game->player.posx + game->player.planex * speed;
-	new_y = game->player.posy + game->player.planey * speed;
-	if(hit_box(game,new_x,game->player.posy) == true)
-		game->player.posx = new_x;
-	if(hit_box(game,game->player.posx,new_y) == true)
-		game->player.posy = new_y;
-	if(game->map.grid[(int)new_y][(int)new_x] == 'c')
-	{
-		i = 0;
-		while(i < game->ass.collect_amount)
-		{
-			if ((int)game->ass.sprites[i].cords.x == (int)new_x && (int)game->ass.sprites[i].cords.y == (int)new_y && game->ass.sprites[i].exists == true) 
-			{
-				game->collected_comics++;
-				game->ass.sprites[i].exists = false;
-			}
-			i++;
-		}
-	}
-}
-
-/*to lookj in both direction i use a formula that rotates vectors,
-	since for the camere i have the direction and the plane (fov)
-	i need to rotate both, but thats just it*/
-void	look_right(t_game *game)
-{
-	double	old_dirx;
-	double	old_planex;
-	double angle;
-	int x;
-
-	x= 1;
-	angle = ARROW_ROT_SPEED;
-	if(game->g_flags.look_flag_right == false)
-	{
-		x = game->mouse.x;
-		angle = ROT_SPEED;
-	}
-	old_dirx = game->player.dirx;
-	game->player.dirx = game->player.dirx * cos(x * angle) - game->player.diry
-		* sin(x * angle);
-	game->player.diry = old_dirx * sin(x * angle) + game->player.diry
-		* cos(x * angle);
-	old_planex = game->player.planex;
-	game->player.planex = game->player.planex * cos(x * angle)
-		- game->player.planey * sin(x * angle);
-	game->player.planey = old_planex * sin(x * angle) + game->player.planey
-		* cos(x * angle);
-}
-
-
