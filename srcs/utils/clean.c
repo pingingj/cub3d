@@ -3,15 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 15:56:50 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 23:35:35 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
+void closex2(t_game *mlx)
+{
+	int i;
+	
+	i = 0;
+	while(i < 194)
+	{
+		if (mlx->title[i].img)
+			mlx_destroy_image(mlx->mlx, mlx->title[i].img);
+		i++;
+	}
+	if (mlx->bg_img.img)
+		mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
+	// free_queue(mlx->queue);
+	free(mlx->move);
+	if (mlx->win)
+		mlx_destroy_window(mlx->mlx, mlx->win);
+	mlx_destroy_display(mlx->mlx);
+	free(mlx->mlx);
+	free_game(mlx);
+}
 int	closex(t_game *mlx)
 {
 	int	i;
@@ -36,22 +57,7 @@ int	closex(t_game *mlx)
 			mlx_destroy_image(mlx->mlx, mlx->ass.textures[i].img);
 		i++;
 	}
-	i = 0;
-	while(i < 194)
-	{
-		if (mlx->title[i].img)
-			mlx_destroy_image(mlx->mlx, mlx->title[i].img);
-		i++;
-	}
-	if (mlx->bg_img.img)
-		mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
-	// free_queue(mlx->queue);
-	free(mlx->move);
-	if (mlx->win)
-		mlx_destroy_window(mlx->mlx, mlx->win);
-	mlx_destroy_display(mlx->mlx);
-	free(mlx->mlx);
-	free_game(mlx);
+	closex2(mlx);
 	exit(0);
 }
 

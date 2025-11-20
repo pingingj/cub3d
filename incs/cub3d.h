@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/19 14:53:22 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/19 23:51:23 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,7 @@ void				create_frame(t_game *game);
 void				artistic_moment(t_game *game, int x, int sdraw, int edraw);
 int					add_light(int color, double intensity);
 double				flashlight(int x, int y, t_game *game, bool is_wall);
+
 // monster
 int					monster(t_game *game);
 // t_queue				*monster_bfs_set_up(t_game *game);
@@ -306,6 +307,7 @@ void 				choose_pathfinding_alg(t_game *game,t_pos target,t_pos *d);
 int	has_line_of_sight(double ex, double ey, double px, double py);
 int	is_near_wall(t_game *game, double x, double y);
 // t_point				pathfinding_alg(t_game *game);
+
 // sprites
 void				draw_sprite(t_game *game);
 void				draw_sprite_prep(t_game *game);
@@ -325,7 +327,7 @@ int					keys(int keycode, t_game *mlx);
 int					pixel_get(t_img *data, int x, int y);
 int					key_press(int keycode, t_game *game);
 int					key_release(int keycode, t_game *game);
-int					move(t_game *game);
+int					action(t_game *game);
 void				move_foward(t_game *game, double speed);
 void				move_back(t_game *game, double speed);
 void				move_left(t_game *game, double speed);
@@ -333,6 +335,9 @@ void				move_right(t_game *game, double speed);
 void				look_right(t_game *game);
 void				look_left(t_game *game);
 bool				hit_box(t_game *game, double x, double y);
+bool				open_door(t_game *game, double x, double y);
+void				change_flag(int key, t_game *game);
+
 // drawing map
 void				draw_wall(t_game *game, int cx, int cy);
 void				draw_floor(t_game *game, int cx, int cy);
