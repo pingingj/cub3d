@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keys.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 14:29:06 by dpaes-so          #+#    #+#             */
+/*   Updated: 2025/11/20 14:29:07 by dpaes-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/cub3d.h"
 
-void way_too_many_press_keys(int keycode, t_game *game)
+void	way_too_many_press_keys(int keycode, t_game *game)
 {
 	if (keycode == ARROW_RIGHT)
 	{
@@ -28,7 +40,7 @@ void way_too_many_press_keys(int keycode, t_game *game)
 		game->g_flags.game_state = running;
 }
 
-void too_many_press_keys(int keycode, t_game *game)
+void	too_many_press_keys(int keycode, t_game *game)
 {
 	if (keycode == L)
 		game->g_flags.laggy_lantern = !game->g_flags.laggy_lantern;
@@ -38,7 +50,7 @@ void too_many_press_keys(int keycode, t_game *game)
 		change_flag(P, game);
 	if (keycode == SHIFT)
 		game->player.speed = RUN_SPEED;
-	way_too_many_press_keys(keycode,game);
+	way_too_many_press_keys(keycode, game);
 }
 
 int	key_press(int keycode, t_game *game)
@@ -66,11 +78,11 @@ int	key_press(int keycode, t_game *game)
 		game->move[2] = 1;
 	if (keycode == D)
 		game->move[3] = 1;
-	too_many_press_keys(keycode,game);
+	too_many_press_keys(keycode, game);
 	return (0);
 }
 
-void too_many_release_keys(int keycode, t_game *game)
+void	too_many_release_keys(int keycode, t_game *game)
 {
 	if (keycode == ARROW_UP)
 		game->move[6] = 0;
@@ -104,6 +116,6 @@ int	key_release(int keycode, t_game *game)
 		game->g_flags.look_flag_left = false;
 		game->move[5] = 0;
 	}
-	too_many_release_keys(keycode,game);
+	too_many_release_keys(keycode, game);
 	return (0);
 }

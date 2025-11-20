@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:52:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/19 15:44:05 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:07:19 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_queue	*monster_bfs_set_up(t_game *game)
 		ft_bzero(game->visited[y], sizeof(int) * row_length);
 		ft_bzero(game->prev[y], sizeof(t_point) * row_length);
 	}
-	monster_pt = malloc(sizeof(t_point));
+	monster_pt = ft_calloc(1, sizeof(t_point));
 	monster_pt->x = (int)game->ass.enemy.cords.x;
 	monster_pt->y = (int)game->ass.enemy.cords.y;
 	if (monster_pt->y >= 0 && monster_pt->y < game->map.pos.y
@@ -84,7 +84,7 @@ static void	check_space(t_game *game, t_queue *q)
 	}
 }
 
-static t_point	pathfinding_alg(t_game *game)
+static t_point	pathfinding_alg(t_game *game, bool *step_monster)
 {
 	t_point	path_cell;
 	t_point	next_cell;
@@ -94,6 +94,7 @@ static t_point	pathfinding_alg(t_game *game)
 	path_cell.x = (int)game->player.posx;
 	path_cell.y = (int)game->player.posy;
 	next_cell = game->prev[path_cell.y][path_cell.x];
+	*step_monster = true;
 	while (!(next_cell.x == (int)game->ass.enemy.cords.x
 			&& next_cell.y == (int)game->ass.enemy.cords.y))
 	{
@@ -101,13 +102,17 @@ static t_point	pathfinding_alg(t_game *game)
 		path_cell.y = next_cell.y;
 		next_cell = game->prev[path_cell.y][path_cell.x];
 		if (path_cell.x == next_cell.x && path_cell.y == next_cell.y)
+		{
+			*step_monster = false;
 			break ;
+		}
 	}
 	free_queue(game->queue);
 	return (path_cell);
 }
 
-void choose_pathfinding_alg(t_game *game,t_pos target,t_pos *d)
+void	choose_pathfinding_alg(t_game *game, t_pos target, t_pos *d,
+		bool *step_monster)
 {
 	t_point	path_cell;
 	int		can_direct_chase;
@@ -123,7 +128,9 @@ void choose_pathfinding_alg(t_game *game,t_pos target,t_pos *d)
 	}
 	else
 	{
-		path_cell = pathfinding_alg(game);
+		path_cell = pathfinding_alg(game, step_monster);
+		if (*step_monster == false)
+			return ;
 		target.x = path_cell.x + 0.5;
 		target.y = path_cell.y + 0.5;
 		d->x = target.x - game->ass.enemy.cords.x;

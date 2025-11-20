@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   look.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/20 14:27:00 by dpaes-so          #+#    #+#             */
+/*   Updated: 2025/11/20 14:29:44 by dpaes-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/cub3d.h"
 
 /*to lookj in both direction i use a formula that rotates vectors,
@@ -7,12 +19,12 @@ void	look_right(t_game *game)
 {
 	double	old_dirx;
 	double	old_planex;
-	double angle;
-	int x;
+	double	angle;
+	int		x;
 
-	x= 1;
+	x = 1;
 	angle = ARROW_ROT_SPEED;
-	if(game->g_flags.look_flag_right == false)
+	if (game->g_flags.look_flag_right == false)
 	{
 		x = game->mouse.x;
 		angle = ROT_SPEED;
@@ -20,14 +32,15 @@ void	look_right(t_game *game)
 	old_dirx = game->player.dirx;
 	game->player.dirx = game->player.dirx * cos(x * angle) - game->player.diry
 		* sin(x * angle);
-	game->player.diry = old_dirx * sin(x * angle) + game->player.diry
-		* cos(x * angle);
+	game->player.diry = old_dirx * sin(x * angle) + game->player.diry * cos(x
+			* angle);
 	old_planex = game->player.planex;
 	game->player.planex = game->player.planex * cos(x * angle)
 		- game->player.planey * sin(x * angle);
 	game->player.planey = old_planex * sin(x * angle) + game->player.planey
 		* cos(x * angle);
 }
+
 void	look_left(t_game *game)
 {
 	double	old_dirx;

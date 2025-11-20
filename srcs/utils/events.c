@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:22:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/20 00:05:55 by finn             ###   ########.fr       */
+/*   Updated: 2025/11/20 14:30:04 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
-void extra_action(t_game *game)
+void	extra_action(t_game *game)
 {
 	if (game->move[6] == 1)
 	{
@@ -56,7 +56,7 @@ int	action(t_game *game)
 	return (0);
 }
 
-static void pause_handle(t_game *game,bool mouse)
+static void	pause_handle(t_game *game, bool mouse)
 {
 	if (game->g_flags.game_state == running)
 	{
@@ -71,6 +71,7 @@ static void pause_handle(t_game *game,bool mouse)
 		game->g_flags.game_state = running;
 	}
 }
+
 void	change_flag(int key, t_game *game)
 {
 	static bool	mouse;
@@ -89,5 +90,5 @@ void	change_flag(int key, t_game *game)
 		}
 	}
 	if (key == P)
-		pause_handle(game,mouse);
+		pause_handle(game, mouse);
 }

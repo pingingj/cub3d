@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/19 23:51:23 by finn             ###   ########.fr       */
+/*   Updated: 2025/11/20 15:58:24 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1440
-# define HEIGHT 900
+# define WIDTH 1920
+# define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.08
 # define MONSTER_SPEED 0.1
@@ -278,8 +278,8 @@ typedef struct s_game
 	int				fps_lock;
 }					t_game;
 
-//extras
-t_game	*mem_save(t_game *to_save);
+// extras
+t_game				*mem_save(t_game *to_save);
 // generation
 void				map_gen(t_game *game);
 void				math_with_an_e(t_game *game);
@@ -303,9 +303,12 @@ t_queue				*ft_queuenew(void *content);
 void				ft_queueadd_back(t_queue **lst, t_queue *new);
 void				free_queue(t_queue *queue);
 void				init_dirs(int *dx, int *dy);
-void 				choose_pathfinding_alg(t_game *game,t_pos target,t_pos *d);
-int	has_line_of_sight(double ex, double ey, double px, double py);
-int	is_near_wall(t_game *game, double x, double y);
+void				choose_pathfinding_alg(t_game *game, t_pos target, t_pos *d,
+						bool *step_monster);
+
+int					has_line_of_sight(double ex, double ey, double px,
+						double py);
+int					is_near_wall(t_game *game, double x, double y);
 // t_point				pathfinding_alg(t_game *game);
 
 // sprites
@@ -334,7 +337,7 @@ void				move_left(t_game *game, double speed);
 void				move_right(t_game *game, double speed);
 void				look_right(t_game *game);
 void				look_left(t_game *game);
-bool				hit_box(t_game *game, double x, double y);
+bool				hit_box(t_game *game, double x, double y, int who);
 bool				open_door(t_game *game, double x, double y);
 void				change_flag(int key, t_game *game);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/19 23:49:30 by finn             ###   ########.fr       */
+/*   Updated: 2025/11/20 15:40:13 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,7 @@ int	main_loop(t_game *game)
 		menu(game);
 	else
 	{
+		printf("m x = %f and m y = %f \n",game->ass.enemy.cords.x,game->ass.enemy.cords.y);
 		if (game->collected_comics == game->ass.collect_amount - 1
 			&& game->g_flags.game_state != Finished
 			&& game->g_flags.collectibles_exist == true)
