@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/21 18:08:15 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/21 19:17:12 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,45 @@ void	math_with_an_e(t_game *game)
 		hande_sprites(game);
 }
 
-void	change_number_bg(t_game *game, t_img *img, int size)
+void	change_number_bg(t_img *img, int size,t_point scale,bool comic)
 {
 	int	x;
 	int	y;
-	int	offset;
+	t_point	offset;
 	int	color;
+	t_game *game;
+	
 
+	game = mem_save(NULL);
 	y = -1;
 	color = 0;
-	offset = WIDTH - 42 * 4;
+	offset.x = WIDTH - 42 * 5;
+	offset.y = 25;
 	if (size == 0)
-		offset += 50;
+		offset.x += 50;
 	else if (size == 1)
-		offset -= 21;
+		offset.x -= 21;
 	else if (size == 2)
-		offset -= 92;
-	while (++y < NUM_H)
+		offset.x -= 92;
+	if(comic == true)
+	{
+		offset.x -= 80;
+		offset.y -= 140;
+	}
+	while (++y < scale.y)
 	{
 		x = -1;
-		while (++x < NUM_W)
+		while (++x < scale.x)
 		{
 			color = pixel_get(img, x, y);
-			my_mlx_pixel_put(&game->bg_img, offset + x, y+ 25, color);
+			if ((unsigned int)color != 0xFF000000)
+				my_mlx_pixel_put(&game->bg_img, offset.x + x, y + offset.y, color);
 		}
+	}
+	if(comic == true)
+	{
+		mlx_destroy_image(game->mlx,img->img);
+		free(img);
 	}
 }
 
@@ -92,7 +107,13 @@ void	create_frame(t_game *game)
 {
 	static int bob_flag;
 	double val;
-
+	t_point scale;
+	t_point scale2;
+	
+	scale.x = 300;
+	scale.y = 300;
+	scale2.x = 42;
+	scale2.y = 100;
 	val = 1.0;
 	if(game->move[0] || game->move[1] || game->move[2] || game->move[3])
 	{
@@ -114,8 +135,8 @@ void	create_frame(t_game *game)
 	math_with_an_e(game);
 	if(game->g_flags.collectibles_exist == true)
 	{
-		change_number_bg(game,&game->nums[game->ass.collect_amount- 1],0);
-		change_number_bg(game,&game->nums[game->collected_comics],2);
+		change_number_bg(draw_scaled_img(game,&game->ass.textures[CL],scale,-1),0,scale,true);
+		change_number_bg(&game->nums[game->collected_comics],2,scale2,false);
 	}
 	mlx_clear_window(game->mlx, game->win);
 	if (game->mini.show == true)

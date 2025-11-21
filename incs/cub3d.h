@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/21 17:37:41 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/21 19:00:15 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,12 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1440
+# define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.08
 # define MONSTER_SPEED 0.1
 # define RUN_SPEED 0.11
-
-// # define TILE_SIZE 40
-// # define MINIMAP_RADIUS 2
-// # define MINIMAP_TILES 5
 
 // keys
 # define W 119
@@ -60,13 +56,13 @@
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
-//shit code
+// shit code
 
-#define SPRITE_SZ 96
-#define COUNTER_H 152
-#define COUNTER_W 288
-#define NUM_H	  101
-#define NUM_W	  42
+# define SPRITE_SZ 96
+# define COUNTER_H 152
+# define COUNTER_W 288
+# define NUM_H 101
+# define NUM_W 42
 
 // parser
 # define NO 0
@@ -370,6 +366,7 @@ void				free_queue(t_queue *queue);
 int					textures(t_game *game);
 void				img_init(t_game *game, char *filename, t_img *img);
 void				ft_sleep(double mili_secs);
+t_img	*draw_scaled_img(t_game *game, t_img *src, t_point scale,double intensity);
 
 // doors
 t_door				*ft_newdoor(int x, int y);
