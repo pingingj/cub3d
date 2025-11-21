@@ -23,15 +23,17 @@ void	start_timer(t_game *game, int x, int y)
 	add_backdoor(&game->doors_opened, ft_newdoor(x, y));
 }
 
-void	door_timer(t_door *doors, t_game *game)
+void	door_timer(t_game *game)
 {
 	struct timeval	now;
 	double			now_s;
 	double			timer;
+	t_door			*doors;
 
 	gettimeofday(&now, NULL);
 	now_s = (now.tv_sec) + (now.tv_usec / 1000000.0);
 	timer = 5;
+	doors = game->doors_opened;
 	while (doors != NULL)
 	{
 		if (now_s - doors->open_s >= timer)
@@ -43,12 +45,16 @@ void	door_timer(t_door *doors, t_game *game)
 						0) == false))
 				game->map.grid[doors->cords.y][doors->cords.x] = 'D';
 			else
-				delete_1stnode(&game->doors_opened);
+			{
+				doors->to_delete = true;
+				delete_door_node(&game->doors_opened);
+				break;
+			}
 		}
-		if(doors)
-			doors = doors->next;
+		doors = doors->next;
 	}
 }
+
 bool	open_door(t_game *game, double x, double y)
 {
 	int		i;

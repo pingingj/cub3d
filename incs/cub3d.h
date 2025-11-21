@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/20 18:30:39 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/21 17:37:41 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
+//shit code
+
+#define SPRITE_SZ 96
+#define COUNTER_H 152
+#define COUNTER_W 288
+#define NUM_H	  101
+#define NUM_W	  42
 
 // parser
 # define NO 0
@@ -165,7 +172,7 @@ typedef struct s_door
 	struct timeval	open_time;
 	double			open_s;
 	struct s_door	*next;
-	// struct s_door prev;
+	bool			to_delete;
 }					t_door;
 
 typedef struct s_map
@@ -255,6 +262,7 @@ typedef struct s_game
 	t_spath			spath;
 	t_game_flags	g_flags;
 	t_img			title[194];
+	t_img			nums[9];
 	t_door			*doors_opened;
 	int				collected_comics;
 	bool			look_flag_right;
@@ -366,6 +374,7 @@ void				ft_sleep(double mili_secs);
 // doors
 t_door				*ft_newdoor(int x, int y);
 void				add_backdoor(t_door **lst, t_door *new);
-void				door_timer(t_door *doors, t_game *game);
-void				delete_1stnode(t_door **doors);
+void				door_timer(t_game *game);
+void				delete_door_node(t_door **doors);
+void				free_doors(t_game *game);
 #endif

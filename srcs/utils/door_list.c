@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 17:43:49 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/20 19:06:36 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/21 15:38:55 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,46 @@ void	add_backdoor(t_door **lst, t_door *new)
 	buffer->next = new;
 }
 
-void	delete_1stnode(t_door **doors)
+void free_doors(t_game *game)
 {
-	t_door	*removed_node;
+	t_door	*remove_node;
+
+	if (game->doors_opened== NULL)
+		return ;
+	while(game->doors_opened)
+	{
+		remove_node = game->doors_opened;
+		game->doors_opened = game->doors_opened->next;
+		free(remove_node);
+	}
+}	
+
+void	delete_door_node(t_door **doors)
+{
+	t_door	*temp;
+	t_door	*remove_node;
 
 	if (*doors == NULL)
 		return ;
-	removed_node = *doors;
-	*doors = (*doors)->next;
-	removed_node->next = NULL;
-	free(removed_node);
+	temp = *doors;
+	while(temp)
+	{
+		if (temp->to_delete == true)
+		{
+			remove_node = temp;
+			(*doors) = temp->next;
+			free(remove_node);
+			return ;
+		}
+		if (temp->next->to_delete == true)
+		{
+			remove_node = temp->next;
+			temp->next = temp->next->next;
+			free(remove_node);
+			return;
+		}
+		temp = temp->next;
+		
+	}
 }
 

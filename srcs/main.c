@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/20 18:22:42 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/21 18:05:39 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ void	make_pause_screen(t_game *game)
 {
 	if (game->g_flags.game_state == Pause)
 		draw_scaled_img(game, &game->ass.pause_screen, false, 1);
+	printf("coins n = %d\n",game->collected_comics);
 }
 
 void	draw_title(t_game *game, int i)
@@ -258,6 +259,7 @@ int	menu(t_game *game)
 	return (1);
 }
 
+
 int	main_loop(t_game *game)
 {
 	double	fsleep;
@@ -280,7 +282,7 @@ int	main_loop(t_game *game)
 			fsleep = fps_counter(game);
 			if (game->fps_lock > 0 && fsleep > 0.0)
 				ft_sleep(fsleep);
-			door_timer(game->doors_opened,game);
+			door_timer(game);
 		}
 		else if (game->g_flags.game_state == death_screen)
 			make_fade_screen(game, &game->ass.death_screen);

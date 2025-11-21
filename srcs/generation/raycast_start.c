@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_start.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 17:48:24 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/21 18:08:15 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,33 @@ void	math_with_an_e(t_game *game)
 		hande_sprites(game);
 }
 
+void	change_number_bg(t_game *game, t_img *img, int size)
+{
+	int	x;
+	int	y;
+	int	offset;
+	int	color;
+
+	y = -1;
+	color = 0;
+	offset = WIDTH - 42 * 4;
+	if (size == 0)
+		offset += 50;
+	else if (size == 1)
+		offset -= 21;
+	else if (size == 2)
+		offset -= 92;
+	while (++y < NUM_H)
+	{
+		x = -1;
+		while (++x < NUM_W)
+		{
+			color = pixel_get(img, x, y);
+			my_mlx_pixel_put(&game->bg_img, offset + x, y+ 25, color);
+		}
+	}
+}
+
 void	create_frame(t_game *game)
 {
 	static int bob_flag;
@@ -85,6 +112,11 @@ void	create_frame(t_game *game)
 		}
 	}
 	math_with_an_e(game);
+	if(game->g_flags.collectibles_exist == true)
+	{
+		change_number_bg(game,&game->nums[game->ass.collect_amount- 1],0);
+		change_number_bg(game,&game->nums[game->collected_comics],2);
+	}
 	mlx_clear_window(game->mlx, game->win);
 	if (game->mini.show == true)
 		draw_minimap(game, game->player.posx, game->player.posy);
