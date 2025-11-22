@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/20 15:58:24 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/21 19:00:15 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,12 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1440
+# define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.08
 # define MONSTER_SPEED 0.1
 # define RUN_SPEED 0.11
-
-// # define TILE_SIZE 40
-// # define MINIMAP_RADIUS 2
-// # define MINIMAP_TILES 5
 
 // keys
 # define W 119
@@ -60,10 +56,13 @@
 # define SHIFT 65505
 # define ARROW_RIGHT 65363
 # define ARROW_LEFT 65361
+// shit code
 
-// circle bullshit
-# define RADIUS_MINI 5
-# define ANGLE_NUMBERS_MINI 50
+# define SPRITE_SZ 96
+# define COUNTER_H 152
+# define COUNTER_W 288
+# define NUM_H 101
+# define NUM_W 42
 
 // parser
 # define NO 0
@@ -163,15 +162,14 @@ typedef struct s_assets
 	int				collect_amount;
 }					t_assets;
 
-// typedef struct s_map_ele
-// {
-// 	bool door;
-// 	bool wall;
-// 	bool empty;
-// 	bool collectible;
-// 	char element;
-// 	bool is_open;
-// }					t_map_ele;
+typedef struct s_door
+{
+	t_point			cords;
+	struct timeval	open_time;
+	double			open_s;
+	struct s_door	*next;
+	bool			to_delete;
+}					t_door;
 
 typedef struct s_map
 {
@@ -259,8 +257,10 @@ typedef struct s_game
 	t_point			**prev;
 	t_spath			spath;
 	t_game_flags	g_flags;
-	int				collected_comics;
 	t_img			title[194];
+	t_img			nums[9];
+	t_door			*doors_opened;
+	int				collected_comics;
 	bool			look_flag_right;
 	bool			look_flag_left;
 	bool			laggy_lanter;
@@ -366,4 +366,12 @@ void				free_queue(t_queue *queue);
 int					textures(t_game *game);
 void				img_init(t_game *game, char *filename, t_img *img);
 void				ft_sleep(double mili_secs);
+t_img	*draw_scaled_img(t_game *game, t_img *src, t_point scale,double intensity);
+
+// doors
+t_door				*ft_newdoor(int x, int y);
+void				add_backdoor(t_door **lst, t_door *new);
+void				door_timer(t_game *game);
+void				delete_door_node(t_door **doors);
+void				free_doors(t_game *game);
 #endif

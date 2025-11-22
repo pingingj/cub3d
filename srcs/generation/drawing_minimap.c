@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/17 17:32:59 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:42:33 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,27 @@ void	clear_minimap_image(t_game *game, t_pos area)
 	}
 }
 
-void	draw_circle_mlx(t_game *game, int cx, int cy, int color)
-{
-	int radius;
-	int	x;
-	int	y;
+// void	draw_circle_mlx(t_game *game, int cx, int cy, int color)
+// {
+// 	int radius;
+// 	int	x;
+// 	int	y;
 
-	radius = game->mini.tile_size / 6;
-	y = cy - radius;
-	while (y <= cy + radius)
-	{
-		x = cx - radius;
-		while (x <= cx + radius)
-		{
-			if ((x - cx) * (x - cx) + (y - cy) * (y - cy) <= radius
-				* radius)
-				my_mlx_pixel_put(&game->bg_img, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}
+// 	radius = game->mini.tile_size / 6;
+// 	y = cy - radius;
+// 	while (y <= cy + radius)
+// 	{
+// 		x = cx - radius;
+// 		while (x <= cx + radius)
+// 		{
+// 			if ((x - cx) * (x - cx) + (y - cy) * (y - cy) <= radius
+// 				* radius)
+// 				my_mlx_pixel_put(&game->bg_img, x, y, color);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
 
 /* Minimap clipping helpers */
 /* Signed area (edge function) you already have */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/20 15:40:13 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/21 19:22:19 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ double	fps_counter(t_game *game)
 	frames++;
 	if (current_time - last_time >= 1.0)
 	{
-		ft_printf("FPS: %d\n", frames);
+		// ft_printf("FPS: %d\n", frames);
 		frames = 0;
 		last_time = current_time;
 	}
@@ -131,45 +131,37 @@ int	new_blank_img(t_game *game, t_img *img, int w, int h)
 	return (1);
 }
 
-void	draw_scaled_img(t_game *game, t_img *src, bool apply, double intensity)
+t_img	*draw_scaled_img(t_game *game, t_img *src, t_point scale,double intensity)
 {
-	t_img			dst;
-	int				s_bpp;
-	int				d_bpp;
-	int				x;
-	int				y;
-	int				sx;
-	int				sy;
-	unsigned char	*dst_row;
-	unsigned char	*src_row;
-	unsigned char	b;
-	unsigned char	g;
-	unsigned char	r;
-	unsigned char	a;
-	int				color;
+	t_img	*dst;
+	int		color;
 
+	int s_bpp, d_bpp;
+	int x, y, sx, sy;
+	unsigned char *dst_row, *src_row;
+	unsigned char b, g, r, a;
 	if (!game || !src || !src->img || !src->addr || src->w <= 0 || src->h <= 0)
-		return ;
-	if (!new_blank_img(game, &dst, WIDTH, HEIGHT))
+		return (NULL);
+	dst = ft_calloc(1,sizeof(t_img));
+	if (!dst)
+		return (NULL);
+	if (!new_blank_img(game, dst, scale.x, scale.y))
 	{
-		mlx_put_image_to_window(game->mlx, game->win, src->img, (WIDTH - src->w)
-			/ 2, (HEIGHT - src->h) / 2);
-		return ;
+		free(dst);
+		return (NULL);
 	}
 	s_bpp = src->bits_per_pixel / 8;
-	d_bpp = dst.bits_per_pixel / 8;
-	y = 0;
-	while (y < dst.h)
+	d_bpp = dst->bits_per_pixel / 8;
+	for (y = 0; y < dst->h; y++)
 	{
-		sy = (int)((long long)y * src->h / dst.h);
+		sy = (long long)y * src->h / dst->h;
 		if (sy >= src->h)
 			sy = src->h - 1;
-		dst_row = (unsigned char *)dst.addr + y * dst.line_length;
+		dst_row = (unsigned char *)dst->addr + y * dst->line_length;
 		src_row = (unsigned char *)src->addr + sy * src->line_length;
-		x = 0;
-		while (x < dst.w)
+		for (x = 0; x < dst->w; x++)
 		{
-			sx = (int)((long long)x * src->w / dst.w);
+			sx = (long long)x * src->w / dst->w;
 			if (sx >= src->w)
 				sx = src->w - 1;
 			b = src_row[sx * s_bpp + 0];
@@ -177,36 +169,51 @@ void	draw_scaled_img(t_game *game, t_img *src, bool apply, double intensity)
 			r = src_row[sx * s_bpp + 2];
 			a = src_row[sx * s_bpp + 3];
 			color = (r << 16) | (g << 8) | b;
-			if (apply)
+			if (intensity >= 0)
 				color = add_light(color, intensity);
-			dst_row[x * d_bpp + 0] = color & 0xFF;         // b
-			dst_row[x * d_bpp + 1] = (color >> 8) & 0xFF;  // g
-			dst_row[x * d_bpp + 2] = (color >> 16) & 0xFF; // r
+			dst_row[x * d_bpp + 0] = color & 0xFF;
+			dst_row[x * d_bpp + 1] = (color >> 8) & 0xFF;
+			dst_row[x * d_bpp + 2] = (color >> 16) & 0xFF;
 			dst_row[x * d_bpp + 3] = a;
-			x++;
 		}
-		y++;
 	}
-	mlx_clear_window(game->mlx, game->win);
-	mlx_put_image_to_window(game->mlx, game->win, dst.img, 0, 0);
-	mlx_destroy_image(game->mlx, dst.img);
+	return (dst); // caller now owns this image
 }
 
 void	make_fade_screen(t_game *game, t_img *img)
 {
 	static double	i;
+	t_point			scale;
+	t_img			*scaled;
 
+	scale.x = WIDTH;
+	scale.y = HEIGHT;
 	mlx_mouse_show(game->mlx, game->win);
 	if (i > 1.5)
 		game->g_flags.game_state = Finished;
-	draw_scaled_img(game, img, true, i);
+	scaled = draw_scaled_img(game, img, scale, i);
+	mlx_clear_window(game->mlx, game->win);
+	mlx_put_image_to_window(game->mlx, game->win, scaled->img, 0, 0);
+	mlx_destroy_image(game->mlx, scaled->img);
+	free(scaled);
 	i += 0.01;
 }
 
 void	make_pause_screen(t_game *game)
 {
+	t_point	scale;
+	t_img	*scaled;
+
+	scale.x = WIDTH;
+	scale.y = HEIGHT;
 	if (game->g_flags.game_state == Pause)
-		draw_scaled_img(game, &game->ass.pause_screen, false, 1);
+	{
+		scaled = draw_scaled_img(game, &game->ass.pause_screen, scale, -1);
+		mlx_clear_window(game->mlx, game->win);
+		mlx_put_image_to_window(game->mlx, game->win, scaled->img, 0, 0);
+		mlx_destroy_image(game->mlx, scaled->img);
+		free(scaled);
+	}
 }
 
 void	draw_title(t_game *game, int i)
@@ -236,7 +243,11 @@ int	menu(t_game *game)
 	struct timeval	now;
 	double			now_ms;
 	double			frame_ms;
+	t_point			scale;
+	t_img 			*scaled;
 
+	scale.x = WIDTH;
+	scale.y = HEIGHT;
 	gettimeofday(&now, NULL);
 	now_ms = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
 	if (last_ms == 0.0)
@@ -249,7 +260,11 @@ int	menu(t_game *game)
 	}
 	if (now_ms - last_ms >= frame_ms)
 	{
-		draw_scaled_img(game, &game->title[frame], false, 1);
+		scaled = draw_scaled_img(game, &game->title[frame], scale, -1);
+		mlx_clear_window(game->mlx, game->win);
+		mlx_put_image_to_window(game->mlx, game->win, scaled->img, 0, 0);
+		mlx_destroy_image(game->mlx, scaled->img);
+		free(scaled);
 		frame++;
 		last_ms = now_ms;
 	}
@@ -266,7 +281,6 @@ int	main_loop(t_game *game)
 		menu(game);
 	else
 	{
-		printf("m x = %f and m y = %f \n",game->ass.enemy.cords.x,game->ass.enemy.cords.y);
 		if (game->collected_comics == game->ass.collect_amount - 1
 			&& game->g_flags.game_state != Finished
 			&& game->g_flags.collectibles_exist == true)
@@ -280,6 +294,7 @@ int	main_loop(t_game *game)
 			fsleep = fps_counter(game);
 			if (game->fps_lock > 0 && fsleep > 0.0)
 				ft_sleep(fsleep);
+			door_timer(game);
 		}
 		else if (game->g_flags.game_state == death_screen)
 			make_fade_screen(game, &game->ass.death_screen);

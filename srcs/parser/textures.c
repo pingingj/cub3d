@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 15:08:32 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/21 17:46:33 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,20 @@ void	img_init(t_game *game, char *filename, t_img *img)
 		printf("Failed to use xpm file\n");
 		closex(game);
 	}		
-} 
+}
+
+void	set_num_imgs(t_game *game)
+{
+	img_init(game, "./incs/textures/zero.xpm", &game->nums[0]);
+	img_init(game, "./incs/textures/one.xpm", &game->nums[1]);
+	img_init(game, "./incs/textures/two.xpm", &game->nums[2]);
+	img_init(game, "./incs/textures/three.xpm", &game->nums[3]);
+	img_init(game, "./incs/textures/four.xpm", &game->nums[4]);
+	img_init(game, "./incs/textures/five.xpm", &game->nums[5]);
+	img_init(game, "./incs/textures/six.xpm", &game->nums[6]);
+	img_init(game, "./incs/textures/seven.xpm", &game->nums[7]);
+	img_init(game, "./incs/textures/eight.xpm", &game->nums[8]);
+}
 
 int	textures(t_game *game)
 {
@@ -41,6 +54,22 @@ int	textures(t_game *game)
 	char	*num;
 
 	i = 0;
+	img_init(game, game->ass.textures[NO].filename, &game->ass.textures[NO]);
+	img_init(game, game->ass.textures[EA].filename, &game->ass.textures[EA]);
+	img_init(game, game->ass.textures[WE].filename, &game->ass.textures[WE]);
+	img_init(game, game->ass.textures[SO].filename, &game->ass.textures[SO]);
+	img_init(game,"./incs/textures/death_screen.xpm",&game->ass.death_screen);
+	img_init(game,"./incs/textures/Win_screen.xpm",&game->ass.win_screen);
+	img_init(game,"./incs/textures/pause.xpm",&game->ass.pause_screen);
+	if (game->ass.textures[CL].filename && game->g_flags.collectibles_exist == true)
+	{
+		img_init(game, game->ass.textures[CL].filename, &game->ass.textures[CL]);
+		set_num_imgs(game);
+	}
+	if (game->ass.textures[EN].filename)
+		img_init(game, game->ass.textures[EN].filename, &game->ass.enemy.texture);
+	if (game->ass.textures[DO].filename)
+		img_init(game, game->ass.textures[DO].filename, &game->ass.door.texture);
 	while(i < 194)
 	{
 		path = "./incs/textures/titlescreen/";
@@ -54,18 +83,5 @@ int	textures(t_game *game)
 		free(filename);
 		i++;
 	}
-	img_init(game, game->ass.textures[NO].filename, &game->ass.textures[NO]);
-	img_init(game, game->ass.textures[EA].filename, &game->ass.textures[EA]);
-	img_init(game, game->ass.textures[WE].filename, &game->ass.textures[WE]);
-	img_init(game, game->ass.textures[SO].filename, &game->ass.textures[SO]);
-	img_init(game,"./incs/textures/death_screen.xpm",&game->ass.death_screen);
-	img_init(game,"./incs/textures/Win_screen.xpm",&game->ass.win_screen);
-	img_init(game,"./incs/textures/pause.xpm",&game->ass.pause_screen);
-	if (game->ass.textures[CL].filename)
-		img_init(game, game->ass.textures[CL].filename, &game->ass.textures[CL]);
-	if (game->ass.textures[EN].filename)
-		img_init(game, game->ass.textures[EN].filename, &game->ass.enemy.texture);
-	if (game->ass.textures[DO].filename)
-		img_init(game, game->ass.textures[DO].filename, &game->ass.door.texture);
 	return (1);
 }

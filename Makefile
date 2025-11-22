@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: finn <finn@student.42.fr>                  +#+  +:+       +#+         #
+#    By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/11/20 00:22:10 by finn             ###   ########.fr        #
+#    Updated: 2025/11/21 15:19:31 by dgarcez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
 SOURCES = main.c generation/creation.c generation/raycast_math.c generation/raycast_start.c \
-			generation/drawing_minimap.c utils/clean.c utils/events.c utils/events2.c utils/mlx_adds.c \
+			generation/drawing_minimap.c utils/clean.c utils/door_list.c utils/events.c utils/events2.c utils/mlx_adds.c \
 			utils/keys.c utils/movement.c utils/look.c parser/parser.c parser/rgb_parser.c \
 			parser/rgb_converter.c parser/map_parser.c parser/map_create.c parser/textures.c sprites/monster.c \
 			sprites/monster_aux.c sprites/monster_pathfinding.c sprites/monster_path_finding_aux.c \
