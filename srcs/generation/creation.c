@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/19 14:00:44 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/23 16:43:25 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = WIDTH * 0.15625 + game->player.look + game->bob / 10.0;
-	if (softness < 80.0)
-		softness = 80.0;
+	softness = WIDTH * 0.15625 + game->player.look/3 + game->bob / 10.0;
+	if (softness < WIDTH * 0.15625 / 3)
+		softness = WIDTH * 0.15625 / 3;
 	dist = dx * dx + dy * dy;
 	max_dist_sq = 2.0 * softness * softness;
 	if (dist >= max_dist_sq)
