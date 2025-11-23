@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monster.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:50:26 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/20 16:07:08 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/20 17:10:10 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	monster(t_game *game)
 	double	speed;
 	bool	step_monster;
 
+	step_monster = true;
 	target.x = 0;
 	target.y = 0;
 	choose_pathfinding_alg(game, target, &d, &step_monster);
