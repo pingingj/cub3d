@@ -35,15 +35,15 @@ void	img_init(t_game *game, char *filename, t_img *img)
 
 void	set_num_imgs(t_game *game)
 {
-	img_init(game, "./incs/textures/zero.xpm", &game->nums[0]);
-	img_init(game, "./incs/textures/one.xpm", &game->nums[1]);
-	img_init(game, "./incs/textures/two.xpm", &game->nums[2]);
-	img_init(game, "./incs/textures/three.xpm", &game->nums[3]);
-	img_init(game, "./incs/textures/four.xpm", &game->nums[4]);
-	img_init(game, "./incs/textures/five.xpm", &game->nums[5]);
-	img_init(game, "./incs/textures/six.xpm", &game->nums[6]);
-	img_init(game, "./incs/textures/seven.xpm", &game->nums[7]);
-	img_init(game, "./incs/textures/eight.xpm", &game->nums[8]);
+	img_init(game, "./incs/textures/nums/zero.xpm", &game->nums[0]);
+	img_init(game, "./incs/textures/nums/one.xpm", &game->nums[1]);
+	img_init(game, "./incs/textures/nums/two.xpm", &game->nums[2]);
+	img_init(game, "./incs/textures/nums/three.xpm", &game->nums[3]);
+	img_init(game, "./incs/textures/nums/four.xpm", &game->nums[4]);
+	img_init(game, "./incs/textures/nums/five.xpm", &game->nums[5]);
+	img_init(game, "./incs/textures/nums/six.xpm", &game->nums[6]);
+	img_init(game, "./incs/textures/nums/seven.xpm", &game->nums[7]);
+	img_init(game, "./incs/textures/nums/eight.xpm", &game->nums[8]);
 }
 
 int	textures(t_game *game)
@@ -63,6 +63,7 @@ int	textures(t_game *game)
 	img_init(game,"./incs/textures/pause.xpm",&game->ass.pause_screen);
 	if (game->ass.textures[CL].filename && game->g_flags.collectibles_exist == true)
 	{
+		img_init(game, "./incs/textures/nums/slash.xpm", &game->slash);
 		img_init(game, game->ass.textures[CL].filename, &game->ass.textures[CL]);
 		set_num_imgs(game);
 	}

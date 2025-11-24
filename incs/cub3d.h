@@ -257,6 +257,7 @@ typedef struct s_game
 	t_point			**prev;
 	t_spath			spath;
 	t_game_flags	g_flags;
+	t_img			slash;
 	t_img			title[194];
 	t_img			nums[9];
 	t_door			*doors_opened;

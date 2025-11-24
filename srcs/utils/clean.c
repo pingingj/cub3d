@@ -53,6 +53,8 @@ int	closex(t_game *mlx)
 		mlx_destroy_image(mlx->mlx, mlx->ass.win_screen.img);
 	if (mlx->ass.pause_screen.img)
 		mlx_destroy_image(mlx->mlx, mlx->ass.pause_screen.img);
+	if (mlx->slash.img)
+		mlx_destroy_image(mlx->mlx, mlx->slash.img);
 	while (i < 6)
 	{
 		if (mlx->ass.textures[i].img)
