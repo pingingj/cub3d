@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/21 19:17:12 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:53:19 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,21 +115,26 @@ void	create_frame(t_game *game)
 	scale2.x = 42;
 	scale2.y = 100;
 	val = 1.0;
-	if(game->move[0] || game->move[1] || game->move[2] || game->move[3])
+	if(game->move[forwards] || game->move[backwards] || game->move[left] || game->move[right])
 	{
-		if(game->player.speed == RUN_SPEED)
-			val = 1.5;
-		if (bob_flag == 0)
-		{
-			game->bob += val;
-			if(game->bob > 6)
-				bob_flag = 1;
-		}
+		if((game->move[left] && game->move[right]))
+			game->bob = 0;
 		else
 		{
-			game->bob -= val;
-			if(game->bob < -6)
-				bob_flag = 0;
+			if(game->player.speed == RUN_SPEED)
+				val = 1.5;
+			if (bob_flag == 0)
+			{
+				game->bob += val;
+				if(game->bob > 6)
+					bob_flag = 1;
+			}
+			else
+			{
+				game->bob -= val;
+				if(game->bob < -6)
+					bob_flag = 0;
+			}
 		}
 	}
 	math_with_an_e(game);

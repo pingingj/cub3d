@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/21 19:00:15 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:45:58 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,22 @@ enum				e_game_state
 	Finished
 };
 
+
+enum				e_move
+{
+	forwards,
+	backwards,
+	left,
+	right,
+	arrow_right,
+	arrow_left,
+	arrow_up,
+	arrow_down,
+	zoom_in,
+	zoom_out
+};
+
+
 typedef struct s_game_flags
 {
 	int				game_state;
@@ -270,7 +286,7 @@ typedef struct s_game
 	double			light;
 	double			walldist;
 	int				wall_dist_sp[WIDTH];
-	int				*move;
+	int				move[10];
 	double			bob;
 	int				**visited;
 	int				monster_target_x;
