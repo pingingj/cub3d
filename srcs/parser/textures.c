@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/21 17:46:33 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:41:05 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ int	textures(t_game *game)
 	img_init(game, game->ass.textures[EA].filename, &game->ass.textures[EA]);
 	img_init(game, game->ass.textures[WE].filename, &game->ass.textures[WE]);
 	img_init(game, game->ass.textures[SO].filename, &game->ass.textures[SO]);
+	
+	img_init(game, "./incs/textures/Fusuma1.xpm", &game->door_frames[0]);
+	img_init(game, "./incs/textures/Fusuma2.xpm", &game->door_frames[1]);
+	img_init(game, "./incs/textures/Fusuma3.xpm", &game->door_frames[2]);
+	img_init(game, "./incs/textures/Fusuma4.xpm", &game->door_frames[3]);
 	img_init(game,"./incs/textures/death_screen.xpm",&game->ass.death_screen);
 	img_init(game,"./incs/textures/Win_screen.xpm",&game->ass.win_screen);
 	img_init(game,"./incs/textures/pause.xpm",&game->ass.pause_screen);
@@ -71,18 +76,18 @@ int	textures(t_game *game)
 		img_init(game, game->ass.textures[EN].filename, &game->ass.enemy.texture);
 	if (game->ass.textures[DO].filename)
 		img_init(game, game->ass.textures[DO].filename, &game->ass.door.texture);
-	while(i < 194)
-	{
-		path = "./incs/textures/titlescreen/";
-		// printf("i = %d\n", i);
-		num = ft_itoa(i);
-		filename = ft_strjoin(path, num);
-		free(num);
-		filename = ft_strjoin2(filename, ".xpm");
-		// printf("filename = %s\n", filename);
-		img_init(game, filename, &game->title[i]);
-		free(filename);
-		i++;
-	}
+	// while(i < 194)
+	// {
+	// 	path = "./incs/textures/titlescreen/";
+	// 	// printf("i = %d\n", i);
+	// 	num = ft_itoa(i);
+	// 	filename = ft_strjoin(path, num);
+	// 	free(num);
+	// 	filename = ft_strjoin2(filename, ".xpm");
+	// 	// printf("filename = %s\n", filename);
+	// 	img_init(game, filename, &game->title[i]);
+	// 	free(filename);
+	// 	i++;
+	// }
 	return (1);
 }

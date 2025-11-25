@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/25 14:30:51 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:41:13 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,7 +340,7 @@ int	main(int argc, char **argv)
 		if (parse(&game, argv[1]) == false)
 			return (1);
 		game.fps_lock = 60;
-		game.g_flags.game_state = main_menu;
+		game.g_flags.game_state = running;
 		game.mlx = mlx_init();
 		mem_save(&game);
 		print_info(game);

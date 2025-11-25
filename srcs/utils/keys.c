@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:29:06 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/25 15:47:06 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:05:56 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	way_too_many_press_keys(int keycode, t_game *game)
 	if (keycode == F)
 		open_door(game, game->player.posx + game->player.dirx * MOVE_SPEED,
 			game->player.posy + game->player.diry * MOVE_SPEED);
-	if (keycode == 44)
+	if (keycode == COMMA)
 		game->move[zoom_in] = 1;
-	if (keycode == 46)
+	if (keycode == DOT)
 		game->move[zoom_out] = 1;
 	if (keycode == ENTER && game->g_flags.button_ready == true
 		&& game->g_flags.game_state == main_menu)
@@ -84,9 +84,9 @@ void	too_many_release_keys(int keycode, t_game *game)
 		game->move[arrow_down] = 0;
 	if (keycode == SHIFT)
 		game->player.speed = MOVE_SPEED;
-	if (keycode == 44)
+	if (keycode == COMMA)
 		game->move[zoom_in] = 0;
-	if (keycode == 46)
+	if (keycode == DOT)
 		game->move[zoom_out] = 0;
 }
 
