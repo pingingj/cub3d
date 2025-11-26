@@ -1,17 +1,17 @@
-NO ./incs/textures/shelfs.xpm
+NO ./incs/textures/prateleiras.xpm
 SO ./incs/textures/Bookcase.xpm
 CL ./incs/textures/Comic.xpm
 
 C 88,212,255
 F 130,50,220
-DO ./incs/textures/fusuma.xpm
+DO ./incs/textures/Fusuma.xpm
 
 
 
 
 EN ./incs/textures/j_b.xpm
 EA ./incs/textures/Comoda.xpm
-WE ./incs/textures/purplestone.xpm
+WE ./incs/textures/posters.xpm
 
 
 
