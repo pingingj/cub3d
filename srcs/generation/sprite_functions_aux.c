@@ -59,7 +59,7 @@ static double	ligth_lvl_sprite(t_game *game, double sprite_dist,
 	double	intensity;
 	double	dist_intensity;
 	(void)game;
-	max_dist = 0.0038462 * WIDTH + 5.4615 / 10.0;
+	max_dist = 0.0038462 * WIDTH + 5.4615;
 	dist_intensity = 1.0 - (sprite_dist / max_dist);
 	if (dist_intensity < 0.0)
 		dist_intensity = 0.0;

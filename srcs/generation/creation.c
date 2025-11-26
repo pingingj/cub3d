@@ -18,14 +18,12 @@ static void	background_gen(t_game *game)
 	if(!game->win)
 	{
 		ft_printf("New window failed [!]\n");
-		free(game->move);
 		exit(1);
 	}
 	game->bg_img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if(!game->bg_img.img)
 	{
 		ft_printf("background creation failed [!]\n");
-		free(game->move);
 		exit(1);
 	}
 	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
@@ -34,7 +32,6 @@ static void	background_gen(t_game *game)
 	if(!game->bg_img.addr)
 	{
 		ft_printf("background adress failed [!]\n");
-		free(game->move);
 		exit(1);
 	}
 }
@@ -279,9 +276,9 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 void	map_gen(t_game *game)
 {
 	
-	game->move = ft_calloc(10, sizeof(int));
-	if (!game->move)
-		exit(1);
+	// game->move = ft_calloc(11, sizeof(int));
+	// if (!game->move)
+	// 	exit(1);
 	game->player.speed = MOVE_SPEED;
 	background_gen(game);
 	create_frame(game);

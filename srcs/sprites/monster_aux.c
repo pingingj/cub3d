@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monster_clean.c                                    :+:      :+:    :+:   */
+/*   monster_aux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:51:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/16 14:51:30 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:36:45 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_queue	*ft_queuenew(void *content)
 {
 	t_queue	*new_node;
 
-	new_node = malloc(sizeof(t_queue));
+	new_node = ft_calloc(1,sizeof(t_queue));
 	if (new_node == NULL)
 		return (NULL);
 	new_node->content = content;

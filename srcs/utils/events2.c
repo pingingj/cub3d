@@ -1,22 +1,22 @@
 #include "../../incs/cub3d.h"
 
-int	close_door(t_pos new, double x, double y, t_game *game)
-{
-	if (game->map.grid[(int)new.y][(int)new.x] == 'D'
-		&& game->meth.looking_door == true)
-	{
-		game->map.grid[(int)new.y][(int)new.x] = 'd';
-		if (hit_box(game, x, y, 1) == false || (game->ass.enemy.cords.x != -1
-				&& hit_box(game, game->ass.enemy.cords.x,
-					game->ass.enemy.cords.y, 0) == false))
-		{
-			game->map.grid[(int)new.y][(int)new.x] = 'D';
-			return (0);
-		}
-		return (1);
-	}
-	return (2);
-}
+// int	close_door(t_pos new, double x, double y, t_game *game)
+// {
+// 	if (game->map.grid[(int)new.y][(int)new.x] == 'D'
+// 		&& game->meth.looking_door == true)
+// 	{
+// 		game->map.grid[(int)new.y][(int)new.x] = 'd';
+// 		if (hit_box(game, x, y, 1) == false || (game->ass.enemy.cords.x != -1
+// 				&& hit_box(game, game->ass.enemy.cords.x,
+// 					game->ass.enemy.cords.y, 0) == false))
+// 		{
+// 			game->map.grid[(int)new.y][(int)new.x] = 'D';
+// 			return (0);
+// 		}
+// 		return (1);
+// 	}
+// 	return (2);
+// }
 
 void	start_timer(t_game *game, int x, int y)
 {
@@ -74,10 +74,6 @@ bool	open_door(t_game *game, double x, double y)
 			start_timer(game, (int)new.x, (int)new.y);
 			return (true);
 		}
-		if (close_door(new, x, y, game) == 0)
-			return (false);
-		else if (close_door(new, x, y, game) == 1)
-			return (true);
 		i++;
 	}
 	return (false);

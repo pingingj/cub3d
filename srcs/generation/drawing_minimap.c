@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/20 16:42:33 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:06:10 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ void	draw_minitile_row(t_game game, t_pos tile_pos, t_pos win_cord,
 			else if (grid == 'o')
 				draw_tile(&game.bg_img, 0x223030, area, win_cord);
 			else if (grid == 'd')
-				draw_tile(&game.bg_img, 0xFFBB23, area, win_cord);
+				draw_tile(&game.bg_img, 0x000089, area, win_cord);
 			else if (grid == 'D')
 				draw_tile(&game.bg_img, 0x8599BA, area, win_cord);
 			else if (grid == 'c')
@@ -270,9 +270,9 @@ void	draw_miniframe(t_game *game)
 		while (x < game->mini.size.x + game->mini.offset)
 		{
 			if (x < game->mini.offset + 10 || x > game->mini.size.x + 20)
-				my_mlx_pixel_put(&game->bg_img, x, y, 0xBB0000);
+				my_mlx_pixel_put(&game->bg_img, x, y, 0x9900BB);
 			if (y < game->mini.offset + 10 || y > game->mini.size.y + 20)
-				my_mlx_pixel_put(&game->bg_img, x, y, 0xBB0000);
+				my_mlx_pixel_put(&game->bg_img, x, y, 0x9900BB);
 			x++;
 		}
 		y++;
