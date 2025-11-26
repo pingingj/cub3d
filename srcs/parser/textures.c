@@ -14,6 +14,7 @@
 
 void	img_init(t_game *game, char *filename, t_img *img)
 {
+	// printf("filename %s\n", filename);
 	img->img = mlx_xpm_file_to_image(game->mlx,
 			filename, &img->w,
 			&img->h);
@@ -48,21 +49,21 @@ void	set_num_imgs(t_game *game)
 
 int	textures(t_game *game)
 {
-	int		i;
-	char	*filename;
-	char	*path;
-	char	*num;
+	// int		i;
+	// char	*filename;
+	// char	*path;
+	// char	*num;
 
-	i = 0;
+	// i = 0;
 	img_init(game, game->ass.textures[NO].filename, &game->ass.textures[NO]);
 	img_init(game, game->ass.textures[EA].filename, &game->ass.textures[EA]);
 	img_init(game, game->ass.textures[WE].filename, &game->ass.textures[WE]);
 	img_init(game, game->ass.textures[SO].filename, &game->ass.textures[SO]);
 	
-	img_init(game, "./incs/textures/Fusuma1.xpm", &game->door_frames[0]);
-	img_init(game, "./incs/textures/Fusuma2.xpm", &game->door_frames[1]);
-	img_init(game, "./incs/textures/Fusuma3.xpm", &game->door_frames[2]);
-	img_init(game, "./incs/textures/Fusuma4.xpm", &game->door_frames[3]);
+	// img_init(game, "./incs/textures/Fusuma1.xpm", &game->door_frames[0]);
+	// img_init(game, "./incs/textures/Fusuma2.xpm", &game->door_frames[1]);
+	// img_init(game, "./incs/textures/Fusuma3.xpm", &game->door_frames[2]);
+	// img_init(game, "./incs/textures/Fusuma4.xpm", &game->door_frames[3]);
 	img_init(game,"./incs/textures/death_screen.xpm",&game->ass.death_screen);
 	img_init(game,"./incs/textures/Win_screen.xpm",&game->ass.win_screen);
 	img_init(game,"./incs/textures/pause.xpm",&game->ass.pause_screen);
