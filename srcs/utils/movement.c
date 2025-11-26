@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/20 15:37:24 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/26 19:21:05 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
-
 
 // bool	hit_box(t_game *game,double x,double y)
 // {
@@ -33,7 +32,7 @@
 // 	return(true);
 // }
 
-bool	hit_box(t_game *game, double x, double y,int who)
+bool	hit_box(t_game *game, double x, double y, int who)
 {
 	int		i;
 	double	new_x;
@@ -47,10 +46,10 @@ bool	hit_box(t_game *game, double x, double y,int who)
 		angle = (2 * PI / ANGLE_NUMBERS) * i;
 		new_x = x + cos(angle) * RADIUS;
 		new_y = y + sin(angle) * RADIUS;
-		if(game->map.grid[(int)new_y][(int)new_x] == 'd')
+		if (game->map.grid[(int)new_y][(int)new_x] == 'd')
 			return (false);
 		if (game->map.grid[(int)new_y][(int)new_x] == '1' && who == 1)
-			return(false);
+			return (false);
 		i++;
 	}
 	return (true);
@@ -64,9 +63,9 @@ void	move_foward(t_game *game, double speed)
 
 	new_x = game->player.posx + game->player.dirx * speed;
 	new_y = game->player.posy + game->player.diry * speed;
-	if (hit_box(game, new_x, game->player.posy,1) == true)
+	if (hit_box(game, new_x, game->player.posy, 1) == true)
 		game->player.posx = new_x;
-	if (hit_box(game, game->player.posx, new_y,1) == true)
+	if (hit_box(game, game->player.posx, new_y, 1) == true)
 		game->player.posy = new_y;
 	if (game->map.grid[(int)new_y][(int)new_x] == 'c')
 	{
@@ -93,9 +92,9 @@ void	move_back(t_game *game, double speed)
 
 	new_x = game->player.posx - game->player.dirx * speed;
 	new_y = game->player.posy - game->player.diry * speed;
-	if (hit_box(game, new_x, game->player.posy,1) == true)
+	if (hit_box(game, new_x, game->player.posy, 1) == true)
 		game->player.posx = new_x;
-	if (hit_box(game, game->player.posx, new_y,1) == true)
+	if (hit_box(game, game->player.posx, new_y, 1) == true)
 		game->player.posy = new_y;
 	if (game->map.grid[(int)new_y][(int)new_x] == 'c')
 	{
@@ -122,9 +121,9 @@ void	move_left(t_game *game, double speed)
 
 	new_x = game->player.posx - game->player.planex * speed;
 	new_y = game->player.posy - game->player.planey * speed;
-	if (hit_box(game, new_x, game->player.posy,1) == true)
+	if (hit_box(game, new_x, game->player.posy, 1) == true)
 		game->player.posx = new_x;
-	if (hit_box(game, game->player.posx, new_y,1) == true)
+	if (hit_box(game, game->player.posx, new_y, 1) == true)
 		game->player.posy = new_y;
 	if (game->map.grid[(int)new_y][(int)new_x] == 'c')
 	{
@@ -151,9 +150,9 @@ void	move_right(t_game *game, double speed)
 
 	new_x = game->player.posx + game->player.planex * speed;
 	new_y = game->player.posy + game->player.planey * speed;
-	if (hit_box(game, new_x, game->player.posy,1) == true)
+	if (hit_box(game, new_x, game->player.posy, 1) == true)
 		game->player.posx = new_x;
-	if (hit_box(game, game->player.posx, new_y,1) == true)
+	if (hit_box(game, game->player.posx, new_y, 1) == true)
 		game->player.posy = new_y;
 	if (game->map.grid[(int)new_y][(int)new_x] == 'c')
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/10/21 14:05:29 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/26 17:52:36 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,98 +53,20 @@ bool	check_map(t_game *game)
 	return (true);
 }
 
-bool	get_player(t_game *game)
+void	fill_spaces(t_map *map, char **new, int *i, int *j)
 {
-	int	x;
-	int	y;
-
-	y = 0;
-	while (game->map.grid[y])
+	while (*j < map->pos.x)
 	{
-		x = 0;
-		while (game->map.grid[y][x])
-		{
-			if (ft_strchr("NEWS", game->map.grid[y][x]))
-			{
-				if (game->map.grid[y][x] == 'N')
-				{
-					game->player.diry = -1;
-					game->player.planex = 0.66;
-				}
-				if (game->map.grid[y][x] == 'S')
-				{
-					game->player.diry = 1;
-					game->player.planex = -0.66;
-				}
-				if (game->map.grid[y][x] == 'E')
-				{
-					game->player.dirx = 1;
-					game->player.planey = 0.66;
-				}
-				if (game->map.grid[y][x] == 'W')
-				{
-					game->player.dirx = -1;
-					game->player.planey = -0.66;
-				}
-				if (game->player.posx > 0 && game->player.posy > 0)
-					return (false);
-				game->player.posx = x + 0.5;
-				game->player.posy = y + 0.5;
-			}
-			x++;
-		}
-		y++;
+		new[*i][*j] = ' ';
+		(*j)++;
 	}
-	if (game->player.posx == -1 || game->player.posy == -1)
-		print_errors(game, 1, "Missing player in map");
-	return (true);
-}
-
-char	*around_walls(t_map map, t_game game, int x, int y)
-{
-	if (map.grid[y][x] == 'd')
-	{
-		if (map.grid[y][x] == 'd' && !game.ass.textures[DO].filename)
-			return ("Missing texture for doors");
-		if (y - 1 < 0 || y + 1 > game.map.pos.y || x - 1 < 0 || x + 1 > ft_strlen(map.grid[y]))
-			return ("Out of bounds door");
-		if (map.grid[y - 1][x] == 'd' || map.grid[y + 1][x] == 'd' || map.grid[y][x -1] == 'd' || map.grid[y][x + 1] == 'd')
-			return ("This ain't fancy no double doors");
-		if (map.grid[y - 1][x] == '1' && map.grid[y + 1][x] == '1' && (map.grid[y][x - 1] != '1' && map.grid[y][x + 1] != '1'))
-			return(NULL);
-		else if (map.grid[y][x - 1] == '1' && map.grid[y][x + 1] == '1' && (map.grid[y - 1][x] != '1' && map.grid[y + 1][x] != '1'))
-			return (NULL);
-		else
-			return ("Doors are not between 2 walls");
-	}
-	return (NULL);
-}
-char	*check_doors(t_map map, t_game game)
-{
-	int		x;
-	int		y;
-	char	*msg;
-
-	msg = NULL;
-	y = 0;
-	while (map.grid[y])
-	{
-		x = 0;
-		while (map.grid[y][x])
-		{
-			msg = around_walls(map, game, x, y);
-			if (msg != NULL)
-				return (msg);
-			x++;
-		}
-		y++;
-	}
-	return (msg);
+	new[*i][*j] = '\0';
+	(*i)++;
 }
 
 bool	change_map(t_map *map)
 {
-	char 	**new;
+	char	**new;
 	int		i;
 	int		j;
 
@@ -159,15 +81,9 @@ bool	change_map(t_map *map)
 		if (new[i] == NULL)
 			return (freetrix(new), false);
 		new[i] = ft_memcpy(new[i], map->grid[i], ft_strlen(map->grid[i]));
-		while(new[i][j] != '\n' && new[i][j])
+		while (new[i][j] && new[i][j] != '\n' )
 			j++;
-		while(j < map->pos.x)
-		{
-			new[i][j] = ' ';
-			j++;
-		}
-		new[i][j] = '\0';
-		i++;
+		fill_spaces(map, new, &i, &j);
 	}
 	new[i] = NULL;
 	freetrix(map->grid);

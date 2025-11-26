@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/25 17:29:46 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/26 19:08:02 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,10 +366,14 @@ void				change_flag(int key, t_game *game);
 void				draw_wall(t_game *game, int cx, int cy);
 void				draw_floor(t_game *game, int cx, int cy);
 void				draw_minimap(t_game *game, double playerx, double playery);
+
 // parse
 bool				parse(t_game *game, char *filename);
 void				print_errors(t_game *game, int error, char *msg);
 void				free_game(t_game *game);
+void				init_vars(t_game *game);
+char				*get_textures(t_game *game);
+char				**letters_init(void);
 void				parse_colors(t_game *game);
 bool				skip_comma(t_color *colors, int *i, bool last_check);
 bool				get_colors(t_color *colors);
@@ -378,6 +382,9 @@ int					color_hexa(t_color color);
 void				parse_map(t_game *game, char *filename, char *line);
 bool				get_map(t_game *game, char *filename, char *line);
 bool				flood_map(t_map *map, int x, int y);
+bool				get_player(t_game *game);
+char				*check_doors(t_map map, t_game game);
+void				make_enemy(t_game *game);
 void				print_info(t_game game);
 int					convert_dec(char *hexa);
 void				convert_hexa(int color, char **result, char *base, int *i);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+         #
+#    By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/11/25 16:07:56 by dgarcez-         ###   ########.fr        #
+#    Updated: 2025/11/26 19:13:06 by dgarcez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,12 @@ CFLAGS = -Wall -Wextra -Werror -g
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
 SOURCES = main.c generation/creation.c generation/raycast_math.c generation/raycast_start.c \
-			generation/drawing_minimap.c utils/clean.c utils/door_list.c utils/events.c utils/events2.c utils/mlx_adds.c \
-			utils/keys.c utils/movement.c utils/look.c parser/parser.c parser/rgb_parser.c \
-			parser/rgb_converter.c parser/map_parser.c parser/map_create.c parser/textures.c sprites/monster.c \
-			sprites/monster_aux.c sprites/monster_pathfinding.c sprites/monster_path_finding_aux.c \
-			generation/sprites_functions.c generation/sprite_functions_aux.c 
+			generation/drawing_minimap.c utils/clean.c utils/door_list.c utils/events.c \
+			utils/events2.c utils/mlx_adds.c utils/keys.c utils/movement.c utils/look.c \
+			parser/parser.c utils/parser_utils.c parser/parse_textures.c parser/rgb_parser.c parser/rgb_converter.c parser/map_parser.c \
+			parser/map_parser_aux.c parser/map_create.c parser/make_enemy.c parser/textures.c \
+			sprites/monster.c sprites/monster_aux.c sprites/monster_pathfinding.c \
+			sprites/monster_path_finding_aux.c generation/sprites_functions.c generation/sprite_functions_aux.c 
        
 SRCS_DIR = srcs
 SRCS =	$(addprefix $(SRCS_DIR)/, $(SOURCES))

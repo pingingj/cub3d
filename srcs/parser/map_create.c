@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:50:51 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/18 18:14:03 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/26 17:58:40 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static void	change_grid(t_map *map, int x, int y)
 
 bool	flood_map(t_map *map, int x, int y)
 {
-	if (y >= 0 && y < map->pos.y && x >= 0 && x < ft_strlen(map->grid[y]) && map->grid[y][x]
-		&& (map->grid[y][x] == '1' || map->grid[y][x] == 'o'
+	if (y >= 0 && y < map->pos.y && x >= 0 && x < ft_strlen(map->grid[y])
+		&& map->grid[y][x] && (map->grid[y][x] == '1' || map->grid[y][x] == 'o'
 			|| map->grid[y][x] == 'e' || map->grid[y][x] == 'c'
 			|| map->grid[y][x] == 'd'))
 		return (true);
@@ -62,9 +62,10 @@ static void	find_map(t_game *game, char *line)
 	i = 0;
 	if (in_string(line, "10NEWSDCJ") == false && game->map.exists == false)
 	{
-		while(line[i])
+		while (line[i])
 		{
-			if (ft_isprint(line[i]) && (line[i] != ' ' || (line[i] < 9 || line[i] > 13)))
+			if (ft_isprint(line[i]) && (line[i] != ' '
+					|| (line[i] < 9 || line[i] > 13)))
 			{
 				free(line);
 				print_errors(game, 1, "Invalid character before map");
@@ -113,7 +114,8 @@ bool	get_map(t_game *game, char *filename, char *line)
 		find_map(game, line);
 		if (game->map.exists)
 		{
-			if (ft_strlen(line) > game->map.pos.x && line[ft_strlen(line) - 1] == '\n')
+			if (ft_strlen(line) > game->map.pos.x
+				&& line[ft_strlen(line) - 1] == '\n')
 				game->map.pos.x = ft_strlen(line) - 1;
 			else if (ft_strlen(line) > game->map.pos.x)
 				game->map.pos.x = ft_strlen(line);
