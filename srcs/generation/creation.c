@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/19 14:00:44 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:13:19 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@ static void	background_gen(t_game *game)
 	if(!game->win)
 	{
 		ft_printf("New window failed [!]\n");
-		free(game->move);
 		exit(1);
 	}
 	game->bg_img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if(!game->bg_img.img)
 	{
 		ft_printf("background creation failed [!]\n");
-		free(game->move);
 		exit(1);
 	}
 	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
@@ -34,7 +32,6 @@ static void	background_gen(t_game *game)
 	if(!game->bg_img.addr)
 	{
 		ft_printf("background adress failed [!]\n");
-		free(game->move);
 		exit(1);
 	}
 }
@@ -105,7 +102,7 @@ double	flashlight(int x, int y, t_game *game, bool is_wall)
 
 	dx = x - WIDTH / 2;
 	dy = y - HEIGHT / 2;
-	softness = WIDTH * 0.15625 + game->player.look + game->bob / 10.0;
+	softness = WIDTH * 0.15625 + game->player.look/10.0 + game->bob / 10.0;
 	if (softness < 80.0)
 		softness = 80.0;
 	dist = dx * dx + dy * dy;
@@ -279,9 +276,9 @@ void	artistic_moment(t_game *game, int x, int sdraw, int edraw)
 void	map_gen(t_game *game)
 {
 	
-	game->move = ft_calloc(10, sizeof(int));
-	if (!game->move)
-		exit(1);
+	// game->move = ft_calloc(11, sizeof(int));
+	// if (!game->move)
+	// 	exit(1);
 	game->player.speed = MOVE_SPEED;
 	background_gen(game);
 	create_frame(game);

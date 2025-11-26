@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/21 18:11:49 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:14:03 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	closex2(t_game *mlx)
 	}
 	if (mlx->bg_img.img)
 		mlx_destroy_image(mlx->mlx, mlx->bg_img.img);
-	free(mlx->move);
+	// free(mlx->move);
 	while(mlx->doors_opened != NULL)
 		free_doors(mlx);
 	if (mlx->win)
@@ -53,6 +53,8 @@ int	closex(t_game *mlx)
 		mlx_destroy_image(mlx->mlx, mlx->ass.win_screen.img);
 	if (mlx->ass.pause_screen.img)
 		mlx_destroy_image(mlx->mlx, mlx->ass.pause_screen.img);
+	if (mlx->slash.img)
+		mlx_destroy_image(mlx->mlx, mlx->slash.img);
 	while (i < 6)
 	{
 		if (mlx->ass.textures[i].img)

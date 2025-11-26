@@ -206,6 +206,8 @@ void	make_sprites(t_game *game)
 		game->g_flags.collectibles_exist = true;
 	if(amount > 0 && !game->ass.textures[CL].filename)
 		print_errors(game,1,"Missing collectible texutre");
+	if (amount > 8)
+		print_errors(game, 1, "Too many collectibles (max 8)");
 	coin_pos(game);
 	if(game->ass.enemy.cords.x != -1)
 	{

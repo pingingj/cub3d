@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/21 19:00:15 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:29:46 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define A 97
 # define D 100
 # define F 102
+# define COMMA 44
+# define DOT 46
 # define PI 3.14159265358979323846
 # define RADIUS 0.1
 # define ARROW_LEFT 65361
@@ -168,6 +170,7 @@ typedef struct s_door
 	struct timeval	open_time;
 	double			open_s;
 	struct s_door	*next;
+	int 			frame;
 	bool			to_delete;
 }					t_door;
 
@@ -233,6 +236,22 @@ enum				e_game_state
 	Finished
 };
 
+
+enum				e_move
+{
+	forwards,
+	backwards,
+	left,
+	right,
+	arrow_right,
+	arrow_left,
+	arrow_up,
+	arrow_down,
+	zoom_in,
+	zoom_out
+};
+
+
 typedef struct s_game_flags
 {
 	int				game_state;
@@ -257,7 +276,9 @@ typedef struct s_game
 	t_point			**prev;
 	t_spath			spath;
 	t_game_flags	g_flags;
+	t_img			slash;
 	t_img			title[194];
+	t_img			door_frames[5];
 	t_img			nums[9];
 	t_door			*doors_opened;
 	int				collected_comics;
@@ -269,7 +290,7 @@ typedef struct s_game
 	double			light;
 	double			walldist;
 	int				wall_dist_sp[WIDTH];
-	int				*move;
+	int				move[10];
 	double			bob;
 	int				**visited;
 	int				monster_target_x;
