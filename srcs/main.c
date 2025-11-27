@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/25 17:41:13 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:18:21 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	mouse(int x, int y, t_game *game)
 {
 	game->mouse.x = x - WIDTH / 2;
-	// ft_printf("mouse x -> %d     mouse y -> %d\n",x,y);
 	if (game->g_flags.game_state != running)
 		return (1);
 	if (x > WIDTH / 2)
@@ -105,7 +104,6 @@ double	fps_counter(t_game *game)
 	frames++;
 	if (current_time - last_time >= 1.0)
 	{
-		// ft_printf("FPS: %d\n", frames);
 		frames = 0;
 		last_time = current_time;
 	}
@@ -177,7 +175,7 @@ t_img	*draw_scaled_img(t_game *game, t_img *src, t_point scale,double intensity)
 			dst_row[x * d_bpp + 3] = a;
 		}
 	}
-	return (dst); // caller now owns this image
+	return (dst);
 }
 
 void	make_fade_screen(t_game *game, t_img *img)
@@ -279,6 +277,12 @@ int	main_loop(t_game *game)
 
 	if (game->g_flags.game_state == main_menu)
 		menu(game);
+	else if (game->g_flags.game_state == death_screen)
+		make_fade_screen(game, &game->ass.death_screen);
+	else if (game->g_flags.game_state == Pause)
+		make_pause_screen(game);
+	else if (game->g_flags.game_state == Win_screen)
+		make_fade_screen(game, &game->ass.win_screen);
 	else
 	{
 		if (game->collected_comics == game->ass.collect_amount - 1
@@ -296,12 +300,6 @@ int	main_loop(t_game *game)
 				ft_sleep(fsleep);
 			door_timer(game);
 		}
-		else if (game->g_flags.game_state == death_screen)
-			make_fade_screen(game, &game->ass.death_screen);
-		else if (game->g_flags.game_state == Pause)
-			make_pause_screen(game);
-		else if (game->g_flags.game_state == Win_screen)
-			make_fade_screen(game, &game->ass.win_screen);
 	}
 	return (0);
 }
@@ -343,7 +341,7 @@ int	main(int argc, char **argv)
 		game.g_flags.game_state = running;
 		game.mlx = mlx_init();
 		mem_save(&game);
-		print_info(game);
+		// print_info(game);
 		textures(&game);
 		map_gen(&game);
 		mlx_hook(game.win, 17, 0, closex, &game);

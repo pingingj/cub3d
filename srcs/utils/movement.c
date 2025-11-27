@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/26 19:21:05 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:08:43 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
-
-// bool	hit_box(t_game *game,double x,double y)
-// {
-// 	int i;
-// 	double new_x;
-// 	double new_y;
-// 	double angle;
-
-// 	i = 0;
-// 	while(i < ANGLE_NUMBERS)
-// 	{
-// 		angle = (2 * PI/ANGLE_NUMBERS) * i;
-// 		new_x = x + cos(angle) * RADIUS;
-// 		new_y = y + sin(angle) * RADIUS;
-// 		if(game->map.grid[(int)new_y][(int)new_x] == '1' || game->map.grid[(int)new_y][(int)new_x] == 'd')
-// 			return (false);
-// 		i++;
-// 	}
-// 	return(true);
-// }
 
 bool	hit_box(t_game *game, double x, double y, int who)
 {

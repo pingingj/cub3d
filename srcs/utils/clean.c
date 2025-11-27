@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/26 19:29:17 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:10:10 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ int	closex(t_game *game)
 	exit(0);
 }
 
-void	print_info(t_game game)
-{
-	int	i;
-	int	j;
+// void	print_info(t_game game)
+// {
+// 	int	i;
+// 	int	j;
 
-	j = 0;
-	i = 0;
+// 	j = 0;
+// 	i = 0;
 	// printf("NO = %s\n", game.ass.textures[NO].filename);
 	// printf("EA = %s\n", game.ass.textures[EA].filename);
 	// printf("SO = %s\n", game.ass.textures[SO].filename);
@@ -101,32 +101,33 @@ void	print_info(t_game game)
 	// printf("B = %d\n", game.ass.floor.blue);
 	// printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
 	// printf("hexa floor = %d\n", game.ass.floor.hexa);
-	// printf("player cords x = %f y = %f\n", game.player.posx, game.player.posy);
+	// printf("player cords x = %f y = %f\n", game.player.posx, 
+	//game.player.posy);
 	// printf("collected amount = %d\n", game.collected_comics);
-	while (i < game.map.pos.y)
-	{
-		j = 0;
-		while (j <= game.map.pos.x)
-		{
-			if (game.map.grid[i][j] == ' ')
-				ft_printf("v");
-			else if (game.map.grid[i][j] == '1')
-				ft_printf("1");
-			else if (game.map.grid[i][j] == 'o')
-				ft_printf("o");
-			else if (game.map.grid[i][j] == 'd')
-				ft_printf("d");
-			else if (game.map.grid[i][j] == 'c')
-				ft_printf("c");
-			else if (game.map.grid[i][j] == 'j')
-				ft_printf("j");
-			else if (game.map.grid[i][j] == '\0')
-				ft_printf("\n");
-			j++;
-		}
-		i++;
-	}
-}
+// 	while (i < game.map.pos.y)
+// 	{
+// 		j = 0;
+// 		while (j <= game.map.pos.x)
+// 		{
+// 			if (game.map.grid[i][j] == ' ')
+// 				ft_printf("v");
+// 			else if (game.map.grid[i][j] == '1')
+// 				ft_printf("1");
+// 			else if (game.map.grid[i][j] == 'o')
+// 				ft_printf("o");
+// 			else if (game.map.grid[i][j] == 'd')
+// 				ft_printf("d");
+// 			else if (game.map.grid[i][j] == 'c')
+// 				ft_printf("c");
+// 			else if (game.map.grid[i][j] == 'j')
+// 				ft_printf("j");
+// 			else if (game.map.grid[i][j] == '\0')
+// 				ft_printf("\n");
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	free_game(t_game *game)
 {

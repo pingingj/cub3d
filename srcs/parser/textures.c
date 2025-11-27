@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/25 17:41:05 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:10:50 by finn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,6 @@ int	textures(t_game *game)
 	img_init(game, game->ass.textures[EA].filename, &game->ass.textures[EA]);
 	img_init(game, game->ass.textures[WE].filename, &game->ass.textures[WE]);
 	img_init(game, game->ass.textures[SO].filename, &game->ass.textures[SO]);
-	// img_init(game, "./incs/textures/Fusuma1.xpm", &game->door_frames[0]);
-	// img_init(game, "./incs/textures/Fusuma2.xpm", &game->door_frames[1]);
-	// img_init(game, "./incs/textures/Fusuma3.xpm", &game->door_frames[2]);
-	// img_init(game, "./incs/textures/Fusuma4.xpm", &game->door_frames[3]);
 	img_init(game, "./incs/textures/death_screen.xpm", &game->ass.death_screen);
 	img_init(game, "./incs/textures/pause.xpm", &game->ass.pause_screen);
 	bonus_init(game, game->g_flags.collectibles_exist,
