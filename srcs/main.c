@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/27 16:18:21 by finn             ###   ########.fr       */
+/*   Updated: 2025/11/27 18:29:01 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,173 +47,6 @@ int	mouse(int x, int y, t_game *game)
 	return (0);
 }
 
-void	ft_sleep(double mili_secs)
-{
-	double			last_time;
-	struct timeval	now;
-	double			current_time;
-
-	last_time = 0.0;
-	if (mili_secs <= 0.0)
-		return ;
-	gettimeofday(&now, NULL);
-	current_time = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
-	if (last_time == 0.0)
-		last_time = current_time;
-	while (1)
-	{
-		gettimeofday(&now, NULL);
-		current_time = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
-		if (current_time - last_time >= mili_secs)
-			break ;
-	}
-}
-
-double	fps_counter(t_game *game)
-{
-	static int		frames;
-	struct timeval	now;
-	static double	last_time;
-	static double	next_deadline_ms;
-	double			current_time;
-	double			fsleep;
-	double			target_ms;
-	double			now_ms;
-
-	fsleep = 0.0;
-	if (game->fps_lock > 0)
-	{
-		target_ms = 1000.0 / (double)game->fps_lock;
-		gettimeofday(&now, NULL);
-		now_ms = (now.tv_sec * 1000.0) + (now.tv_usec / 1000.0);
-		if (next_deadline_ms == 0.0)
-			next_deadline_ms = now_ms + target_ms;
-		fsleep = next_deadline_ms - now_ms;
-		if (fsleep < 0.0)
-			fsleep = 0.0;
-		next_deadline_ms += target_ms;
-		if (next_deadline_ms < now_ms - target_ms)
-			next_deadline_ms = now_ms + target_ms;
-	}
-	else
-		next_deadline_ms = 0.0;
-	gettimeofday(&now, NULL);
-	current_time = now.tv_sec + now.tv_usec / 1000000.0;
-	if (last_time == 0.0)
-		last_time = current_time;
-	frames++;
-	if (current_time - last_time >= 1.0)
-	{
-		frames = 0;
-		last_time = current_time;
-	}
-	return (fsleep);
-}
-
-int	new_blank_img(t_game *game, t_img *img, int w, int h)
-{
-	img->img = mlx_new_image(game->mlx, w, h);
-	if (!img->img)
-		return (0);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
-	if (!img->addr)
-	{
-		mlx_destroy_image(game->mlx, img->img);
-		img->img = NULL;
-		return (0);
-	}
-	img->w = w;
-	img->h = h;
-	img->filename = NULL;
-	return (1);
-}
-
-t_img	*draw_scaled_img(t_game *game, t_img *src, t_point scale,double intensity)
-{
-	t_img	*dst;
-	int		color;
-
-	int s_bpp, d_bpp;
-	int x, y, sx, sy;
-	unsigned char *dst_row, *src_row;
-	unsigned char b, g, r, a;
-	if (!game || !src || !src->img || !src->addr || src->w <= 0 || src->h <= 0)
-		return (NULL);
-	dst = ft_calloc(1,sizeof(t_img));
-	if (!dst)
-		return (NULL);
-	if (!new_blank_img(game, dst, scale.x, scale.y))
-	{
-		free(dst);
-		return (NULL);
-	}
-	s_bpp = src->bits_per_pixel / 8;
-	d_bpp = dst->bits_per_pixel / 8;
-	for (y = 0; y < dst->h; y++)
-	{
-		sy = (long long)y * src->h / dst->h;
-		if (sy >= src->h)
-			sy = src->h - 1;
-		dst_row = (unsigned char *)dst->addr + y * dst->line_length;
-		src_row = (unsigned char *)src->addr + sy * src->line_length;
-		for (x = 0; x < dst->w; x++)
-		{
-			sx = (long long)x * src->w / dst->w;
-			if (sx >= src->w)
-				sx = src->w - 1;
-			b = src_row[sx * s_bpp + 0];
-			g = src_row[sx * s_bpp + 1];
-			r = src_row[sx * s_bpp + 2];
-			a = src_row[sx * s_bpp + 3];
-			color = (r << 16) | (g << 8) | b;
-			if (intensity >= 0)
-				color = add_light(color, intensity);
-			dst_row[x * d_bpp + 0] = color & 0xFF;
-			dst_row[x * d_bpp + 1] = (color >> 8) & 0xFF;
-			dst_row[x * d_bpp + 2] = (color >> 16) & 0xFF;
-			dst_row[x * d_bpp + 3] = a;
-		}
-	}
-	return (dst);
-}
-
-void	make_fade_screen(t_game *game, t_img *img)
-{
-	static double	i;
-	t_point			scale;
-	t_img			*scaled;
-
-	scale.x = WIDTH;
-	scale.y = HEIGHT;
-	mlx_mouse_show(game->mlx, game->win);
-	if (i > 1.5)
-		game->g_flags.game_state = Finished;
-	scaled = draw_scaled_img(game, img, scale, i);
-	mlx_clear_window(game->mlx, game->win);
-	mlx_put_image_to_window(game->mlx, game->win, scaled->img, 0, 0);
-	mlx_destroy_image(game->mlx, scaled->img);
-	free(scaled);
-	i += 0.01;
-}
-
-void	make_pause_screen(t_game *game)
-{
-	t_point	scale;
-	t_img	*scaled;
-
-	scale.x = WIDTH;
-	scale.y = HEIGHT;
-	if (game->g_flags.game_state == Pause)
-	{
-		scaled = draw_scaled_img(game, &game->ass.pause_screen, scale, -1);
-		mlx_clear_window(game->mlx, game->win);
-		mlx_put_image_to_window(game->mlx, game->win, scaled->img, 0, 0);
-		mlx_destroy_image(game->mlx, scaled->img);
-		free(scaled);
-	}
-}
-
 void	draw_title(t_game *game, int i)
 {
 	int	x;
@@ -242,7 +75,7 @@ int	menu(t_game *game)
 	double			now_ms;
 	double			frame_ms;
 	t_point			scale;
-	t_img 			*scaled;
+	t_img			*scaled;
 
 	scale.x = WIDTH;
 	scale.y = HEIGHT;

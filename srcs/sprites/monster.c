@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monster.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:50:26 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/20 17:10:10 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:30:25 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	move_monster(double speed, t_game *game, t_pos d, double dist)
 			- 1].cords.y = game->ass.enemy.cords.y;
 	}
 }
+
 int	monster(t_game *game)
 {
 	t_pos	target;

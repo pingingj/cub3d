@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/27 16:10:50 by finn             ###   ########.fr       */
+/*   Updated: 2025/11/27 18:50:33 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	textures(t_game *game)
 	img_init(game, "./incs/textures/pause.xpm", &game->ass.pause_screen);
 	bonus_init(game, game->g_flags.collectibles_exist,
 		game->ass.textures[EN].filename, game->ass.textures[DO].filename);
-	menu_init(game);
+	if(game->g_flags.game_state == main_menu)
+		menu_init(game);
 	return (1);
 }
