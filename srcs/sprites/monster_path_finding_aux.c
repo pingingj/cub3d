@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monster_path_finding_aux.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/27 16:29:47 by dpaes-so          #+#    #+#             */
+/*   Updated: 2025/11/27 16:30:15 by dpaes-so         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
 static int	line_of_sight_loop(t_point xy, t_point d, t_point endxy, t_point s)
 {
+	t_game	*game;
 	int		err;
 	int		e2;
-	t_game	*game;
 
 	err = d.x - d.y;
 	game = mem_save(NULL);
@@ -29,6 +40,7 @@ static int	line_of_sight_loop(t_point xy, t_point d, t_point endxy, t_point s)
 	}
 	return (1);
 }
+
 int	has_line_of_sight(double ex, double ey, double px, double py)
 {
 	t_point	xy;
@@ -55,13 +67,13 @@ int	has_line_of_sight(double ex, double ey, double px, double py)
 
 int	is_near_wall(t_game *game, double x, double y)
 {
-	int	i;
-	t_point n;
-	t_point c;
-	int	dx[4];
-	int	dy[4];
+	t_point	n;
+	t_point	c;
+	int		i;
+	int		dx[4];
+	int		dy[4];
 
-	init_dirs(dx,dy);
+	init_dirs(dx, dy);
 	c.x = (int)x;
 	c.y = (int)y;
 	i = 0;
@@ -71,7 +83,8 @@ int	is_near_wall(t_game *game, double x, double y)
 		n.y = c.y + dy[i];
 		if (n.y >= 0 && n.y < game->map.pos.y && n.x >= 0
 			&& n.x < (int)ft_strlen(game->map.grid[n.y])
-			&& (game->map.grid[n.y][n.x] == '1' || game->map.grid[n.y][n.x] == 'd'))
+			&& (game->map.grid[n.y][n.x] == '1'
+			|| game->map.grid[n.y][n.x] == 'd'))
 			return (1);
 		i++;
 	}

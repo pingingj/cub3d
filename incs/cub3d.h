@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/25 17:29:46 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:59:35 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ typedef struct s_door
 	struct timeval	open_time;
 	double			open_s;
 	struct s_door	*next;
-	int 			frame;
+	int				frame;
 	bool			to_delete;
 }					t_door;
 
@@ -236,7 +236,6 @@ enum				e_game_state
 	Finished
 };
 
-
 enum				e_move
 {
 	forwards,
@@ -251,7 +250,6 @@ enum				e_move
 	zoom_out
 };
 
-
 typedef struct s_game_flags
 {
 	int				game_state;
@@ -261,6 +259,18 @@ typedef struct s_game_flags
 	bool			look_flag_left;
 	bool			laggy_lantern;
 }					t_game_flags;
+
+typedef struct s_cale_img_math
+{
+	unsigned char	*dst_row;
+	unsigned char	*src_row;
+	unsigned char	rgba[4];
+	int				color;
+	int				s_bpp;
+	int				d_bpp;
+	t_point	xy;
+    t_point	s_xy;
+}					t_cale_img_math;
 
 typedef struct s_game
 {
@@ -281,6 +291,7 @@ typedef struct s_game
 	t_img			door_frames[5];
 	t_img			nums[9];
 	t_door			*doors_opened;
+	t_cale_img_math	scaling;
 	int				collected_comics;
 	bool			look_flag_right;
 	bool			look_flag_left;
@@ -299,6 +310,13 @@ typedef struct s_game
 	int				fps_lock;
 }					t_game;
 
+// fps
+void				ft_sleep(double mili_secs);
+double				fps_counter(t_game *game);
+t_img				*draw_scaled_img(t_game *game, t_img *src, t_point scale,
+						double intensity);
+void				make_fade_screen(t_game *game, t_img *img);
+void				make_pause_screen(t_game *game);
 // extras
 t_game				*mem_save(t_game *to_save);
 // generation
@@ -366,10 +384,14 @@ void				change_flag(int key, t_game *game);
 void				draw_wall(t_game *game, int cx, int cy);
 void				draw_floor(t_game *game, int cx, int cy);
 void				draw_minimap(t_game *game, double playerx, double playery);
+
 // parse
 bool				parse(t_game *game, char *filename);
 void				print_errors(t_game *game, int error, char *msg);
 void				free_game(t_game *game);
+void				init_vars(t_game *game);
+char				*get_textures(t_game *game);
+char				**letters_init(void);
 void				parse_colors(t_game *game);
 bool				skip_comma(t_color *colors, int *i, bool last_check);
 bool				get_colors(t_color *colors);
@@ -378,6 +400,9 @@ int					color_hexa(t_color color);
 void				parse_map(t_game *game, char *filename, char *line);
 bool				get_map(t_game *game, char *filename, char *line);
 bool				flood_map(t_map *map, int x, int y);
+bool				get_player(t_game *game);
+char				*check_doors(t_map map, t_game game);
+void				make_enemy(t_game *game);
 void				print_info(t_game game);
 int					convert_dec(char *hexa);
 void				convert_hexa(int color, char **result, char *base, int *i);
@@ -387,7 +412,8 @@ void				free_queue(t_queue *queue);
 int					textures(t_game *game);
 void				img_init(t_game *game, char *filename, t_img *img);
 void				ft_sleep(double mili_secs);
-t_img	*draw_scaled_img(t_game *game, t_img *src, t_point scale,double intensity);
+t_img				*draw_scaled_img(t_game *game, t_img *src, t_point scale,
+						double intensity);
 
 // doors
 t_door				*ft_newdoor(int x, int y);

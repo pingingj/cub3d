@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/26 19:32:52 by dgarcez-          #+#    #+#             */
+/*   Updated: 2025/11/26 19:52:34 by dgarcez-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/cub3d.h"
 
 // int	close_door(t_pos new, double x, double y, t_game *game)
@@ -23,6 +35,22 @@ void	start_timer(t_game *game, int x, int y)
 	add_backdoor(&game->doors_opened, ft_newdoor(x, y));
 }
 
+bool	close_door(t_game *game, t_door *doors)
+{
+	if (hit_box(game, game->player.posx, game->player.posy, 1) == false
+		|| (game->ass.enemy.cords.x != -1 && hit_box(game,
+				game->ass.enemy.cords.x, game->ass.enemy.cords.y,
+				0) == false))
+		game->map.grid[doors->cords.y][doors->cords.x] = 'D';
+	else
+	{
+		doors->to_delete = true;
+		delete_door_node(&game->doors_opened);
+		return (true);
+	}
+	return (false);
+}
+
 void	door_timer(t_game *game)
 {
 	struct timeval	now;
@@ -39,17 +67,8 @@ void	door_timer(t_game *game)
 		if (now_s - doors->open_s >= timer)
 		{
 			game->map.grid[doors->cords.y][doors->cords.x] = 'd';
-			if (hit_box(game, game->player.posx, game->player.posy, 1) == false
-				|| (game->ass.enemy.cords.x != -1 && hit_box(game,
-						game->ass.enemy.cords.x, game->ass.enemy.cords.y,
-						0) == false))
-				game->map.grid[doors->cords.y][doors->cords.x] = 'D';
-			else
-			{
-				doors->to_delete = true;
-				delete_door_node(&game->doors_opened);
-				break;
-			}
+			if (close_door(game, doors) == true)
+				break ;
 		}
 		doors = doors->next;
 	}
