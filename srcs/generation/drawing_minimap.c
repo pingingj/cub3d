@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 19:15:34 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/25 15:06:10 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/01 18:51:32 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,117 +53,109 @@ void	clear_minimap_image(t_game *game, t_pos area)
 // 	}
 // }
 
-/* Minimap clipping helpers */
-/* Signed area (edge function) you already have */
+
 static inline int edge_fn(int ax, int ay, int bx, int by, int px, int py)
 {
 	return (px - ax) * (by - ay) - (py - ay) * (bx - ax);
 }
 
-/* Orientation-agnostic point-in-triangle */
+// static inline void normalize2(double *x, double *y)
+// {
+// 	double len;
 
+// 	len = sqrt((*x) * (*x) + (*y) * (*y));
+// 	if (len > 1e-9) 
+// 	{
+// 		*x /= len;
+// 		*y /= len;
+// 	}
+// }
 
-/* Normalize 2D vector (you already have normalize2; keep one) */
-static inline void normalize2(double *x, double *y)
+void fill_triangle_minimap(t_game *g, int ax, int ay, int bx, int by, int cx, int cy, int color)
 {
-	double len = sqrt((*x) * (*x) + (*y) * (*y));
-	if (len > 1e-9) { *x /= len; *y /= len; }
-}
+	int minX = ax;
+	int maxX = ax;
+	int minY = ay;
+	int maxY = ay;
+	int	y;
+	int	x;
 
-void fill_triangle_minimap(t_game *g,
-                           int ax, int ay,
-                           int bx, int by,
-                           int cx, int cy,
-                           int color)
-{
-	/* Degenerate? (area == 0) */
-	int area2 = edge_fn(ax, ay, bx, by, cx, cy);
-	if (area2 == 0)
-		return;
-
-	/* Bounding box (then clip to minimap rect) */
-	int minX = ax; if (bx < minX) minX = bx; if (cx < minX) minX = cx;
-	int maxX = ax; if (bx > maxX) maxX = bx; if (cx > maxX) maxX = cx;
-	int minY = ay; if (by < minY) minY = by; if (cy < minY) minY = cy;
-	int maxY = ay; if (by > maxY) maxY = by; if (cy > maxY) maxY = cy;
-
-	int left   = g->mini.offset;
-	int top    = g->mini.offset;
-	int right  = g->mini.offset + g->mini.size.x - 1;
-	int bottom = g->mini.offset + g->mini.size.y - 1;
-
-	if (minX < left)   minX = left;
-	if (maxX > right)  maxX = right;
-	if (minY < top)    minY = top;
-	if (maxY > bottom) maxY = bottom;
-
-	/* Accept rule based on winding */
-	int ccw = (area2 > 0);
-
-	for (int y = minY; y <= maxY; ++y)
+	if (bx < minX)
+		minX = bx;
+	if (cx < minX)
+		minX = cx;
+	if (bx > maxX)
+		maxX = bx;
+	if (cx > maxX)
+		maxX = cx;
+	if (by < minY)
+		minY = by;
+	if (cy < minY)
+		minY = cy;
+	if (by > maxY)
+		maxY = by; 
+	if (cy > maxY)
+		maxY = cy;
+	y = minY;
+	while(y <= maxY)
 	{
-		for (int x = minX; x <= maxX; ++x)
+		x = minX;
+		while(x <= maxX)
 		{
 			int w0 = edge_fn(ax, ay, bx, by, x, y);
 			int w1 = edge_fn(bx, by, cx, cy, x, y);
 			int w2 = edge_fn(cx, cy, ax, ay, x, y);
 
-			if (ccw)
-			{
+
 				if (w0 >= 0 && w1 >= 0 && w2 >= 0)
 					my_mlx_pixel_put(&g->bg_img, x, y, color);
-			}
-			else
-			{
 				if (w0 <= 0 && w1 <= 0 && w2 <= 0)
 					my_mlx_pixel_put(&g->bg_img	, x, y, color);
-			}
+			x++;
 		}
+		y++;
 	}
 }
 
-/*
-Chevron arrow:
-- Outer triangle (tip forward) minus inner notch triangle (base-side cut)
-- Everything drawn in a single color (solid red).
-*/
 void	draw_arrow(t_game *game, int cx, int cy, int color)
 {
-	/* Forward and perpendicular */
 	double fx = game->player.dirx;
 	double fy = game->player.diry;
-	normalize2(&fx, &fy);
-	double px = -fy, py = fx;
+	double px = -fy;
+	double py = fx;
+	double size;
+	double tip_len;
+	double base_len;
+	double bottom_len;
+	double sides_len;
+	t_pos	tip;
+	t_pos	left;
+	t_pos	right;
+	t_pos	bottom;
 
-	/* Scale knobs (in pixels) */
-	double T          = game->mini.tile_size * 0.8;
-	double tip_len    = 0.45 * T;  /* tip distance forward */
-	double base_len   = 0.50 * T;  /* where left/right sit behind center */
-	double apex_len   = 0.20 * T;  /* bottom apex; bigger -> lower (further back) */
-	double arm_half   = 0.45 * T;  /* half width at the “base” spread */
-
-	/* Points (float) */
-	double tipx = cx + fx * tip_len;
-	double tipy = cy + fy * tip_len;
-
-	double lx   = cx - fx * base_len + px * arm_half;
-	double ly   = cy - fy * base_len + py * arm_half;
-
-	double rx   = cx - fx * base_len - px * arm_half;
-	double ry   = cy - fy * base_len - py * arm_half;
-
-	double ax   = cx - fx * apex_len; /* lower bottom apex */
-	double ay   = cy - fy * apex_len;
-
-	/* Convert to ints (use same rounding for both triangles so edges align) */
-	int T_x = (int)lround(tipx), T_y = (int)lround(tipy);
-	int L_x = (int)lround(lx),   L_y = (int)lround(ly);
-	int R_x = (int)lround(rx),   R_y = (int)lround(ry);
-	int A_x = (int)lround(ax),   A_y = (int)lround(ay);
-
-	/* Fill two arms; no horizontal base is drawn */
+	size = game->mini.tile_size * 0.8;
+	tip_len = 0.45 * size;
+	base_len = 0.50 * size;
+	bottom_len = 0.20 * size;
+	sides_len = 0.45 * size;
+	tip.x = cx + game->player.dirx * tip_len;
+	tip.y = cy + game->player.diry * tip_len;
+	left.x   = cx - game->player.dirx * base_len + px * sides_len;
+	left.y   = cy - game->player.diry * base_len + py * sides_len;
+	right.x   = cx - game->player.dirx * base_len - px * sides_len;
+	right.y   = cy - game->player.diry * base_len - py * sides_len;
+	bottom.x   = cx - game->player.dirx * bottom_len;
+	bottom.y   = cy - game->player.diry * bottom_len;
+	int T_x = (int)lround(tip.x);
+	int T_y = (int)lround(tip.y);
+	int L_x = (int)lround(left.x);
+	int L_y = (int)lround(left.y);
+	int R_x = (int)lround(right.x);
+	int R_y = (int)lround(right.y);
+	int A_x = (int)lround(bottom.x);
+	int A_y = (int)lround(bottom.y);
 	fill_triangle_minimap(game, T_x, T_y, L_x, L_y, A_x, A_y, color);
-	fill_triangle_minimap(game, T_x, T_y, A_x, A_y, R_x, R_y, color);
+	fill_triangle_minimap(game, T_x, T_y, R_x, R_y, A_x, A_y, color);
 }
 
 void	mini_init(t_game *game)
