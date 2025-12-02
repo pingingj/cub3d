@@ -6,7 +6,7 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/12/02 14:41:26 by dpaes-so         ###   ########.fr        #
+#    Updated: 2025/12/02 18:11:20 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ CC = cc -O3
 CFLAGS = -Wall -Wextra -Werror -g 
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
-SOURCES = main.c generation/creation.c generation/raycast_math.c generation/frame_building.c \
-			generation/drawing_minimap.c generation/raycast_hit.c utils/clean.c utils/door_list.c utils/events.c \
-			utils/events2.c utils/mlx_adds.c utils/keys.c utils/movement.c utils/look.c \
-			utils/fps.c utils/image_handle.c utils/img_scaling.c \
+SOURCES = main.c generation/creation.c generation/raycast_math.c generation/frame_building.c generation/flashlight.c \
+			generation/drawing_minimap.c generation/raycast_hit.c generation/paint.c utils/clean.c utils/door_list.c utils/events.c \
+			generation/main_menu.c utils/events2.c utils/mlx_adds.c utils/keys.c utils/movement.c utils/look.c \
+			utils/fps.c utils/image_handle.c utils/img_scaling.c utils/draw_mini_arrow.c utils/drawing_mini_aux.c utils/mouse_handle.c \
 			parser/parser.c utils/parser_utils.c parser/parse_textures.c parser/rgb_parser.c parser/rgb_converter.c parser/map_parser.c \
 			parser/map_parser_aux.c parser/map_create.c parser/make_enemy.c parser/textures.c \
 			sprites/monster.c sprites/monster_aux.c sprites/monster_pathfinding.c \

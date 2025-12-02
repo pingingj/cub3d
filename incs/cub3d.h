@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/02 13:47:57 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:05:19 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,19 @@ typedef struct s_map
 	int				height;
 }					t_map;
 
+typedef struct s_arrow
+{
+	double			size;
+	double			tip_len;
+	double			base_len;
+	double			bottom_len;
+	double			sides_len;
+	t_pos			tip;
+	t_pos			left;
+	t_pos			right;
+	t_pos			bottom;
+}					t_arrow;
+
 typedef struct s_mini
 {
 	int				tile_size;
@@ -193,6 +206,7 @@ typedef struct s_mini
 	int				offset;
 	t_pos			size;
 	t_pos			center;
+	t_arrow			arrow;
 }					t_mini;
 
 typedef struct s_queue
@@ -269,8 +283,8 @@ typedef struct s_cale_img_math
 	int				color;
 	int				s_bpp;
 	int				d_bpp;
-	t_point	xy;
-    t_point	s_xy;
+	t_point			xy;
+	t_point			s_xy;
 }					t_cale_img_math;
 
 typedef struct s_game
@@ -320,6 +334,8 @@ void				make_fade_screen(t_game *game, t_img *img);
 void				make_pause_screen(t_game *game);
 // extras
 t_game				*mem_save(t_game *to_save);
+int					mouse(int x, int y, t_game *game);
+int					mouse_press(int keycode, int x, int y, t_game *game);
 // generation
 void				map_gen(t_game *game);
 void				math_with_an_e(t_game *game);
@@ -333,12 +349,12 @@ void				create_frame(t_game *game);
 void				artistic_moment(t_game *game, int x, int sdraw, int edraw);
 int					add_light(int color, double intensity);
 double				flashlight(int x, int y, t_game *game, bool is_wall);
+void				draw_title(t_game *game, int i);
+int					menu(t_game *game);
+double				flashlight(int x, int y, t_game *game, bool is_wall);
 
 // monster
 int					monster(t_game *game);
-// t_queue				*monster_bfs_set_up(t_game *game);
-// void				while_do(t_game *game, t_queue *q, t_point *curr, int i);
-// void				check_space(t_game *game, t_queue *q);
 t_queue				*ft_queuenew(void *content);
 void				ft_queueadd_back(t_queue **lst, t_queue *new);
 void				free_queue(t_queue *queue);
@@ -349,8 +365,6 @@ void				choose_pathfinding_alg(t_game *game, t_pos target, t_pos *d,
 int					has_line_of_sight(double ex, double ey, double px,
 						double py);
 int					is_near_wall(t_game *game, double x, double y);
-// t_point				pathfinding_alg(t_game *game);
-
 // sprites
 void				draw_sprite(t_game *game);
 void				draw_sprite_prep(t_game *game);
@@ -385,8 +399,9 @@ void				change_flag(int key, t_game *game);
 void				draw_wall(t_game *game, int cx, int cy);
 void				draw_floor(t_game *game, int cx, int cy);
 void				draw_minimap(t_game *game, double playerx, double playery);
-
-// parse
+void				draw_arrow(t_game *game, int cx, int cy);
+void				draw_miniframe(t_game *game);
+void				minimap_tiles(t_game game, t_pos tile_pos, t_pos win_pos);
 bool				parse(t_game *game, char *filename);
 void				print_errors(t_game *game, int error, char *msg);
 void				free_game(t_game *game);
