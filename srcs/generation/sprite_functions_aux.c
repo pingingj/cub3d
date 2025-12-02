@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_functions_aux.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:38:06 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/23 16:44:21 by finn             ###   ########.fr       */
+/*   Updated: 2025/12/02 14:25:34 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static double	ligth_lvl_sprite(t_game *game, double sprite_dist,
 	double	max_dist;
 	double	intensity;
 	double	dist_intensity;
+
 	(void)game;
 	max_dist = 0.0038462 * WIDTH + 5.4615;
 	dist_intensity = 1.0 - (sprite_dist / max_dist);
@@ -73,22 +74,19 @@ static double	ligth_lvl_sprite(t_game *game, double sprite_dist,
 
 double	sprite_flashlight(int x, int y, t_game *game, double sprite_dist)
 {
-	double	dx;
-	double	dy;
+	t_pos	d;
 	double	softness;
 	double	dist;
 	double	circ_intensity;
 	double	intensity;
-	double	max_dist_sq;
 
-	dx = x - WIDTH / 2;
-	dy = y - HEIGHT / 2;
-	softness = WIDTH * 0.15625 + game->player.look/3 + game->bob / 10.0;
+	d.x = x - WIDTH / 2;
+	d.y = y - HEIGHT / 2;
+	softness = WIDTH * 0.15625 + game->player.look / 3 + game->bob / 10.0;
 	if (softness < WIDTH * 0.15625 / 3)
 		softness = WIDTH * 0.15625 / 3;
-	dist = dx * dx + dy * dy;
-	max_dist_sq = 2.0 * softness * softness;
-	if (dist >= max_dist_sq)
+	dist = d.x * d.x + d.y * d.y;
+	if (dist >= 2.0 * softness * softness)
 		return (AMBIENT);
 	circ_intensity = 1.0 - (dist / (2.0 * softness * softness));
 	if (circ_intensity < 0.0)

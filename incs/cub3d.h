@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/27 18:59:35 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/02 13:47:57 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1440
+# define WIDTH 1400
 # define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.08
@@ -74,6 +74,7 @@
 # define CL 4
 # define EN 5
 # define DO 6
+# define MAX_CL 8
 
 typedef struct s_img
 {

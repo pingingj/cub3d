@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_math.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:38:08 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/25 17:57:45 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/02 14:40:12 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
+
+/*->dir its the direction, like if dirx = 1 & diry = 0, we are looking rigth
+  ->plane is a perpendicular vector to the direction, it determines the FOV.
+
+	->camerax indicates how much the ray is leaning to the left/rigth(valors
+	go between [-1,1])
+
+	->raydir are the vector that when added will give me the ray,so basicly
+		camra x tells me wich side the ray is
+  the math to get raydirx/y is basicly connecting the player the pointy
+  part of the triangle
+  to the base,using the direction he is looking, the fov,
+	and how far left or rigth the ray should be*/
+
+void	setup_ray(t_game *game, int x)
+{
+	game->meth.camerax = 2 * x / (double)WIDTH - 1;
+	game->meth.raydirx = game->player.dirx + game->player.planex
+		* game->meth.camerax;
+	game->meth.raydiry = game->player.diry + game->player.planey
+		* game->meth.camerax;
+	game->meth.mapx = (int)game->player.posx;
+	game->meth.mapy = (int)game->player.posy;
+}
 
 /*->so here, if raydir is 0 means we are following the x/y axes,
 	and since we cant divide by 0 we just slap a big ahh number
@@ -64,56 +88,6 @@ void	dda_prep(t_game *game)
 		game->meth.sidedisty = (game->meth.mapy + 1.0 - game->player.posy)
 			* game->meth.deltadisty;
 	}
-}
-
-int	hit_loop(t_game *game, int *side)
-{
-	int	hit;
-
-	hit = 0;
-	if (game->meth.sidedistx < game->meth.sidedisty)
-	{
-		game->meth.sidedistx += game->meth.deltadistx;
-		game->meth.mapx += game->meth.stepx;
-		*side = 0;
-	}
-	else
-	{
-		game->meth.sidedisty += game->meth.deltadisty;
-		game->meth.mapy += game->meth.stepy;
-		*side = 1;
-	}
-	if (game->map.grid[game->meth.mapy][game->meth.mapx] == '1')
-		hit = 1;
-	else if (game->map.grid[game->meth.mapy][game->meth.mapx] == 'd')
-	{
-		game->meth.door = true;
-		hit = 1;
-	}
-	if (game->map.grid[game->meth.mapy][game->meth.mapx] == 'D')
-		game->meth.looking_door = true;
-	return (hit);
-}
-/*->hit wall we calculate how far the ray goes until it hits a wall,
-	so we need to add the distance the player need to reach the closes wall
-   then we just nned to add delta,because its the distance the ray walsk to
-   go from one line to another lane in the same orientation(x or y)
-  ->we add on the map side,
-	because we need to "walk" on the map to be able to identify the wall*/
-
-int	hit_wall(t_game *game)
-{
-	int	hit;
-	int	side;
-
-	hit = 0;
-	side = 0;
-	game->meth.door = false;
-	while (hit == 0)
-	{
-		hit = hit_loop(game, &side);
-	}
-	return (side);
 }
 
 /*this is jsut becayse the DDA walks one square 2 much so we gotta go back

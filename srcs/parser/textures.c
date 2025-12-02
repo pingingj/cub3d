@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/27 18:50:33 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/02 13:43:38 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,14 @@
 
 void	img_init(t_game *game, char *filename, t_img *img)
 {
-	img->img = mlx_xpm_file_to_image(game->mlx,
-			filename, &img->w,
-			&img->h);
+	img->img = mlx_xpm_file_to_image(game->mlx, filename, &img->w, &img->h);
 	if (img->img == NULL)
 	{
 		ft_dprintf(2, "Error\nFailed to use %s file\n", filename);
 		closex(game);
 	}
-	img->addr = mlx_get_data_addr(img->img,
-			&img->bits_per_pixel,
-			&img->line_length,
-			&img->endian);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
 	if (img->addr == NULL)
 	{
 		ft_dprintf(2, "Error\nFailed to use %s file\n", filename);
@@ -94,7 +90,7 @@ int	textures(t_game *game)
 	img_init(game, "./incs/textures/pause.xpm", &game->ass.pause_screen);
 	bonus_init(game, game->g_flags.collectibles_exist,
 		game->ass.textures[EN].filename, game->ass.textures[DO].filename);
-	if(game->g_flags.game_state == main_menu)
+	if (game->g_flags.game_state == main_menu)
 		menu_init(game);
 	return (1);
 }

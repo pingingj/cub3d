@@ -6,7 +6,7 @@
 #    By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 16:42:33 by dgarcez-          #+#    #+#              #
-#    Updated: 2025/11/27 18:44:40 by dpaes-so         ###   ########.fr        #
+#    Updated: 2025/12/02 14:41:26 by dpaes-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ CC = cc -O3
 CFLAGS = -Wall -Wextra -Werror -g 
 MLXFLAGS = -L ./minilibx_linux -Imlx_linux -lX11 -lXext
 
-SOURCES = main.c generation/creation.c generation/raycast_math.c generation/raycast_start.c \
-			generation/drawing_minimap.c utils/clean.c utils/door_list.c utils/events.c \
+SOURCES = main.c generation/creation.c generation/raycast_math.c generation/frame_building.c \
+			generation/drawing_minimap.c generation/raycast_hit.c utils/clean.c utils/door_list.c utils/events.c \
 			utils/events2.c utils/mlx_adds.c utils/keys.c utils/movement.c utils/look.c \
-			utils/fps.c utils/image_handle.c \
+			utils/fps.c utils/image_handle.c utils/img_scaling.c \
 			parser/parser.c utils/parser_utils.c parser/parse_textures.c parser/rgb_parser.c parser/rgb_converter.c parser/map_parser.c \
 			parser/map_parser_aux.c parser/map_create.c parser/make_enemy.c parser/textures.c \
 			sprites/monster.c sprites/monster_aux.c sprites/monster_pathfinding.c \

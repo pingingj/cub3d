@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 18:37:27 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/18 17:27:23 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/02 13:51:28 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,11 @@ void	start_sprite_handle(t_game *game, int *order)
 	while (game->spath.sp_index < game->spath.edrawx)
 		draw_sprite_prep(game);
 }
+
 void	hande_sprites(t_game *game)
 {
-	int order[game->ass.collect_amount];
-	double sprite_dist[game->ass.collect_amount];
+	double	sprite_dist[MAX_CL];
+	int		order[MAX_CL];
 
 	game->spath.i = -1;
 	while (++game->spath.i < game->ass.collect_amount)
