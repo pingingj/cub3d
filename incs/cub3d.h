@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/02 18:05:19 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/03 17:04:33 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1400
+# define WIDTH 1440
 # define HEIGHT 900
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.08

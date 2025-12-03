@@ -6,7 +6,7 @@
 /*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/03 15:52:08 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:29:46 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	running_loops(t_game *game)
 
 int	main_loop(t_game *game)
 {
+	static int	autoclose;
+
 	if (game->g_flags.game_state == main_menu)
 		menu(game);
 	else if (game->g_flags.game_state == death_screen)
@@ -45,6 +47,14 @@ int	main_loop(t_game *game)
 		make_fade_screen(game, &game->ass.win_screen);
 	else
 		running_loops(game);
+	if (game->g_flags.game_state == Finished)
+	{
+		if (autoclose < 20)
+			ft_sleep(100);
+		else
+			closex(game);
+		autoclose++;
+	}
 	return (0);
 }
 
@@ -68,6 +78,7 @@ int	main(int argc, char **argv)
 			return (1);
 		game.fps_lock = 60;
 		game.mlx = mlx_init();
+		game.g_flags.game_state = running;
 		mem_save(&game);
 		textures(&game);
 		map_gen(&game);

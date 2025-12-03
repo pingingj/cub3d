@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/27 16:08:43 by finn             ###   ########.fr       */
+/*   Updated: 2025/12/03 16:36:59 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	move_foward(t_game *game, double speed)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x
 				&& (int)game->ass.sprites[i].cords.y == (int)new_y
-				&& game->ass.sprites[i].exists == true)
+				&& game->ass.sprites[i].exists == true && game->ass.sprites[i].enemy == false)
 			{
 				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
@@ -83,7 +83,7 @@ void	move_back(t_game *game, double speed)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x
 				&& (int)game->ass.sprites[i].cords.y == (int)new_y
-				&& game->ass.sprites[i].exists == true)
+				&& game->ass.sprites[i].exists == true && game->ass.sprites[i].enemy == false)
 			{
 				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
@@ -112,7 +112,7 @@ void	move_left(t_game *game, double speed)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x
 				&& (int)game->ass.sprites[i].cords.y == (int)new_y
-				&& game->ass.sprites[i].exists == true)
+				&& game->ass.sprites[i].exists == true && game->ass.sprites[i].enemy == false)
 			{
 				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
@@ -141,7 +141,7 @@ void	move_right(t_game *game, double speed)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x
 				&& (int)game->ass.sprites[i].cords.y == (int)new_y
-				&& game->ass.sprites[i].exists == true)
+				&& game->ass.sprites[i].exists == true && game->ass.sprites[i].enemy == false)
 			{
 				game->collected_comics++;
 				game->ass.sprites[i].exists = false;
