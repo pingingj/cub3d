@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:58:52 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/26 19:04:00 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:27:13 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	check_walls(char *line, t_game *game)
 		}
 	}
 	free(line);
-	print_errors(game, 1, "Invalid input only 'NO', 'EA', 'WE', 'SO', 'C', 'F',\
-		'EN', 'DO' and 'CL' available");
+	print_errors(game, 1, "Invalid input only 'NO', 'EA', 'WE', 'SO', 'C',\
+	'F','EN', 'DO' and 'CL' available");
 }
 
 bool	check_line(char *line, t_game *game)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/26 19:07:06 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:23:21 by dpaes-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,12 @@ bool	parse(t_game *game, char *filename)
 	if (!game->ass.ceiling.nums || !game->ass.floor.nums
 		|| !game->ass.textures[NO].filename || !game->ass.textures[EA].filename
 		|| !game->ass.textures[WE].filename || !game->ass.textures[SO].filename)
+	{
+		free(line);
 		print_errors(game, 1, "Missing texture or color");
-	parse_colors(game);
+	}
 	parse_map(game, filename, line);
+	parse_colors(game);
 	close(game->fd);
 	make_enemy(game);
 	make_sprites(game);
