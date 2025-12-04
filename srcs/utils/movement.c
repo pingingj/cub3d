@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/04 18:24:34 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:59:32 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	move_back(t_game *game, double speed)
 	if (game->map.grid[(int)new_y][(int)new_x] == 'c')
 	{
 		i = -1;
-		while (i < game->ass.collect_amount)
+		while (++i < game->ass.collect_amount)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x
 				&& (int)game->ass.sprites[i].cords.y == (int)new_y
@@ -108,7 +108,7 @@ void	move_left(t_game *game, double speed)
 	if (game->map.grid[(int)new_y][(int)new_x] == 'c')
 	{
 		i = -1;
-		while (i < game->ass.collect_amount)
+		while (++i < game->ass.collect_amount)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x
 				&& (int)game->ass.sprites[i].cords.y == (int)new_y
@@ -137,7 +137,7 @@ void	move_right(t_game *game, double speed)
 	if (game->map.grid[(int)new_y][(int)new_x] == 'c')
 	{
 		i = -1;
-		while (i < game->ass.collect_amount)
+		while (++i < game->ass.collect_amount)
 		{
 			if ((int)game->ass.sprites[i].cords.x == (int)new_x
 				&& (int)game->ass.sprites[i].cords.y == (int)new_y
