@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fps.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 17:40:28 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/02 13:31:44 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:23:22 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ double	fps_counter(t_game *game)
 	frames++;
 	if (current_time - last_time >= 1.0)
 	{
-		printf("fps = %d\n", frames);
 		frames = 0;
 		last_time = current_time;
 	}

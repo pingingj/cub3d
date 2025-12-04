@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paint.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 17:14:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/03 19:04:04 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:23:40 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,11 @@ int	get_color(t_game *game, int sdraw, int y)
 	textpos.y = textpos.x + (y - sdraw) * (1.0 * sprite.h
 			/ game->meth.line_height);
 	text.y = (int)textpos.y % (sprite.h);
+	if (text.x < 0 || text.y < 0 || text.x > sprite.w || text.y > sprite.h)
+		return (0xFFFFFF);
 	pixel = sprite.addr + (text.y * sprite.line_length + text.x
 			* (sprite.bits_per_pixel / 8));
-	color = *(int*)pixel;
+	color = *(int *)pixel;
 	return (color);
 }
 
