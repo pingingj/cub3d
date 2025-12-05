@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_enemy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 19:06:14 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/26 19:07:24 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 14:52:48 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void	allocating_enemy(t_game *game)
 		print_errors(game, 1, "Malloc fail in make_enemy");
 	game->prev = ft_calloc(game->map.pos.y + 1, sizeof(t_point *));
 	if (game->prev == NULL)
-	{
-		free(game->visited);
 		print_errors(game, 1, "Malloc fail in make_enemy");
-	}
 	while (y < game->map.pos.y)
 	{
 		game->visited[y] = ft_calloc(game->map.pos.x, sizeof(int));

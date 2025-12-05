@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: finn <finn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/11/27 16:10:10 by finn             ###   ########.fr       */
+/*   Updated: 2025/12/05 15:02:48 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,7 @@ void	print_errors(t_game *game, int error, char *msg)
 		ft_dprintf(2, "Error\n%s\n", msg);
 	if (error == 1)
 		free_game(game);
+	if(error == 2)
+		closex(game);
 	exit(error);
 }

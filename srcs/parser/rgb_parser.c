@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rgb_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 22:06:42 by daniel            #+#    #+#             */
-/*   Updated: 2025/08/26 19:46:05 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 14:56:43 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ void	parse_colors(t_game *game)
 	if (check_colors(game->ass.ceiling) == false
 		|| check_colors(game->ass.floor) == false)
 		print_errors(game, 1, "Colors values aren't valid");
-	game->ass.ceiling.hexa = color_hexa(game->ass.ceiling);
-	game->ass.floor.hexa = color_hexa(game->ass.floor);
+	game->ass.ceiling.hexa = color_hexa(game, game->ass.ceiling);
+	game->ass.floor.hexa = color_hexa(game, game->ass.floor);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/03 17:04:33 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/05 14:56:53 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,7 +412,7 @@ void				parse_colors(t_game *game);
 bool				skip_comma(t_color *colors, int *i, bool last_check);
 bool				get_colors(t_color *colors);
 bool				check_colors(t_color colors);
-int					color_hexa(t_color color);
+int					color_hexa(t_game *game, t_color color);
 void				parse_map(t_game *game, char *filename, char *line);
 bool				get_map(t_game *game, char *filename, char *line);
 bool				flood_map(t_map *map, int x, int y);

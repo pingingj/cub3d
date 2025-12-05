@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:50:51 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/11/26 17:58:40 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 14:53:54 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ bool	get_map(t_game *game, char *filename, char *line)
 	}
 	game->map.grid = ft_calloc(game->map.pos.y + 1, sizeof(char *));
 	if (game->map.grid == NULL)
-		return (false);
+		print_errors(game, 1, "Malloc failed in get_map");
 	close(game->fd);
 	get_grid(game, filename);
 	return (true);

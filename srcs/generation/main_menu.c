@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_menu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 17:58:18 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/02 18:12:05 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/05 14:42:48 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	draw_title(t_game *game, int i)
 	}
 }
 
-void	menu_scale(int *frame, t_game *game, double now_ms, double last_ms)
+void	menu_scale(int *frame, t_game *game, double now_ms, double *last_ms)
 {
 	t_img	*scaled;
 	t_point	scale;
@@ -45,7 +45,7 @@ void	menu_scale(int *frame, t_game *game, double now_ms, double last_ms)
 	mlx_destroy_image(game->mlx, scaled->img);
 	free(scaled);
 	(*frame)++;
-	last_ms = now_ms;
+	(*last_ms) = now_ms;
 }
 
 int	menu(t_game *game)
@@ -67,7 +67,7 @@ int	menu(t_game *game)
 		game->g_flags.button_ready = true;
 	}
 	if (now_ms - last_ms >= frame_ms)
-		menu_scale(&frame, game, now_ms, last_ms);
+		menu_scale(&frame, game, now_ms, &last_ms);
 	if (frame > 193)
 		frame = 152;
 	return (1);
