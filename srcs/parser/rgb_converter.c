@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:37:31 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/05 14:58:12 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 16:56:27 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	convert_hexa(int color, char **result, char *base, int *i)
 	(*result)[*i] = base[remainder];
 }
 
-int	color_hexa(t_game *game,t_color color)
+int	color_hexa(t_game *game, t_color color)
 {
 	char	*hexa;
 	int		result;

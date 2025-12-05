@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_freeany.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 17:49:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/10/15 17:51:40 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:09:27 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void freeany(void *arr)
+void	freeany(void *arr)
 {
-	int	i;
-	void **ptr;
+	int		i;
+	void	**ptr;
 
-	ptr = (void**)arr;
+	ptr = (void **)arr;
 	i = 0;
 	if (!ptr)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/05 16:16:36 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:03:28 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,29 @@ int	closex(t_game *game)
 
 // 	j = 0;
 // 	i = 0;
-	// printf("NO = %s\n", game.ass.textures[NO].filename);
-	// printf("EA = %s\n", game.ass.textures[EA].filename);
-	// printf("SO = %s\n", game.ass.textures[SO].filename);
-	// printf("WE = %s\n", game.ass.textures[WE].filename);
-	// printf("CL = %s\n", game.ass.textures[CL].filename);
-	// printf("EN = %s\n", game.ass.textures[EN].filename);
-	// printf("DO = %s\n", game.ass.textures[DO].filename);
-	// printf("length = %f\n", game.map.pos.x);
-	// printf("height = %f\n", game.map.pos.y);
-	// printf("collect amount  = %d\n", game.ass.collect_amount - 1);
-	// printf("Ceiling = %s\n", game.ass.ceiling.nums);
-	// printf("R = %d\n", game.ass.ceiling.red);
-	// printf("G = %d\n", game.ass.ceiling.green);
-	// printf("B = %d\n", game.ass.ceiling.blue);
-	// printf("Floor = %s\n", game.ass.floor.nums);
-	// printf("R = %d\n", game.ass.floor.red);
-	// printf("G = %d\n", game.ass.floor.green);
-	// printf("B = %d\n", game.ass.floor.blue);
-	// printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
-	// printf("hexa floor = %d\n", game.ass.floor.hexa);
-	// printf("player cords x = %f y = %f\n", game.player.posx, 
-	//game.player.posy);
-	// printf("collected amount = %d\n", game.collected_comics);
+// printf("NO = %s\n", game.ass.textures[NO].filename);
+// printf("EA = %s\n", game.ass.textures[EA].filename);
+// printf("SO = %s\n", game.ass.textures[SO].filename);
+// printf("WE = %s\n", game.ass.textures[WE].filename);
+// printf("CL = %s\n", game.ass.textures[CL].filename);
+// printf("EN = %s\n", game.ass.textures[EN].filename);
+// printf("DO = %s\n", game.ass.textures[DO].filename);
+// printf("length = %f\n", game.map.pos.x);
+// printf("height = %f\n", game.map.pos.y);
+// printf("collect amount  = %d\n", game.ass.collect_amount - 1);
+// printf("Ceiling = %s\n", game.ass.ceiling.nums);
+// printf("R = %d\n", game.ass.ceiling.red);
+// printf("G = %d\n", game.ass.ceiling.green);
+// printf("B = %d\n", game.ass.ceiling.blue);
+// printf("Floor = %s\n", game.ass.floor.nums);
+// printf("R = %d\n", game.ass.floor.red);
+// printf("G = %d\n", game.ass.floor.green);
+// printf("B = %d\n", game.ass.floor.blue);
+// printf("hexa ceiling = %d\n", game.ass.ceiling.hexa);
+// printf("hexa floor = %d\n", game.ass.floor.hexa);
+// printf("player cords x = %f y = %f\n", game.player.posx,
+// game.player.posy);
+// printf("collected amount = %d\n", game.collected_comics);
 // 	while (i < game.map.pos.y)
 // 	{
 // 		j = 0;
@@ -162,7 +162,7 @@ void	print_errors(t_game *game, int error, char *msg)
 {
 	if (msg != NULL)
 		ft_dprintf(2, "Error\n%s\n", msg);
-	if(error == 2)
+	if (error == 2)
 		closex(game);
 	if (game->fd > 2)
 		close(game->fd);

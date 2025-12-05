@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/05 15:34:42 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:11:59 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,7 +355,7 @@ double				flashlight(int x, int y, t_game *game, bool is_wall);
 
 // monster
 int					monster(t_game *game);
-t_queue				*ft_queuenew(t_game *game,void *content);
+t_queue				*ft_queuenew(t_game *game, void *content);
 void				ft_queueadd_back(t_queue **lst, t_queue *new);
 void				free_queue(t_queue *queue);
 void				init_dirs(int *dx, int *dy);

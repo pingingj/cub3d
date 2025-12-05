@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 19:32:52 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/05 16:15:22 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:03:37 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@
 
 void	start_timer(t_game *game, int x, int y)
 {
-	t_door *door;
+	t_door	*door;
 
-	door =  ft_newdoor(x, y);
-	if(!door)
-		print_errors(game,2,"Malloc Failled at start_timer\n");
+	door = ft_newdoor(x, y);
+	if (!door)
+		print_errors(game, 2, "Malloc Failled at start_timer\n");
 	add_backdoor(&game->doors_opened, door);
 }
 
@@ -44,8 +44,7 @@ bool	close_door(t_game *game, t_door *doors)
 {
 	if (hit_box(game, game->player.posx, game->player.posy, 1) == false
 		|| (game->ass.enemy.cords.x != -1 && hit_box(game,
-				game->ass.enemy.cords.x, game->ass.enemy.cords.y,
-				0) == false))
+				game->ass.enemy.cords.x, game->ass.enemy.cords.y, 0) == false))
 		game->map.grid[doors->cords.y][doors->cords.x] = 'D';
 	else
 	{

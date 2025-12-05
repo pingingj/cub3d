@@ -6,21 +6,19 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:52:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/05 16:07:54 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:03:04 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
-static t_queue	*monster_bfs_set_up(t_game *game)
+static t_queue	*monster_bfs_set_up(t_game *game, int y)
 {
-	int		y;
 	t_point	*monster_pt;
 	t_queue	*queue;
 	int		row_length;
 
 	queue = NULL;
-	y = -1;
 	while (++y < game->map.pos.y)
 	{
 		row_length = ft_strlen(game->map.grid[y]);
@@ -28,15 +26,15 @@ static t_queue	*monster_bfs_set_up(t_game *game)
 		ft_bzero(game->prev[y], sizeof(t_point) * row_length);
 	}
 	monster_pt = ft_calloc(1, sizeof(t_point));
-	if(!monster_pt)
-		print_errors(game,2,"Malloc Failed at monster bfs\n");
+	if (!monster_pt)
+		print_errors(game, 2, "Malloc Failed at monster bfs\n");
 	monster_pt->x = (int)game->ass.enemy.cords.x;
 	monster_pt->y = (int)game->ass.enemy.cords.y;
 	if (monster_pt->y >= 0 && monster_pt->y < game->map.pos.y
 		&& monster_pt->x >= 0
 		&& monster_pt->x < (int)ft_strlen(game->map.grid[monster_pt->y]))
 	{
-		ft_queueadd_back(&queue, ft_queuenew(game,monster_pt));
+		ft_queueadd_back(&queue, ft_queuenew(game, monster_pt));
 		game->visited[monster_pt->y][monster_pt->x] = 1;
 		game->prev[monster_pt->y][monster_pt->x] = *monster_pt;
 	}
@@ -63,14 +61,12 @@ static void	while_do(t_game *game, t_queue *q, t_point *curr, int i)
 		game->visited[new_y][new_x] = 1;
 		game->prev[new_y][new_x] = *curr;
 		next = ft_calloc(1, sizeof(t_point));
-		if(!next)
-		{
-			free_queue(game->queue);
-			print_errors(game,2,"Malloc failed at While do monster\n");
-		}
+		if (!next)
+			return (free_queue(game->queue), print_errors(game, 2,
+					"Malloc failed at While do monster\n"));
 		next->x = new_x;
 		next->y = new_y;
-		ft_queueadd_back(&q, ft_queuenew(game,next));
+		ft_queueadd_back(&q, ft_queuenew(game, next));
 	}
 }
 
@@ -96,7 +92,7 @@ static t_point	pathfinding_alg(t_game *game, bool *step_monster)
 	t_point	path_cell;
 	t_point	next_cell;
 
-	game->queue = monster_bfs_set_up(game);
+	game->queue = monster_bfs_set_up(game, -1);
 	check_space(game, game->queue);
 	path_cell.x = (int)game->player.posx;
 	path_cell.y = (int)game->player.posy;

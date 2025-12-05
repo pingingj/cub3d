@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- <dgarcez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:30:24 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/21 19:36:01 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:09:37 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,3 @@ long	ft_atol(char *num)
 		result = -1;
 	return (result * sign);
 }
-

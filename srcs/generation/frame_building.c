@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/05 16:30:34 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 16:59:05 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,29 +89,27 @@ static t_point	change_offset(int size, bool comic)
 
 void	change_number_bg(t_img *img, int size, t_point scale, bool comic)
 {
-	int		x;
-	int		y;
+	t_point	coords;
 	t_point	offset;
 	int		color;
 	t_game	*game;
 
 	game = mem_save(NULL);
-	if(!img)
-		print_errors(game,2,"New Img Failed");
-	y = -1;
-	color = 0;
+	if (!img)
+		print_errors(game, 2, "New Img Failed");
+	coords.y = -1;
 	offset = change_offset(size, comic);
-	while (++y < scale.y)
+	while (++coords.y < scale.y)
 	{
-		x = -1;
-		while (++x < scale.x)
+		coords.x = -1;
+		while (++coords.x < scale.x)
 		{
-			color = pixel_get(img, x, y);
-			if ((unsigned int)color != 0xFF000000 && offset.x + x >= 0
-				&& offset.x + x <= WIDTH && offset.y + y >= 0 && offset.y
-				+ y <= HEIGHT)
-				my_mlx_pixel_put(&game->bg_img, offset.x + x, y + offset.y,
-					color);
+			color = pixel_get(img, coords.x, coords.y);
+			if ((unsigned int)color != 0xFF000000 && offset.x + coords.x >= 0
+				&& offset.x + coords.x <= WIDTH && offset.y + coords.y >= 0
+				&& offset.y + coords.y <= HEIGHT)
+				my_mlx_pixel_put(&game->bg_img, offset.x + coords.x, coords.y
+					+ offset.y, color);
 		}
 	}
 	mlx_destroy_image(game->mlx, img->img);

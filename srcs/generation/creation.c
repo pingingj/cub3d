@@ -6,26 +6,25 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:34:15 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/05 16:35:01 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 16:56:48 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/cub3d.h"
 
-
 static void	background_gen(t_game *game)
 {
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "NEETs");
 	if (!game->win)
-		print_errors(game,2,"Mlx New Window Failed");
+		print_errors(game, 2, "Mlx New Window Failed");
 	game->bg_img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (!game->bg_img.img)
-		print_errors(game,2,"Mlx New Img Failed");
+		print_errors(game, 2, "Mlx New Img Failed");
 	game->bg_img.addr = mlx_get_data_addr(game->bg_img.img,
 			&game->bg_img.bits_per_pixel, &game->bg_img.line_length,
 			&game->bg_img.endian);
 	if (!game->bg_img.addr)
-		print_errors(game,2,"Mlx Img Addres Failed");
+		print_errors(game, 2, "Mlx Img Addres Failed");
 }
 
 // camera plane is the fov
