@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:28:51 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/05 16:54:03 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:25:03 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@ void	make_fade_screen(t_game *game, t_img *img)
 	static double	i;
 	t_point			scale;
 	t_img			*scaled;
+	double			limit;
 
+	limit = 0;
 	scale.x = WIDTH;
 	scale.y = HEIGHT;
 	mlx_mouse_show(game->mlx, game->win);
-	if (i > 1.5)
+	if (game->g_flags.game_state == Win_screen)
+		limit = 0.8;
+	else if (game->g_flags.game_state == death_screen)
+		limit = 1.5;
+	if (i > limit)
 		game->g_flags.game_state = Finished;
 	scaled = draw_scaled_img(game, img, scale, i);
 	if (scaled == NULL)
