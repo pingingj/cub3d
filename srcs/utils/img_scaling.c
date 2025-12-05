@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   img_scaling.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 13:38:01 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/02 13:43:12 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/05 16:19:51 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_img	*draw_scaled_img(t_game *game, t_img *src, t_point scale,
 		return (NULL);
 	dst = ft_calloc(1, sizeof(t_img));
 	if (!dst)
-		return (NULL);
+		print_errors(game,2,"Malloc Failed at draw scaled img\n");
 	if (!new_blank_img(game, dst, scale.x, scale.y))
 		return (free(dst), NULL);
 	scale_img(src, intensity, dst, game);

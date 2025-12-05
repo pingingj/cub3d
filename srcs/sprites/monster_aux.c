@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:51:03 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/05 15:06:16 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:46:08 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@ void	ft_queueadd_back(t_queue **lst, t_queue *new)
 	buffer->next = new;
 }
 
-t_queue	*ft_queuenew(void *content)
+t_queue	*ft_queuenew(t_game *game,void *content)
 {
 	t_queue	*new_node;
 
 	new_node = ft_calloc(1, sizeof(t_queue));
 	if (new_node == NULL)
-		return (NULL);
+	{
+		free(content);
+		ft_dprintf(2,"Malloc Failed at ft_queuenew\n");
+		closex(game);
+	}
 	new_node->content = content;
 	new_node->next = NULL;
 	return (new_node);

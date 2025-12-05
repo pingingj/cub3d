@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frame_building.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:46:37 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/02 14:38:56 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2025/12/05 16:30:34 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	change_number_bg(t_img *img, int size, t_point scale, bool comic)
 	t_game	*game;
 
 	game = mem_save(NULL);
+	if(!img)
+		print_errors(game,2,"New Img Failed");
 	y = -1;
 	color = 0;
 	offset = change_offset(size, comic);

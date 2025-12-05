@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/05 14:56:53 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:34:42 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1440
-# define HEIGHT 900
+# define WIDTH 1200
+# define HEIGHT 700
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.08
 # define MONSTER_SPEED 0.1
@@ -355,7 +355,7 @@ double				flashlight(int x, int y, t_game *game, bool is_wall);
 
 // monster
 int					monster(t_game *game);
-t_queue				*ft_queuenew(void *content);
+t_queue				*ft_queuenew(t_game *game,void *content);
 void				ft_queueadd_back(t_queue **lst, t_queue *new);
 void				free_queue(t_queue *queue);
 void				init_dirs(int *dx, int *dy);

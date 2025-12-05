@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 17:58:18 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/05 14:42:48 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/05 16:46:33 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	menu_scale(int *frame, t_game *game, double now_ms, double *last_ms)
 	scale.x = WIDTH;
 	scale.y = HEIGHT;
 	scaled = draw_scaled_img(game, &game->title[(*frame)], scale, -1);
+	if (scaled == NULL)
+		print_errors(game, 2, "New img failed in menu_scale");
 	mlx_clear_window(game->mlx, game->win);
 	mlx_put_image_to_window(game->mlx, game->win, scaled->img, 0, 0);
 	mlx_destroy_image(game->mlx, scaled->img);
