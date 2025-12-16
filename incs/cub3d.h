@@ -6,7 +6,7 @@
 /*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/05 17:11:59 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2025/12/16 14:02:53 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@
 # define CL 4
 # define EN 5
 # define DO 6
-# define MAX_CL 8
+# define MAX_CL 9
 
 typedef struct s_img
 {
