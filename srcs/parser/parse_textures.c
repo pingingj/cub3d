@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:58:52 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/03 15:27:13 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:07:46 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	check_texture(char *line, char **img, char c)
 	return (true);
 }
 
-void	check_walls(char *line, t_game *game)
+bool	check_walls(char *line, t_game *game)
 {
 	char	**letters;
 	int		i;
@@ -56,39 +56,37 @@ void	check_walls(char *line, t_game *game)
 				free(line);
 				print_errors(game, 1, "Invalid texture input");
 			}
-			return ;
+			return (true);
 		}
 	}
-	free(line);
-	print_errors(game, 1, "Invalid input only 'NO', 'EA', 'WE', 'SO', 'C',\
-	'F','EN', 'DO' and 'CL' available");
+	return (false);
 }
 
-bool	check_line(char *line, t_game *game)
+char	*check_line(char *line, t_game *game)
 {
 	skip_wspaces(&line);
 	if (line[0] == '\0' || line[0] == '\n')
-		return (true);
+		return (NULL);
 	if (ft_strncmp(line, "C ", 2) == 0)
 	{
 		if (check_texture(line, &game->ass.ceiling.nums, 'C') == false)
 		{
-			free(line);
-			print_errors(game, 1, "Invalid ceiling input");
+			return ("Invalid ceiling input");
 		}
-		return (true);
+		return (NULL);
 	}
 	else if (ft_strncmp(line, "F ", 2) == 0)
 	{
 		if (check_texture(line, &game->ass.floor.nums, 'F') == false)
 		{
-			free(line);
-			print_errors(game, 1, "Invalid floor input");
+			return ("Invalid floor input");
 		}
-		return (true);
+		return (NULL);
 	}
-	check_walls(line, game);
-	return (true);
+	if (check_walls(line, game) == false)
+		return ("Invalid input only 'NO', 'EA', 'WE', 'SO', 'C',\
+					'F','EN', 'DO' and 'CL' available");
+	return (NULL);
 }
 
 bool	is_map(char *line)
@@ -113,6 +111,7 @@ bool	is_map(char *line)
 char	*get_textures(t_game *game)
 {
 	char	*line;
+	char	*error;
 
 	line = get_next_line(game->fd);
 	if (line == NULL)
@@ -122,8 +121,12 @@ char	*get_textures(t_game *game)
 		if (is_map(line) == true)
 			return (line);
 		game->map.breakp++;
-		check_line(line, game);
-		free(line);
+			error = check_line(line, game);
+		if (error != NULL)
+		{
+			free(line);
+			print_errors(game, 1 , error);
+		}
 		line = get_next_line(game->fd);
 	}
 	return (NULL);
