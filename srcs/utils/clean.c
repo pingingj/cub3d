@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:55:00 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/05 17:03:28 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2026/06/15 23:01:14 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,8 @@ void	bazooka_imgs(t_game *game)
 			mlx_destroy_image(game->mlx, game->nums[i].img);
 		i++;
 	}
-	i = 0;
-	while (i < 194)
-	{
-		if (game->title[i].img)
-			mlx_destroy_image(game->mlx, game->title[i].img);
-		i++;
-	}
+	if (game->title.img)
+		mlx_destroy_image(game->mlx, game->title.img);
 }
 
 void	closex2(t_game *game)

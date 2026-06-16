@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/12/02 13:43:38 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/16 23:36:19 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,21 @@ void	bonus_init(t_game *game, bool collectible, char *enemy, char *door)
 
 void	menu_init(t_game *game)
 {
-	int		i;
-	char	*filename;
-	char	*path;
-	char	*num;
-
-	i = 0;
-	while (i < 194)
+	game->title.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);\
+	if (!game->title.img)
 	{
-		path = "./incs/textures/titlescreen/";
-		num = ft_itoa(i);
-		filename = ft_strjoin(path, num);
-		free(num);
-		filename = ft_strjoin2(filename, ".xpm");
-		img_init(game, filename, &game->title[i]);
-		free(filename);
-		i++;
+		ft_dprintf(2, "Error\nFailed to use %s file\n", "title");
+		closex(game);
 	}
+	game->title.addr = mlx_get_data_addr(game->title.img, &game->title.bits_per_pixel,
+			&game->title.line_length, &game->title.endian);
+	if (!game->title.addr)
+	{
+		ft_dprintf(2, "Error\nFailed to use %s file\n", "title");
+		closex(game);
+	}
+	game->title.w = WIDTH;
+	game->title.h = HEIGHT;
 }
 
 int	textures(t_game *game)
@@ -88,6 +86,8 @@ int	textures(t_game *game)
 	img_init(game, game->ass.textures[SO].filename, &game->ass.textures[SO]);
 	img_init(game, "./incs/textures/death_screen.xpm", &game->ass.death_screen);
 	img_init(game, "./incs/textures/pause.xpm", &game->ass.pause_screen);
+	img_init(game, "./incs/textures/titlescreen/animatedcomic.xpm", &game->animated_comic);
+	img_init(game, "./incs/textures/titlescreen/animateddarkcomic.xpm", &game->animated_dark);
 	bonus_init(game, game->g_flags.collectibles_exist,
 		game->ass.textures[EN].filename, game->ass.textures[DO].filename);
 	if (game->g_flags.game_state == main_menu)

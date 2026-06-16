@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/16 14:02:53 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2026/06/16 22:23:29 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,14 @@ typedef struct s_cale_img_math
 	t_point			s_xy;
 }					t_cale_img_math;
 
+typedef struct s_comic
+{
+	t_point	coords;
+	int		frame;
+	int		active;
+	char	type;
+}				t_comic;
+
 typedef struct s_game
 {
 	int				fd;
@@ -302,7 +310,10 @@ typedef struct s_game
 	t_spath			spath;
 	t_game_flags	g_flags;
 	t_img			slash;
-	t_img			title[194];
+	t_img			animated_comic;
+	t_img			animated_dark;
+	t_comic			comics[20];
+	t_img			title;
 	t_img			door_frames[5];
 	t_img			nums[9];
 	t_door			*doors_opened;
@@ -349,7 +360,7 @@ void				create_frame(t_game *game);
 void				artistic_moment(t_game *game, int x, int sdraw, int edraw);
 int					add_light(int color, double intensity);
 double				flashlight(int x, int y, t_game *game, bool is_wall);
-void				draw_title(t_game *game, int i);
+void				draw_title(t_game *game);
 int					menu(t_game *game);
 double				flashlight(int x, int y, t_game *game, bool is_wall);
 

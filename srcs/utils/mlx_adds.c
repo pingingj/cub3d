@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_adds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpaes-so <dpaes-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 19:02:52 by dpaes-so          #+#    #+#             */
-/*   Updated: 2025/08/26 19:24:05 by dpaes-so         ###   ########.fr       */
+/*   Updated: 2026/06/16 22:58:18 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 {
 	char	*dst;
+	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+		return;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
