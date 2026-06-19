@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:07:45 by dgarcez-          #+#    #+#             */
-/*   Updated: 2025/12/05 14:54:50 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2026/06/18 23:27:56 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ bool	parse(t_game *game, char *filename)
 		print_errors(game, 1, "Missing texture or color");
 	}
 	parse_map(game, filename, line);
+	// free(line);
 	parse_colors(game);
 	close(game->fd);
 	make_enemy(game);

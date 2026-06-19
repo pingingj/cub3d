@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgarcez- < dgarcez-@student.42lisboa.com > +#+  +:+       +#+        */
+/*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:58:52 by dgarcez-          #+#    #+#             */
-/*   Updated: 2026/03/30 19:07:46 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2026/06/18 23:35:07 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char	*get_textures(t_game *game)
 			free(line);
 			print_errors(game, 1 , error);
 		}
+		free(line);
 		line = get_next_line(game->fd);
 	}
 	return (NULL);

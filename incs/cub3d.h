@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:04:42 by dgarcez-          #+#    #+#             */
-/*   Updated: 2026/06/16 22:23:29 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2026/06/19 01:15:35 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <sys/time.h>
 
 // pixels
-# define WIDTH 1200
-# define HEIGHT 700
+# define WIDTH 1920
+# define HEIGHT 1080
 # define AMBIENT 0.03
 # define MOVE_SPEED 0.08
 # define MONSTER_SPEED 0.1
@@ -162,6 +162,9 @@ typedef struct s_assets
 	t_img			death_screen;
 	t_img			pause_screen;
 	t_img			win_screen;
+	t_img			animated_comic;
+	t_img			animated_dark;
+	t_img			menu;
 	int				collect_amount;
 }					t_assets;
 
@@ -310,9 +313,7 @@ typedef struct s_game
 	t_spath			spath;
 	t_game_flags	g_flags;
 	t_img			slash;
-	t_img			animated_comic;
-	t_img			animated_dark;
-	t_comic			comics[20];
+	t_comic			comics[30];
 	t_img			title;
 	t_img			door_frames[5];
 	t_img			nums[9];

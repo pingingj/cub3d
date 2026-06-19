@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 17:58:18 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/16 23:44:39 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2026/06/19 01:50:54 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ void	spawn_comics(t_game *game)
 	int			amount;
 	int			checked = 0;
 	int			spawned = 0;
+	int			spacing = 0;
 	
 	if (wave % 2 == 0)
-		amount = 4;
+		amount = 5;
 	else
-		amount = 3;
+		amount = 4;
+	spacing = (WIDTH - amount * 200) / (amount + 1);
 	wave++;
 	while(spawned < amount && checked < 20)
 	{
@@ -37,8 +39,10 @@ void	spawn_comics(t_game *game)
 			else
 				game->comics[i].type = 'D';	
 			game->comics[i].frame = 0;
-			game->comics[i].coords.x = rand() % (WIDTH - 300);
-			game->comics[i].coords.y = -300;
+			game->comics[i].coords.x = spacing;
+			game->comics[i].coords.y = -200;
+			printf("%d\n", game->comics[i].coords.x);
+			spacing += 200 + (WIDTH - amount * 200) / (amount + 1);
 			spawned++;
 		}
 		checked++;
@@ -51,6 +55,7 @@ void	draw_books(t_game *game)
 	int	i;
 	int	x;
 	int	y;
+	int	size = WIDTH / 6;
 	unsigned int	color;
 	t_img	cur_img;
 
@@ -63,16 +68,16 @@ void	draw_books(t_game *game)
 			continue;
 		}
 		if (game->comics[i].type == 'B')
-			cur_img = game->animated_comic;
+			cur_img = game->ass.animated_comic;
 		else
-			cur_img = game->animated_dark;
+			cur_img = game->ass.animated_dark;
 		x = 0;
-		while (x < 300)
+		while (x < size)
 		{
 			y = 0;
-			while (y < 300)
+			while (y < size)
 			{
-				color = pixel_get(&cur_img, game->comics[i].frame * 300 + x, y);
+				color = pixel_get(&cur_img, game->comics[i].frame * 200 + (x * 200 / size), y * 200 / size);
 				// printf("%x\n", color);
 				if (game->comics[i].coords.y + y > 0 && game->comics[i].coords.y + y < HEIGHT && color != 0xff000000)
 					my_mlx_pixel_put(&game->title, game->comics[i].coords.x + x, game->comics[i].coords.y + y, color);
@@ -81,7 +86,7 @@ void	draw_books(t_game *game)
 			x++;
 		}
 		game->comics[i].frame++;
-		if (game->comics[i].frame >= 30)
+		if (game->comics[i].frame >= 24)
 			game->comics[i].frame = 0;
    		game->comics[i].coords.y += 10;
 		if (game->comics[i].coords.y >= HEIGHT)
@@ -148,7 +153,7 @@ int	menu(t_game *game)
 	frame_ms = 50;
 	if (now_ms - last_ms >= frame_ms)
 	{
-		if (frame % 40 == 0)
+		if (frame % 30 == 0)
 			spawn_comics(game);
 		menu_scale(game, now_ms, &last_ms);
 		frame++;

@@ -6,7 +6,7 @@
 /*   By: dgarcez- <dgarcez-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:54:55 by dpaes-so          #+#    #+#             */
-/*   Updated: 2026/06/16 23:36:19 by dgarcez-         ###   ########.fr       */
+/*   Updated: 2026/06/19 01:13:39 by dgarcez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	bonus_init(t_game *game, bool collectible, char *enemy, char *door)
 
 void	menu_init(t_game *game)
 {
-	game->title.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);\
+	game->title.img = mlx_new_image(game->mlx, 1920, 1080);\
 	if (!game->title.img)
 	{
 		ft_dprintf(2, "Error\nFailed to use %s file\n", "title");
@@ -86,8 +86,9 @@ int	textures(t_game *game)
 	img_init(game, game->ass.textures[SO].filename, &game->ass.textures[SO]);
 	img_init(game, "./incs/textures/death_screen.xpm", &game->ass.death_screen);
 	img_init(game, "./incs/textures/pause.xpm", &game->ass.pause_screen);
-	img_init(game, "./incs/textures/titlescreen/animatedcomic.xpm", &game->animated_comic);
-	img_init(game, "./incs/textures/titlescreen/animateddarkcomic.xpm", &game->animated_dark);
+	img_init(game, "./incs/textures/titlescreen/shorter_animatedcomic.xpm", &game->ass.animated_comic);
+	img_init(game, "./incs/textures/titlescreen/shorter_animateddarkcomic.xpm", &game->ass.animated_dark);
+	img_init(game, "./incs/textures/titlescreen/menu.xpm", &game->ass.menu);
 	bonus_init(game, game->g_flags.collectibles_exist,
 		game->ass.textures[EN].filename, game->ass.textures[DO].filename);
 	if (game->g_flags.game_state == main_menu)
